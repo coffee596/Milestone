@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>武器目標管理</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        background-color: #121824;
+        margin: 0;
+        padding: 20px;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        color: #f1f5f9;
+    }
+    .container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 25px;
+        background-color: #1e293b;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border: 1px solid #334155;
+    }
+    .title {
+        text-align: center;
+        color: #f8fafc;
+        margin-bottom: 25px;
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+    .tab-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 2px solid #334155;
+        margin-bottom: 20px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+    .tab {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 6px 6px 0 0;
+        border: 1px solid #334155;
+        border-bottom: none;
+        font-size: 14px;
+        white-space: nowrap;
+        background-color: #1e293b;
+        color: #94a3b8;
+        transition: all 0.2s;
+        opacity: 0.6;
+    }
+    .tab.active {
+        background-color: #3b82f6;
+        color: #ffffff;
+        opacity: 1;
+    }
+    .delete-btn {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 0 2px;
+        display: flex;
+        align-items: center;
+        opacity: 0.7;
+    }
+    .add-btn {
+        padding: 8px 12px;
+        background-color: #0f172a;
+        border: 1px dashed #475569;
+        border-radius: 6px;
+        color: #38bdf8;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    .header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+    .header-row h2 {
+        margin: 0;
+        font-size: 18px;
+        color: #f8fafc;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 65%;
+    }
+    .btn {
+        padding: 8px 14px;
+        cursor: pointer;
+        border-radius: 6px;
+        border: none;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .btn-edit { background-color: #475569; color: #fff; }
+    .btn-save { background-color: #047857; color: #fff; }
+    .btn-copy { background-color: #2563eb; color: #fff; }
+    .btn-delete { background-color: #dc2626; color: #fff; }
+    .btn-add-material {
+        width: 100%;
+        margin-top: 10px;
+        background-color: #0f172a;
+        border: 1px dashed #475569;
+        color: #38bdf8;
+        padding: 10px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .progress-container {
+        padding: 20px;
+        background-color: #0f172a;
+        border-radius: 8px;
+        border: 1px solid #334155;
+        margin-bottom: 20px;
+    }
+    .progress-bar-bg {
+        width: 100%;
+        height: 20px;
+        background-color: #334155;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+    .progress-bar-fill {
+        height: 100%;
+        background-color: #10b981;
+        transition: width 0.3s ease-in-out;
+    }
+    .progress-pct { font-size: 24px; font-weight: bold; color: #10b981; margin-left: 8px; }
+    .material-card {
+        background-color: #0f172a;
+        border: 1px solid #334155;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+    .display-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #e2e8f0;
+    }
+    .display-row .lack { color: #ef4444; font-weight: bold; }
+    .display-row .done { color: #10b981; font-weight: bold; }
+    .input-row { display: flex; align-items: center; gap: 10px; }
+    input, select {
+        padding: 10px;
+        font-size: 15px;
+        border-radius: 6px;
+        border: 1px solid #475569;
+        background-color: #0f172a;
+        color: #ffffff;
+        outline: none;
+        font-family: inherit;
+    }
+    input[type="number"].current-input {
+        width: 110px;
+        background: #0f172a;
+        border: 1px solid #475569;
+        color: #38bdf8;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .target-val { color: #94a3b8; font-size: 15px; }
+    .edit-mode-box {
+        border: 1px dashed #475569;
+        padding: 14px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background-color: #0f172a;
+    }
+    .edit-mode-box label {
+        font-size: 12px;
+        font-weight: bold;
+        color: #94a3b8;
+        display: block;
+        margin-bottom: 6px;
+    }
+    .edit-input {
+        background-color: #1e293b;
+        border: 1px solid #475569;
+        color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+    .edit-actions { display: flex; justify-content: space-between; gap: 10px; }
+    .edit-actions .btn { flex: 1; }
+    .material-edit-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+    }
+    .material-edit-row label { font-size: 13px; color: #94a3b8; white-space: nowrap; }
+    .material-edit-row input[type="number"] { width: 90px; }
+    .footnote {
+        font-size: 11px;
+        color: #64748b;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .section-heading {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        color: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        padding-left: 8px;
+    }
+
+    /* ===== 共通ハンバーガーメニュー（ドロワー） ===== */
+    .menu-trigger-btn {
+        position: fixed; top: 16px; left: 16px; width: 42px; height: 42px;
+        background-color: #1e293b; border: 1px solid #334155; border-radius: 8px;
+        color: #f1f5f9; font-size: 20px; line-height: 1; cursor: pointer; z-index: 200;
+        display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .menu-trigger-btn:hover { background-color: #334155; }
+    .drawer-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.55); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    .drawer-panel {
+        position: fixed; top: 0; left: 0; width: 280px; max-width: 80vw; height: 100%;
+        background-color: #1e293b; border-right: 1px solid #334155; box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+        z-index: 301; transform: translateX(-100%); transition: transform 0.25s ease; display: flex; flex-direction: column;
+    }
+    .drawer-panel.open { transform: translateX(0); }
+    .drawer-header { padding: 20px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+    .drawer-header h3 { margin: 0; font-size: 15px; color: #f8fafc; letter-spacing: 0.5px; }
+    .drawer-close-btn { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; line-height: 1; }
+    .drawer-nav { padding: 10px; overflow-y: auto; }
+    .drawer-nav-item {
+        display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 8px;
+        color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: bold; margin-bottom: 4px; transition: background-color 0.15s;
+    }
+    .drawer-nav-item:hover { background-color: #0f172a; }
+    .drawer-nav-item.current { background-color: #3b82f6; color: #ffffff; }
+    .drawer-nav-item .icon { font-size: 16px; }
+    .drawer-nav-item .desc { display: block; font-size: 11px; color: #94a3b8; font-weight: normal; margin-top: 2px; }
+    .drawer-nav-item.current .desc { color: #dbeafe; }
+    .drawer-footer { padding: 14px 20px; border-top: 1px solid #334155; font-size: 11px; color: #64748b; text-align: center; }
+    @media (max-width: 600px) {
+        .container { margin-top: 64px; }
+    }
+</style>
+</head>
+<body>
+
+<button class="menu-trigger-btn" id="menu-trigger-btn" aria-label="メニューを開く">☰</button>
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<div class="drawer-panel" id="drawer-panel">
+    <div class="drawer-header">
+        <h3>⚔️ 古戦場進捗管理ツール</h3>
+        <button class="drawer-close-btn" id="drawer-close-btn" aria-label="閉じる">×</button>
+    </div>
+    <nav class="drawer-nav">
+        <a class="drawer-nav-item" href="index.html">
+            <span class="icon">🏠</span>
+            <span>トップページ<span class="desc">ツール一覧に戻る</span></span>
+        </a>
+        <a class="drawer-nav-item" href="gbf_tracker.html">
+            <span class="icon">🏆</span>
+            <span>古戦場貢献度マネージャー＆ログ<span class="desc">貢献度・HELL逆算</span></span>
+        </a>
+        <a class="drawer-nav-item" href="kessho-tool.html">
+            <span class="icon">🗡️</span>
+            <span>十天衆・十賢者 必要素材<span class="desc">最終上限解放・超越対応</span></span>
+        </a>
+        <a class="drawer-nav-item current" href="weapon_tracker.html">
+            <span class="icon">⚔️</span>
+            <span>武器目標管理<span class="desc">必要素材の収集進捗</span></span>
+        </a>
+    </nav>
+    <div class="drawer-footer">データはブラウザ内に保存されます</div>
+</div>
+
+<div id="root"></div>
+
+<script>
+(function () {
+    "use strict";
+
+    const STORAGE_KEY = 'gbf_weapon_tracker_v1';
+
+    const defaultData = [{
+        id: 'proj_default',
+        name: "ドラゴニック・オリジン(火)",
+        requirements: [
+            { id: "m1", name: "火の刻銘", target: 500, current: 0 },
+            { id: "m2", name: "ドラゴニックコア", target: 50, current: 0 },
+            { id: "m3", name: "刻の流砂", target: 3, current: 0 }
+        ]
+    }];
+
+    function loadProjects() {
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+            }
+        } catch (e) {
+            console.error('保存データの読み込みに失敗:', e);
+        }
+        return JSON.parse(JSON.stringify(defaultData));
+    }
+
+    function saveProjects() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+        } catch (e) {
+            console.error('保存に失敗:', e);
+        }
+    }
+
+    let projects = loadProjects();
+    let activeIndex = 0;
+    let isEditing = false;
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    }
+
+    function numFmt(n) {
+        const num = Number(n);
+        if (isNaN(num)) return '0';
+        return num.toLocaleString('ja-JP');
+    }
+
+    function getCurrentProject() {
+        return projects[activeIndex] || projects[0];
+    }
+
+    // ===== レンダリング =====
+    function render() {
+        const root = document.getElementById('root');
+        const p = getCurrentProject();
+
+        let totalScore = 0;
+        p.requirements.forEach(function (m) {
+            const ratio = m.target > 0 ? (m.current / m.target) : 0;
+            totalScore += Math.min(ratio, 1);
+        });
+        const finalPercent = p.requirements.length > 0
+            ? Math.round((totalScore / p.requirements.length) * 100)
+            : 0;
+
+        let html = '<div class="container">';
+        html += '<h2 class="title">⚔️ 武器目標管理</h2>';
+
+        // タブ
+        html += '<div class="tab-wrapper">';
+        projects.forEach(function (proj, i) {
+            const isActive = i === activeIndex;
+            html += '<div class="tab' + (isActive ? ' active' : '') + '" data-tab-index="' + i + '">' +
+                escapeHtml(proj.name) +
+                '<button class="delete-btn" data-delete-index="' + i + '" title="この武器目標を削除">×</button>' +
+                '</div>';
+        });
+        html += '<button class="add-btn" id="add-project-btn">＋ 新規</button>';
+        html += '</div>';
+
+        // ヘッダー行
+        html += '<div class="header-row">';
+        html += '<h2>' + escapeHtml(p.name) + '</h2>';
+        html += '<button class="btn ' + (isEditing ? 'btn-save' : 'btn-edit') + '" id="toggle-edit-btn">' +
+            (isEditing ? '保存終了' : '編集モード') + '</button>';
+        html += '</div>';
+
+        // 編集ボックス(武器名変更・コピー・削除)
+        if (isEditing) {
+            html += '<div class="edit-mode-box">';
+            html += '<label>武器名を変更:</label>';
+            html += '<input type="text" class="edit-input" id="edit-project-name" value="' + escapeHtml(p.name) + '">';
+            html += '<div class="edit-actions">';
+            html += '<button class="btn btn-copy" id="copy-project-btn">この武器をコピーして増やす</button>';
+            html += '<button class="btn btn-delete" id="delete-project-btn">削除</button>';
+            html += '</div></div>';
+        }
+
+        // 進捗バー
+        html += '<div class="progress-container">';
+        html += '<h3 style="margin:0;font-size:16px;color:#f8fafc;">【' + escapeHtml(p.name) + '】集め達成率:' +
+            '<span class="progress-pct">' + finalPercent + '%</span></h3>';
+        html += '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + finalPercent + '%;"></div></div>';
+        html += '</div>';
+
+        // 素材リスト
+        html += '<div><h3 class="section-heading">📦 必要素材と所持数の入力</h3>';
+        p.requirements.forEach(function (m, idx) {
+            html += '<div class="material-card">';
+            if (isEditing) {
+                html += '<input type="text" class="edit-input" data-mat-name-index="' + idx + '" value="' + escapeHtml(m.name) + '">';
+                html += '<div class="material-edit-row">';
+                html += '<label>目標数:</label>';
+                html += '<input type="number" data-mat-target-index="' + idx + '" value="' + m.target + '">';
+                html += '<button class="btn btn-delete" data-mat-delete-index="' + idx + '">削除</button>';
+                html += '</div>';
+            } else {
+                const lack = Math.max(m.target - m.current, 0);
+                const lackHtml = lack > 0
+                    ? '<span class="lack">あと ' + numFmt(lack) + '</span>'
+                    : '<span class="done">完了</span>';
+                html += '<div class="display-row"><span>' + escapeHtml(m.name) + '</span>' + lackHtml + '</div>';
+                html += '<div class="input-row">';
+                html += '<input type="number" class="current-input" data-mat-current-index="' + idx + '" value="' + m.current + '">';
+                html += '<span class="target-val">/ ' + numFmt(m.target) + '</span>';
+                html += '</div>';
+            }
+            html += '</div>';
+        });
+
+        if (isEditing) {
+            html += '<button class="btn-add-material" id="add-material-btn">＋ 素材項目を追加</button>';
+        }
+        html += '</div>';
+
+        html += '<div class="footnote">※データはブラウザのLocalStorageに保存されます</div>';
+        html += '</div>';
+
+        root.innerHTML = html;
+        attachEvents();
+        saveProjects();
+    }
+
+    // ===== イベント結線 =====
+    function attachEvents() {
+        // タブ切り替え
+        document.querySelectorAll('.tab').forEach(function (tabEl) {
+            tabEl.addEventListener('click', function (e) {
+                if (e.target.classList.contains('delete-btn')) return;
+                activeIndex = Number(tabEl.getAttribute('data-tab-index'));
+                isEditing = false;
+                render();
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // タブ削除
+        document.querySelectorAll('.delete-btn').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const idx = Number(btn.getAttribute('data-delete-index'));
+                handleDeleteProjectByIndex(idx);
+            });
+        });
+
+        // 新規タブ追加
+        const addProjectBtn = document.getElementById('add-project-btn');
+        if (addProjectBtn) {
+            addProjectBtn.addEventListener('click', function () {
+                const n = prompt('武器名?', '新しい武器');
+                if (n) {
+                    projects.push({ id: 'proj_' + Date.now(), name: n, requirements: [] });
+                    activeIndex = projects.length - 1;
+                    isEditing = false;
+                    render();
+                }
+            });
+        }
+
+        // 編集モード切り替え
+        const toggleEditBtn = document.getElementById('toggle-edit-btn');
+        if (toggleEditBtn) {
+            toggleEditBtn.addEventListener('click', function () {
+                isEditing = !isEditing;
+                render();
+            });
+        }
+
+        // 武器名変更
+        const editNameInput = document.getElementById('edit-project-name');
+        if (editNameInput) {
+            editNameInput.addEventListener('change', function () {
+                getCurrentProject().name = editNameInput.value;
+                render();
+            });
+        }
+
+        // コピー
+        const copyBtn = document.getElementById('copy-project-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', handleCopyProject);
+        }
+
+        // 武器削除(編集ボックス内)
+        const deleteProjectBtn = document.getElementById('delete-project-btn');
+        if (deleteProjectBtn) {
+            deleteProjectBtn.addEventListener('click', function () {
+                handleDeleteProjectByIndex(activeIndex);
+            });
+        }
+
+        // 素材名変更
+        document.querySelectorAll('[data-mat-name-index]').forEach(function (el) {
+            el.addEventListener('change', function () {
+                const idx = Number(el.getAttribute('data-mat-name-index'));
+                getCurrentProject().requirements[idx].name = el.value;
+                render();
+            });
+        });
+
+        // 素材目標数変更
+        document.querySelectorAll('[data-mat-target-index]').forEach(function (el) {
+            el.addEventListener('change', function () {
+                const idx = Number(el.getAttribute('data-mat-target-index'));
+                getCurrentProject().requirements[idx].target = parseInt(el.value, 10) || 0;
+                render();
+            });
+        });
+
+        // 素材削除
+        document.querySelectorAll('[data-mat-delete-index]').forEach(function (el) {
+            el.addEventListener('click', function () {
+                const idx = Number(el.getAttribute('data-mat-delete-index'));
+                getCurrentProject().requirements.splice(idx, 1);
+                render();
+            });
+        });
+
+        // 素材現在所持数変更
+        document.querySelectorAll('[data-mat-current-index]').forEach(function (el) {
+            el.addEventListener('change', function () {
+                const idx = Number(el.getAttribute('data-mat-current-index'));
+                getCurrentProject().requirements[idx].current = parseInt(el.value, 10) || 0;
+                render();
+            });
+        });
+
+        // 素材項目追加
+        const addMaterialBtn = document.getElementById('add-material-btn');
+        if (addMaterialBtn) {
+            addMaterialBtn.addEventListener('click', function () {
+                getCurrentProject().requirements.push({ id: 'mat_' + Date.now(), name: '新しい素材', target: 10, current: 0 });
+                render();
+            });
+        }
+    }
+
+    // ===== ロジック =====
+    function handleCopyProject() {
+        const source = getCurrentProject();
+        const newProj = JSON.parse(JSON.stringify(source));
+        newProj.id = 'proj_' + Date.now();
+        newProj.name = source.name + ' (コピー)';
+        newProj.requirements.forEach(function (r) { r.current = 0; });
+        projects.push(newProj);
+        activeIndex = projects.length - 1;
+        render();
+    }
+
+    function handleDeleteProjectByIndex(idx) {
+        if (projects.length <= 1) {
+            alert('最後の1つは削除できません');
+            return;
+        }
+        const name = projects[idx].name;
+        if (!confirm('「' + name + '」の目標を削除しますか？')) return;
+        projects.splice(idx, 1);
+        if (activeIndex >= projects.length) {
+            activeIndex = projects.length - 1;
+        }
+        isEditing = false;
+        render();
+    }
+
+    // ===== 共通ハンバーガーメニュー（ドロワー）の初期化 =====
+    (function () {
+        const triggerBtn = document.getElementById('menu-trigger-btn');
+        const overlay = document.getElementById('drawer-overlay');
+        const panel = document.getElementById('drawer-panel');
+        const closeBtn = document.getElementById('drawer-close-btn');
+        function openDrawer() { overlay.classList.add('open'); panel.classList.add('open'); }
+        function closeDrawer() { overlay.classList.remove('open'); panel.classList.remove('open'); }
+        if (triggerBtn) triggerBtn.addEventListener('click', openDrawer);
+        if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+        if (overlay) overlay.addEventListener('click', closeDrawer);
+    })();
+
+    // ===== 初期化 =====
+    render();
+})();
+</script>
+
+</body>
+</html>

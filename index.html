@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>古戦場進捗管理ツール</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        background-color: #121824;
+        margin: 0;
+        padding: 20px;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        color: #f1f5f9;
+    }
+    .container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 25px;
+        background-color: #1e293b;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border: 1px solid #334155;
+    }
+    .title {
+        text-align: center;
+        color: #f8fafc;
+        margin-bottom: 6px;
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+    .subtitle {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 28px;
+        font-size: 13px;
+    }
+    .tool-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .tool-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 20px;
+        background-color: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #f1f5f9;
+        transition: border-color 0.15s, transform 0.15s;
+    }
+    .tool-card:hover {
+        border-color: #3b82f6;
+        transform: translateY(-2px);
+    }
+    .tool-card .icon {
+        font-size: 28px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1e293b;
+        border-radius: 10px;
+        flex-shrink: 0;
+    }
+    .tool-card .info h3 {
+        margin: 0 0 4px 0;
+        font-size: 16px;
+        color: #f8fafc;
+    }
+    .tool-card .info p {
+        margin: 0;
+        font-size: 13px;
+        color: #94a3b8;
+        line-height: 1.5;
+    }
+    .footnote {
+        font-size: 11px;
+        color: #64748b;
+        text-align: center;
+        margin-top: 26px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="title">⚔️ 古戦場進捗管理ツール</h2>
+    <div class="subtitle">使いたいツールを選んでください</div>
+
+    <div class="tool-grid">
+        <a class="tool-card" href="gbf_tracker.html">
+            <span class="icon">🏆</span>
+            <span class="info">
+                <h3>古戦場貢献度マネージャー＆ログ</h3>
+                <p>各回の貢献度目標を管理し、残り貢献度からHELL周回数・お肉の必要数を逆算</p>
+            </span>
+        </a>
+
+        <a class="tool-card" href="kessho-tool.html">
+            <span class="icon">🗡️</span>
+            <span class="info">
+                <h3>十天衆・十賢者 必要素材マネージャー</h3>
+                <p>最終上限解放・超越（限界超越／賢者最終・4アビ）に必要な素材の収集進捗を管理</p>
+            </span>
+        </a>
+
+        <a class="tool-card" href="weapon_tracker.html">
+            <span class="icon">⚔️</span>
+            <span class="info">
+                <h3>武器目標管理</h3>
+                <p>武器ごとに必要素材を登録し、収集の進捗をパーセントで管理</p>
+            </span>
+        </a>
+    </div>
+
+    <div class="footnote">データはブラウザ内（LocalStorage）に保存されます</div>
+</div>
+
+</body>
+</html>

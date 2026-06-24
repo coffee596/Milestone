@@ -1,0 +1,3822 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>グラブル 十天衆・十賢者 必要素材マネージャー</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #121824;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #f1f5f9;
+        }
+        .container {
+            max-width: 820px;
+            margin: 30px auto;
+            padding: 25px;
+            background-color: #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+        }
+        .title {
+            text-align: center;
+            color: #f8fafc;
+            margin: 0 0 6px 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 22px;
+            font-size: 12px;
+        }
+        .tab-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #334155;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .tab {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 6px 6px 0 0;
+            border: 1px solid #334155;
+            border-bottom: none;
+            font-size: 14px;
+            white-space: nowrap;
+            background-color: #1e293b;
+            color: #94a3b8;
+            transition: all 0.2s;
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+        }
+        .tab.active {
+            background-color: #3b82f6;
+            color: #ffffff;
+            opacity: 1;
+        }
+        .delete-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 6px;
+            opacity: 0.7;
+        }
+        .add-btn {
+            padding: 8px 12px;
+            background-color: #0f172a;
+            border: 1px dashed #475569;
+            border-radius: 6px;
+            color: #38bdf8;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .all-summary-btn {
+            padding: 8px 14px;
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            color: #c4b5fd;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+            .grid2 { grid-template-columns: 1fr; }
+        }
+        .form-group { display: flex; flex-direction: column; }
+        .label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+        }
+        .category-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 9px;
+            border-radius: 999px;
+            margin-left: 10px;
+        }
+        .category-badge.kenja { background-color: #312e81; color: #a5b4fc; }
+        .category-badge.tenshu { background-color: #7c2d12; color: #fdba74; }
+        select {
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #ffffff;
+            outline: none;
+            width: 100%;
+            font-family: inherit;
+        }
+        .step-wrapper {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .step-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .step-btn.active { background-color: #10b981; }
+        .progress-container {
+            padding: 20px;
+            background-color: #0f172a;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            margin-bottom: 20px;
+        }
+        .progress-title { margin: 0; font-size: 16px; color: #f8fafc; }
+        .progress-pct { font-size: 24px; color: #10b981; font-weight: bold; margin-left: 8px; }
+        .progress-bar-bg {
+            width: 100%;
+            height: 20px;
+            background-color: #334155;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #10b981;
+            transition: width 0.3s ease-in-out;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            table { font-size: 12px; }
+            th, td { padding: 8px 6px !important; }
+        }
+        th {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #475569;
+            font-weight: bold;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #334155;
+            color: #e2e8f0;
+        }
+        td.highlight { color: #f43f5e; font-weight: bold; }
+        input[type="number"] {
+            width: 80px;
+            padding: 6px;
+            background: #0f172a;
+            border: 1px solid #475569;
+            color: #38bdf8;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .alert-complete {
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #064e3b;
+            color: #34d399;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #047857;
+        }
+        .needed-lack { color: #ef4444; font-weight: bold; }
+        .needed-done { color: #10b981; font-weight: bold; }
+        .section-heading {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding-left: 8px;
+        }
+        .all-summary-heading {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+            color: #f8fafc;
+        }
+        .all-summary-empty { color: #34d399; font-weight: bold; }
+
+        /* ===== 共通ハンバーガーメニュー（ドロワー） ===== */
+        .menu-trigger-btn {
+            position: fixed; top: 16px; left: 16px; width: 42px; height: 42px;
+            background-color: #1e293b; border: 1px solid #334155; border-radius: 8px;
+            color: #f1f5f9; font-size: 20px; line-height: 1; cursor: pointer; z-index: 200;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .menu-trigger-btn:hover { background-color: #334155; }
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.55); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+        }
+        .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+        .drawer-panel {
+            position: fixed; top: 0; left: 0; width: 280px; max-width: 80vw; height: 100%;
+            background-color: #1e293b; border-right: 1px solid #334155; box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+            z-index: 301; transform: translateX(-100%); transition: transform 0.25s ease; display: flex; flex-direction: column;
+        }
+        .drawer-panel.open { transform: translateX(0); }
+        .drawer-header { padding: 20px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+        .drawer-header h3 { margin: 0; font-size: 15px; color: #f8fafc; letter-spacing: 0.5px; }
+        .drawer-close-btn { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; line-height: 1; }
+        .drawer-nav { padding: 10px; overflow-y: auto; }
+        .drawer-nav-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 8px;
+            color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: bold; margin-bottom: 4px; transition: background-color 0.15s;
+        }
+        .drawer-nav-item:hover { background-color: #0f172a; }
+        .drawer-nav-item.current { background-color: #3b82f6; color: #ffffff; }
+        .drawer-nav-item .icon { font-size: 16px; }
+        .drawer-nav-item .desc { display: block; font-size: 11px; color: #94a3b8; font-weight: normal; margin-top: 2px; }
+        .drawer-nav-item.current .desc { color: #dbeafe; }
+        .drawer-footer { padding: 14px 20px; border-top: 1px solid #334155; font-size: 11px; color: #64748b; text-align: center; }
+        @media (max-width: 600px) {
+            .container { margin-top: 64px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-trigger-btn" id="menu-trigger-btn" aria-label="メニューを開く">☰</button>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="drawer-panel" id="drawer-panel">
+        <div class="drawer-header">
+            <h3>⚔️ 古戦場進捗管理ツール</h3>
+            <button class="drawer-close-btn" id="drawer-close-btn" aria-label="閉じる">×</button>
+        </div>
+        <nav class="drawer-nav">
+            <a class="drawer-nav-item" href="index.html">
+                <span class="icon">🏠</span>
+                <span>トップページ<span class="desc">ツール一覧に戻る</span></span>
+            </a>
+            <a class="drawer-nav-item" href="gbf_tracker.html">
+                <span class="icon">🏆</span>
+                <span>古戦場貢献度マネージャー＆ログ<span class="desc">貢献度・HELL逆算</span></span>
+            </a>
+            <a class="drawer-nav-item current" href="kessho-tool.html">
+                <span class="icon">🗡️</span>
+                <span>十天衆・十賢者 必要素材<span class="desc">最終上限解放・超越対応</span></span>
+            </a>
+            <a class="drawer-nav-item" href="weapon_tracker.html">
+                <span class="icon">⚔️</span>
+                <span>武器目標管理<span class="desc">必要素材の収集進捗</span></span>
+            </a>
+        </nav>
+        <div class="drawer-footer">データはブラウザ内に保存されます</div>
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+
+        // キャラ区分（十賢者 / 十天衆）
+        const CHAR_CATEGORY = 
+        {
+          "ハーゼリーラ": "十賢者",
+          "マリア・テレサ": "十賢者",
+          "アラナン": "十賢者",
+          "フラウ": "十賢者",
+          "カイム": "十賢者",
+          "ロベリア": "十賢者",
+          "カッツェリーラ": "十賢者",
+          "エスタリオラ": "十賢者",
+          "ガイゼンボーガ": "十賢者",
+          "ニーア": "十賢者",
+          "ウーノ": "十天衆",
+          "ソーン": "十天衆",
+          "サラーサ": "十天衆",
+          "カトル": "十天衆",
+          "フュンフ": "十天衆",
+          "シス": "十天衆",
+          "シエテ": "十天衆",
+          "オクトー": "十天衆",
+          "ニオ": "十天衆",
+          "エッセル": "十天衆"
+        };
+
+        // 必要素材マスターデータ（十賢者10名 + 十天衆10名、各キャラ全段階を収録）
+        const RAW_MASTER_DATA = 
+        {
+          "ハーゼリーラ": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・水",
+                "target": 120
+              },
+              {
+                "name": "カオティックヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "水のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・水",
+                "target": 240
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "カオティックヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "エウロペのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "月のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "月のイデア",
+                "target": 40
+              },
+              {
+                "name": "ベラトールフラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "アビサルトラジェディ",
+                "target": 30
+              },
+              {
+                "name": "アクアブライト",
+                "target": 20
+              },
+              {
+                "name": "月のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "月のイデア",
+                "target": 70
+              },
+              {
+                "name": "ベラトールフラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "アナリプシア・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "アクアブライト",
+                "target": 70
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "月のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "アビサルトラジェディ",
+                "target": 30
+              },
+              {
+                "name": "ベラトールフラグメント",
+                "target": 30
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "月のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "マリア・テレサ": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・水",
+                "target": 120
+              },
+              {
+                "name": "カオティックヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "水のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・水",
+                "target": 240
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "カオティックヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "エウロペのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "正義のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "正義のイデア",
+                "target": 40
+              },
+              {
+                "name": "ベラトールフラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "アビサルトラジェディ",
+                "target": 30
+              },
+              {
+                "name": "アクアブライト",
+                "target": 20
+              },
+              {
+                "name": "正義のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "正義のイデア",
+                "target": 70
+              },
+              {
+                "name": "ベラトールフラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "アナリプシア・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "アクアブライト",
+                "target": 70
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "正義のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "アビサルトラジェディ",
+                "target": 30
+              },
+              {
+                "name": "ベラトールフラグメント",
+                "target": 30
+              },
+              {
+                "name": "水精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "正義のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "アラナン": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・火",
+                "target": 120
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "火のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・火",
+                "target": 240
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "シヴァのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "太陽のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "太陽のイデア",
+                "target": 40
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "イグナイトラブル",
+                "target": 30
+              },
+              {
+                "name": "イグニス・ブライト",
+                "target": 20
+              },
+              {
+                "name": "太陽のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "太陽のイデア",
+                "target": 70
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "エゲイラ・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "イグニス・ブライト",
+                "target": 70
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "太陽のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "イグナイトラブル",
+                "target": 30
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 30
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "太陽のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "フラウ": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・火",
+                "target": 120
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "火のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・火",
+                "target": 240
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "シヴァのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "悪魔のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "悪魔のイデア",
+                "target": 40
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "イグナイトラブル",
+                "target": 30
+              },
+              {
+                "name": "イグニス・ブライト",
+                "target": 20
+              },
+              {
+                "name": "悪魔のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "悪魔のイデア",
+                "target": 70
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "エゲイラ・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "イグニス・ブライト",
+                "target": 70
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "悪魔のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "イグナイトラブル",
+                "target": 30
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 30
+              },
+              {
+                "name": "火精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "悪魔のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "カイム": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・土",
+                "target": 120
+              },
+              {
+                "name": "カオティック・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "土のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・土",
+                "target": 240
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "カオティック・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "ゴッドガード・ブローディアのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "刑死者のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "刑死者のイデア",
+                "target": 40
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "インシュラーコア",
+                "target": 30
+              },
+              {
+                "name": "テラ・ブライト",
+                "target": 20
+              },
+              {
+                "name": "刑死者のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "刑死者のイデア",
+                "target": 70
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "テュシア・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "テラ・ブライト",
+                "target": 70
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "刑死者のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "インシュラーコア",
+                "target": 30
+              },
+              {
+                "name": "アクイラ・フラグメント",
+                "target": 30
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "刑死者のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "ロベリア": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・土",
+                "target": 120
+              },
+              {
+                "name": "カオティック・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "土のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・土",
+                "target": 240
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "カオティック・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "ゴッドガード・ブローディアのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "塔のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "塔のイデア",
+                "target": 40
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "インシュラーコア",
+                "target": 30
+              },
+              {
+                "name": "テラ・ブライト",
+                "target": 20
+              },
+              {
+                "name": "塔のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "塔のイデア",
+                "target": 70
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "テュシア・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "テラ・ブライト",
+                "target": 70
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "塔のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "インシュラーコア",
+                "target": 30
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 30
+              },
+              {
+                "name": "土精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "塔のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "カッツェリーラ": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・風",
+                "target": 120
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "風のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・風",
+                "target": 240
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "グリームニルのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "審判のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "審判のイデア",
+                "target": 40
+              },
+              {
+                "name": "ベラトール・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "ゲイルロック",
+                "target": 30
+              },
+              {
+                "name": "ウェントス・ブライト",
+                "target": 20
+              },
+              {
+                "name": "審判のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "審判のイデア",
+                "target": 70
+              },
+              {
+                "name": "ベラトール・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "ゲネア・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "ウェントス・ブライト",
+                "target": 70
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "審判のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "ゲイルロック",
+                "target": 30
+              },
+              {
+                "name": "ベラトール・フラグメント",
+                "target": 30
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "審判のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "エスタリオラ": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・風",
+                "target": 120
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "風のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・風",
+                "target": 240
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "グリームニルのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "節制のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "節制のイデア",
+                "target": 40
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "ゲイルロック",
+                "target": 30
+              },
+              {
+                "name": "ウェントス・ブライト",
+                "target": 20
+              },
+              {
+                "name": "節制のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "節制のイデア",
+                "target": 70
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "ゲネア・ゴスペル",
+                "target": 50
+              },
+              {
+                "name": "ウェントス・ブライト",
+                "target": 50
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "節制のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "ゲイルロック",
+                "target": 30
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 30
+              },
+              {
+                "name": "風精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "節制のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "ガイゼンボーガ": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・火",
+                "target": 90
+              },
+              {
+                "name": "ヴェルム文書・風",
+                "target": 90
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "光のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・火",
+                "target": 90
+              },
+              {
+                "name": "ヴェルム文書・風",
+                "target": 90
+              },
+              {
+                "name": "光精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "オーロラ・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "メタトロンのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "星のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "光精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "星のイデア",
+                "target": 40
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "靂輪",
+                "target": 30
+              },
+              {
+                "name": "イグニス・ブライト",
+                "target": 10
+              },
+              {
+                "name": "ウェントス・ブライト",
+                "target": 10
+              },
+              {
+                "name": "星のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "光精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "星のイデア",
+                "target": 70
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "エゲイラ・ゴスペル",
+                "target": 25
+              },
+              {
+                "name": "ゲネア・ゴスペル",
+                "target": 25
+              },
+              {
+                "name": "イグニス・ブライト",
+                "target": 50
+              },
+              {
+                "name": "ウェントス・ブライト",
+                "target": 50
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 200
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "星のウェリタス",
+                "target": 170
+              },
+              {
+                "name": "靂輪",
+                "target": 30
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 30
+              },
+              {
+                "name": "光精のアストラ",
+                "target": 140
+              },
+              {
+                "name": "星のイデア",
+                "target": 130
+              },
+              {
+                "name": "刻の流砂",
+                "target": 3
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "ニーア": {
+            "至賢の領域(1段階目)": [
+              {
+                "name": "ジェネシスフラグメント",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・水",
+                "target": 90
+              },
+              {
+                "name": "ヴェルム文書・土",
+                "target": 90
+              },
+              {
+                "name": "カオティック・ヘイズ",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 5
+              }
+            ],
+            "至賢の領域(2段階目)": [
+              {
+                "name": "闇のプシュケー",
+                "target": 30
+              },
+              {
+                "name": "ヴェルム文書・水",
+                "target": 90
+              },
+              {
+                "name": "ヴェルム文書・土",
+                "target": 90
+              },
+              {
+                "name": "闇精のアストラ",
+                "target": 30
+              },
+              {
+                "name": "カオティック・ヘイズ",
+                "target": 30
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 10
+              }
+            ],
+            "至賢の領域(3段階目)": [
+              {
+                "name": "アバターのマグナアニマ",
+                "target": 10
+              },
+              {
+                "name": "死神のウェリタス",
+                "target": 30
+              },
+              {
+                "name": "闇精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "死神のイデア",
+                "target": 40
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 10
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 15
+              }
+            ],
+            "至賢の領域(4段階目)": [
+              {
+                "name": "トーデストリープ",
+                "target": 30
+              },
+              {
+                "name": "アクア・ブライト",
+                "target": 10
+              },
+              {
+                "name": "テラ・ブライト",
+                "target": 10
+              },
+              {
+                "name": "死神のウェリタス",
+                "target": 50
+              },
+              {
+                "name": "闇精のアストラ",
+                "target": 40
+              },
+              {
+                "name": "死神のイデア",
+                "target": 70
+              },
+              {
+                "name": "ケルサス・フラグメント",
+                "target": 20
+              },
+              {
+                "name": "セフィラストーン",
+                "target": 20
+              }
+            ],
+            "賢者最終上限解放(5凸)": [
+              {
+                "name": "セフィラ玉髄",
+                "target": 1
+              },
+              {
+                "name": "アナリプシア・ゴスペル",
+                "target": 25
+              },
+              {
+                "name": "テュシア・ゴスペル",
+                "target": 25
+              },
+              {
+                "name": "アクア・ブライト",
+                "target": 50
+              },
+              {
+                "name": "テラ・ブライト",
+                "target": 50
+              }
+            ],
+            "第4アビリティ取得": [
+              {
+                "name": "金剛晶",
+                "target": 1
+              },
+              {
+                "name": "世界のイデア",
+                "target": 100
+              },
+              {
+                "name": "ニューワールド・クォーツ",
+                "target": 30
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 1
+              }
+            ]
+          },
+          "ウーノ": {
+            "最終上限解放": [
+              {
+                "name": "青星の輝き",
+                "target": 30
+              },
+              {
+                "name": "水のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "黒き魂",
+                "target": 2
+              },
+              {
+                "name": "水分の書",
+                "target": 30
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "槍の銀片",
+                "target": 200
+              },
+              {
+                "name": "アビサルトラジェディ",
+                "target": 50
+              },
+              {
+                "name": "水の光輪",
+                "target": 80
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "水の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "アクアジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた槍(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "エウロペのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "水のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "一番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黒麒麟のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "アクアブライト",
+                "target": 30
+              },
+              {
+                "name": "槍のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "水のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "ワムデュスの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "ソーン": {
+            "最終上限解放": [
+              {
+                "name": "白星の輝き",
+                "target": 30
+              },
+              {
+                "name": "光のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "白き魂",
+                "target": 2
+              },
+              {
+                "name": "灼熱の書",
+                "target": 15
+              },
+              {
+                "name": "風凪の書",
+                "target": 15
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "弓の銀片",
+                "target": 200
+              },
+              {
+                "name": "靂輪",
+                "target": 50
+              },
+              {
+                "name": "火の光輪",
+                "target": 40
+              },
+              {
+                "name": "風の光輪",
+                "target": 40
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "光の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "ホーリージーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた弓(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "メタトロンのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "光のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "二番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黄龍のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "イグニスブライト",
+                "target": 15
+              },
+              {
+                "name": "ウェントスブライト",
+                "target": 15
+              },
+              {
+                "name": "弓のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "光のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "ル・オーの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "サラーサ": {
+            "最終上限解放": [
+              {
+                "name": "黄星の輝き",
+                "target": 30
+              },
+              {
+                "name": "土のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "黒き魂",
+                "target": 2
+              },
+              {
+                "name": "巨人の書",
+                "target": 30
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "斧の銀片",
+                "target": 200
+              },
+              {
+                "name": "インシュラーコア",
+                "target": 50
+              },
+              {
+                "name": "土の光輪",
+                "target": 80
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "土の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "アースジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた斧(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "ゴッドガード・ブローディアのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "土のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "三番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黒麒麟のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "テラブライト",
+                "target": 30
+              },
+              {
+                "name": "斧のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "土のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "ガレヲンの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "カトル": {
+            "最終上限解放": [
+              {
+                "name": "青星の輝き",
+                "target": 30
+              },
+              {
+                "name": "水のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "黒き魂",
+                "target": 2
+              },
+              {
+                "name": "水分の書",
+                "target": 30
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "刃の銀片",
+                "target": 200
+              },
+              {
+                "name": "アビサルトラジェディ",
+                "target": 50
+              },
+              {
+                "name": "水の光輪",
+                "target": 80
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "水の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "アクアジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた短剣(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "エウロペのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "水のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "四番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黒麒麟のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "アクアブライト",
+                "target": 30
+              },
+              {
+                "name": "短剣のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "土のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "ワムデュスの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "フュンフ": {
+            "最終上限解放": [
+              {
+                "name": "白星の輝き",
+                "target": 30
+              },
+              {
+                "name": "光のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "白き魂",
+                "target": 2
+              },
+              {
+                "name": "灼熱の書",
+                "target": 15
+              },
+              {
+                "name": "風凪の書",
+                "target": 15
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "杖の銀片",
+                "target": 200
+              },
+              {
+                "name": "靂輪",
+                "target": 50
+              },
+              {
+                "name": "火の光輪",
+                "target": 40
+              },
+              {
+                "name": "風の光輪",
+                "target": 40
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "光の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "ホーリージーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた杖(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "メタトロンのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "光のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "五番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黄龍のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "イグニスブライト",
+                "target": 15
+              },
+              {
+                "name": "ウェントスブライト",
+                "target": 15
+              },
+              {
+                "name": "杖のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "光のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "ル・オーの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "シス": {
+            "最終上限解放": [
+              {
+                "name": "黒星の輝き",
+                "target": 30
+              },
+              {
+                "name": "闇のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "黒き魂",
+                "target": 2
+              },
+              {
+                "name": "水分の書",
+                "target": 15
+              },
+              {
+                "name": "巨人の書",
+                "target": 15
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "手甲の銀片",
+                "target": 200
+              },
+              {
+                "name": "トーデストリープ",
+                "target": 50
+              },
+              {
+                "name": "水の光輪",
+                "target": 40
+              },
+              {
+                "name": "土の光輪",
+                "target": 40
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "闇の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "ダークジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた手甲(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "アバターのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "闇のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "六番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黒麒麟のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "アクアブライト",
+                "target": 15
+              },
+              {
+                "name": "テラブライト",
+                "target": 15
+              },
+              {
+                "name": "格闘のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "闇のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "フェディエルの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "シエテ": {
+            "最終上限解放": [
+              {
+                "name": "緑星の輝き",
+                "target": 30
+              },
+              {
+                "name": "風のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "白き魂",
+                "target": 2
+              },
+              {
+                "name": "風凪の書",
+                "target": 30
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "剣の銀片",
+                "target": 200
+              },
+              {
+                "name": "ゲイルロック",
+                "target": 50
+              },
+              {
+                "name": "風の光輪",
+                "target": 80
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "風の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "ウィンドジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた剣(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "グリームニルのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "風のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "七番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黄龍のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "ウェントスブライト",
+                "target": 30
+              },
+              {
+                "name": "剣のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "風のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "イーウィヤの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "オクトー": {
+            "最終上限解放": [
+              {
+                "name": "黄星の輝き",
+                "target": 30
+              },
+              {
+                "name": "土のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "黒き魂",
+                "target": 2
+              },
+              {
+                "name": "巨人の書",
+                "target": 30
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "太刀の銀片",
+                "target": 200
+              },
+              {
+                "name": "インシュラーコア",
+                "target": 50
+              },
+              {
+                "name": "土の光輪",
+                "target": 80
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "土の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "アースジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた刀(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "ゴッドガード・ブローディアのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "土のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "八番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黒麒麟のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "テラブライト",
+                "target": 30
+              },
+              {
+                "name": "刀のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "土のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "ガレヲンの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "ニオ": {
+            "最終上限解放": [
+              {
+                "name": "緑星の輝き",
+                "target": 30
+              },
+              {
+                "name": "風のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "白き魂",
+                "target": 2
+              },
+              {
+                "name": "風凪の書",
+                "target": 30
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "竪琴の銀片",
+                "target": 200
+              },
+              {
+                "name": "ゲイルロック",
+                "target": 50
+              },
+              {
+                "name": "風の光輪",
+                "target": 80
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "風の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "ウィンドジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた琴(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "グリームニルのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "風のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "九番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黄龍のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "ウェントスブライト",
+                "target": 30
+              },
+              {
+                "name": "楽器のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "風のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "イーウィヤの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          },
+          "エッセル": {
+            "最終上限解放": [
+              {
+                "name": "赤星の輝き",
+                "target": 30
+              },
+              {
+                "name": "火のプシュケー",
+                "target": 10
+              },
+              {
+                "name": "白き魂",
+                "target": 2
+              },
+              {
+                "name": "灼熱の書",
+                "target": 30
+              },
+              {
+                "name": "虹星晶",
+                "target": 100
+              }
+            ],
+            "Lv110": [
+              {
+                "name": "ヒヒイロカネ",
+                "target": 1
+              },
+              {
+                "name": "銃の銀片",
+                "target": 200
+              },
+              {
+                "name": "イグナイトラブル",
+                "target": 50
+              },
+              {
+                "name": "火の光輪",
+                "target": 80
+              },
+              {
+                "name": "ダマスカス骸晶",
+                "target": 20
+              },
+              {
+                "name": "星晶の欠片",
+                "target": 7500
+              },
+              {
+                "name": "火の宝珠",
+                "target": 7500
+              },
+              {
+                "name": "ファイアジーン",
+                "target": 7500
+              },
+              {
+                "name": "朽ち果てた銃(3凸)",
+                "target": 30
+              },
+              {
+                "name": "ルピ",
+                "target": 100000
+              }
+            ],
+            "Lv120": [
+              {
+                "name": "シヴァのマグナアニマ",
+                "target": 50
+              },
+              {
+                "name": "火のプシュケー",
+                "target": 300
+              },
+              {
+                "name": "バハムートの紫電角",
+                "target": 100
+              },
+              {
+                "name": "十番天星の欠片",
+                "target": 50
+              },
+              {
+                "name": "究竟の証",
+                "target": 100
+              },
+              {
+                "name": "蒼天の魂",
+                "target": 1
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv130": [
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ],
+            "Lv140": [
+              {
+                "name": "黄龍のマグナアニマ",
+                "target": 30
+              },
+              {
+                "name": "イグニスブライト",
+                "target": 30
+              },
+              {
+                "name": "銃のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "火のエレメント",
+                "target": 2000
+              },
+              {
+                "name": "ウィルナスの竜珠",
+                "target": 300
+              },
+              {
+                "name": "真龍の金鱗",
+                "target": 50
+              },
+              {
+                "name": "ルピ",
+                "target": 5000000
+              }
+            ],
+            "Lv150": [
+              {
+                "name": "終末の暗晶",
+                "target": 30
+              },
+              {
+                "name": "漆黒の棘翅",
+                "target": 30
+              },
+              {
+                "name": "狡知の魔角",
+                "target": 30
+              },
+              {
+                "name": "碧麗の証",
+                "target": 1
+              }
+            ]
+          }
+        };
+
+        // ===== 状態管理 =====
+        const STORAGE_KEY = 'gbf_material_user_tabs_v5';
+
+        function loadTabs() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) return JSON.parse(saved);
+            } catch (e) { /* ignore */ }
+            return [
+                { id: 'tab_default', charName: 'シス', activeStage: 'Lv110', currentMaterials: {} }
+            ];
+        }
+
+        function saveTabs(tabs) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(tabs));
+            } catch (e) { /* ignore */ }
+        }
+
+        let state = {
+            userTabs: loadTabs(),
+            activeTabId: null,
+            showAllSummary: false
+        };
+        state.activeTabId = state.userTabs[0] ? state.userTabs[0].id : 'tab_default';
+
+        function getCurrentTab() {
+            return state.userTabs.find(t => t.id === state.activeTabId) || state.userTabs[0];
+        }
+
+        // 入手困難・特殊素材は赤強調
+        const HIGHLIGHT_MATERIALS = ['マリシャスクランプ', '碧麗の証', '刻の流砂', '金剛晶'];
+
+        // ===== イベントハンドラ =====
+        function handleAddTab() {
+            const nameList = Object.keys(RAW_MASTER_DATA);
+            const newTab = {
+                id: 'tab_' + Date.now(),
+                charName: nameList[0],
+                activeStage: Object.keys(RAW_MASTER_DATA[nameList[0]])[0],
+                currentMaterials: {}
+            };
+            state.userTabs.push(newTab);
+            state.activeTabId = newTab.id;
+            persistAndRender();
+        }
+
+        function handleDeleteTab(id, name) {
+            if (state.userTabs.length <= 1) {
+                alert('最低1つの管理タブが必要です。');
+                return;
+            }
+            if (window.confirm('「' + name + '」の目標を削除しますか？')) {
+                state.userTabs = state.userTabs.filter(t => t.id !== id);
+                if (state.activeTabId === id) {
+                    state.activeTabId = state.userTabs[0].id;
+                }
+                persistAndRender();
+            }
+        }
+
+        function handleSelectTab(id) {
+            state.activeTabId = id;
+            persistAndRender();
+        }
+
+        function handleCharChange(name) {
+            const current = getCurrentTab();
+            const defaultStage = Object.keys(RAW_MASTER_DATA[name])[0];
+            current.charName = name;
+            current.activeStage = defaultStage;
+            current.currentMaterials = {};
+            persistAndRender();
+        }
+
+        function handleStageChange(stage) {
+            const current = getCurrentTab();
+            current.activeStage = stage;
+            persistAndRender();
+        }
+
+        function handleMaterialCountChange(matName, val) {
+            const current = getCurrentTab();
+            const num = Math.max(0, Number(val) || 0);
+            current.currentMaterials[matName] = num;
+            persistAndRender();
+        }
+
+        function handleToggleSummary() {
+            state.showAllSummary = !state.showAllSummary;
+            persistAndRender();
+        }
+
+        function persistAndRender() {
+            saveTabs(state.userTabs);
+            render();
+        }
+
+        // ===== ユーティリティ =====
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function computeShortageSummary() {
+            const summary = {};
+            state.userTabs.forEach(tab => {
+                const reqs = (RAW_MASTER_DATA[tab.charName] && RAW_MASTER_DATA[tab.charName][tab.activeStage]) || [];
+                reqs.forEach(m => {
+                    const have = tab.currentMaterials[m.name] || 0;
+                    const lack = Math.max(0, m.target - have);
+                    if (lack > 0) {
+                        summary[m.name] = (summary[m.name] || 0) + lack;
+                    }
+                });
+            });
+            return Object.entries(summary).sort((a, b) => b[1] - a[1]);
+        }
+
+        function numFmt(n) {
+            return n.toLocaleString('ja-JP');
+        }
+
+        // ===== レンダリング =====
+        function render() {
+            const root = document.getElementById('root');
+            const currentTab = getCurrentTab();
+            const availableStages = Object.keys(RAW_MASTER_DATA[currentTab.charName]);
+            const masterRequirements = RAW_MASTER_DATA[currentTab.charName][currentTab.activeStage] || [];
+            const currentCategory = CHAR_CATEGORY[currentTab.charName];
+
+            let totalScore = 0;
+            masterRequirements.forEach(m => {
+                const currentVal = currentTab.currentMaterials[m.name] || 0;
+                totalScore += Math.min(m.target > 0 ? (currentVal / m.target) : 0, 1);
+            });
+            const percentage = masterRequirements.length > 0
+                ? Math.round((totalScore / masterRequirements.length) * 100)
+                : 0;
+
+            // --- タブ ---
+            let tabsHtml = state.userTabs.map(t => {
+                const activeClass = t.id === state.activeTabId ? ' active' : '';
+                return '<div class="tab' + activeClass + '" data-tab-id="' + escapeHtml(t.id) + '">' +
+                    escapeHtml(t.charName) +
+                    '<button class="delete-btn" data-delete-id="' + escapeHtml(t.id) + '" data-delete-name="' + escapeHtml(t.charName) + '">×</button>' +
+                    '</div>';
+            }).join('');
+
+            // --- 全タブ不足合計 ---
+            let summaryHtml = '';
+            if (state.showAllSummary) {
+                const shortage = computeShortageSummary();
+                let bodyHtml;
+                if (shortage.length === 0) {
+                    bodyHtml = '<div class="all-summary-empty">全タブで素材が揃っています！</div>';
+                } else {
+                    const rows = shortage.map(([name, lack]) =>
+                        '<tr><td>' + escapeHtml(name) + '</td><td class="needed-lack">' + numFmt(lack) + '</td></tr>'
+                    ).join('');
+                    bodyHtml = '<table><thead><tr><th>素材名</th><th>不足合計数</th></tr></thead><tbody>' + rows + '</tbody></table>';
+                }
+                summaryHtml = '<div class="progress-container" style="margin-bottom:20px;">' +
+                    '<h3 class="all-summary-heading">📊 現在登録中の全' + state.userTabs.length + 'タブ：不足素材合計</h3>' +
+                    bodyHtml +
+                    '</div>';
+            }
+
+            // --- キャラ選択 select ---
+            const kenjaOptions = Object.keys(RAW_MASTER_DATA)
+                .filter(n => CHAR_CATEGORY[n] === '十賢者')
+                .map(name => '<option value="' + escapeHtml(name) + '"' + (name === currentTab.charName ? ' selected' : '') + '>' + escapeHtml(name) + '</option>')
+                .join('');
+            const tenshuOptions = Object.keys(RAW_MASTER_DATA)
+                .filter(n => CHAR_CATEGORY[n] === '十天衆')
+                .map(name => '<option value="' + escapeHtml(name) + '"' + (name === currentTab.charName ? ' selected' : '') + '>' + escapeHtml(name) + '</option>')
+                .join('');
+
+            const badgeClass = currentCategory === '十賢者' ? 'kenja' : 'tenshu';
+            const badgeHtml = currentCategory ? '<span class="category-badge ' + badgeClass + '">' + escapeHtml(currentCategory) + '</span>' : '';
+
+            // --- ステージボタン ---
+            const stageButtonsHtml = availableStages.map(stage => {
+                const activeClass = stage === currentTab.activeStage ? ' active' : '';
+                return '<button class="step-btn' + activeClass + '" data-stage="' + escapeHtml(stage) + '">' + escapeHtml(stage) + '</button>';
+            }).join('');
+
+            // --- 素材テーブル ---
+            const rowsHtml = masterRequirements.map((m, idx) => {
+                const currentCount = currentTab.currentMaterials[m.name] || 0;
+                const neededCount = Math.max(0, m.target - currentCount);
+                const isHighlighted = HIGHLIGHT_MATERIALS.indexOf(m.name) !== -1;
+                const nameClass = isHighlighted ? ' class="highlight"' : '';
+                const targetClass = isHighlighted ? ' class="highlight"' : '';
+                const neededClass = neededCount > 0 ? 'needed-lack' : 'needed-done';
+                const neededText = neededCount > 0 ? ('不足 ' + numFmt(neededCount)) : '完了';
+
+                return '<tr>' +
+                    '<td' + nameClass + '>' + escapeHtml(m.name) + '</td>' +
+                    '<td><input type="number" min="0" value="' + currentCount + '" data-mat-name="' + escapeHtml(m.name) + '"></td>' +
+                    '<td' + targetClass + '>/ ' + numFmt(m.target) + '</td>' +
+                    '<td class="' + neededClass + '">' + neededText + '</td>' +
+                    '</tr>';
+            }).join('');
+
+            const completeAlertHtml = percentage >= 100
+                ? '<div class="alert-complete">🎉 必要素材がすべて揃いました！</div>'
+                : '';
+
+            root.innerHTML =
+                '<div class="container">' +
+                    '<h2 class="title">⚔️ 十天衆・十賢者 必要素材マネージャー</h2>' +
+                    '<div class="subtitle">最終上限解放・超越（限界超越／賢者最終・4アビ）対応</div>' +
+
+                    '<div class="tab-wrapper">' +
+                        tabsHtml +
+                        '<button class="add-btn" id="btn-add-tab">＋ 目標を追加</button>' +
+                        '<button class="all-summary-btn" id="btn-toggle-summary">' +
+                            (state.showAllSummary ? '✕ 合計を閉じる' : '📊 全タブの不足合計') +
+                        '</button>' +
+                    '</div>' +
+
+                    summaryHtml +
+
+                    '<div class="grid2">' +
+                        '<div class="form-group">' +
+                            '<label class="label">キャラクター選択' + badgeHtml + '</label>' +
+                            '<select id="char-select">' +
+                                '<optgroup label="十賢者">' + kenjaOptions + '</optgroup>' +
+                                '<optgroup label="十天衆">' + tenshuOptions + '</optgroup>' +
+                            '</select>' +
+                        '</div>' +
+                        '<div class="form-group">' +
+                            '<label class="label">クイックステージ選択</label>' +
+                            '<div style="color:#94a3b8;font-size:13px;margin-top:10px;">下のボタンで行きたい段階へ一発切り替えが可能です。</div>' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div class="step-wrapper">' + stageButtonsHtml + '</div>' +
+
+                    '<div class="progress-container">' +
+                        '<h3 class="progress-title">【' + escapeHtml(currentTab.charName) + ' / ' + escapeHtml(currentTab.activeStage) + '】集め達成率:' +
+                            '<span class="progress-pct">' + percentage + '%</span>' +
+                        '</h3>' +
+                        '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + percentage + '%;"></div></div>' +
+                        completeAlertHtml +
+                    '</div>' +
+
+                    '<div style="margin-top:25px;">' +
+                        '<h3 class="section-heading">📦 必要素材と所持数の入力</h3>' +
+                        '<table>' +
+                            '<thead><tr><th>素材名</th><th>現在所持数</th><th>目標必要数</th><th>あといくつ？</th></tr></thead>' +
+                            '<tbody>' + rowsHtml + '</tbody>' +
+                        '</table>' +
+                    '</div>' +
+                '</div>';
+
+            attachEvents();
+        }
+
+        function attachEvents() {
+            const root = document.getElementById('root');
+
+            root.querySelectorAll('.tab').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('delete-btn')) return;
+                    handleSelectTab(el.getAttribute('data-tab-id'));
+                });
+            });
+
+            root.querySelectorAll('.delete-btn').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleDeleteTab(el.getAttribute('data-delete-id'), el.getAttribute('data-delete-name'));
+                });
+            });
+
+            const addBtn = document.getElementById('btn-add-tab');
+            if (addBtn) addBtn.addEventListener('click', handleAddTab);
+
+            const summaryBtn = document.getElementById('btn-toggle-summary');
+            if (summaryBtn) summaryBtn.addEventListener('click', handleToggleSummary);
+
+            const charSelect = document.getElementById('char-select');
+            if (charSelect) charSelect.addEventListener('change', (e) => handleCharChange(e.target.value));
+
+            root.querySelectorAll('.step-btn').forEach(el => {
+                el.addEventListener('click', () => handleStageChange(el.getAttribute('data-stage')));
+            });
+
+            root.querySelectorAll('input[type="number"][data-mat-name]').forEach(el => {
+                el.addEventListener('change', (e) => handleMaterialCountChange(el.getAttribute('data-mat-name'), e.target.value));
+            });
+        }
+
+        // ===== 共通ハンバーガーメニュー（ドロワー）の初期化 =====
+        (function () {
+            const triggerBtn = document.getElementById('menu-trigger-btn');
+            const overlay = document.getElementById('drawer-overlay');
+            const panel = document.getElementById('drawer-panel');
+            const closeBtn = document.getElementById('drawer-close-btn');
+            function openDrawer() { overlay.classList.add('open'); panel.classList.add('open'); }
+            function closeDrawer() { overlay.classList.remove('open'); panel.classList.remove('open'); }
+            if (triggerBtn) triggerBtn.addEventListener('click', openDrawer);
+            if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+            if (overlay) overlay.addEventListener('click', closeDrawer);
+        })();
+
+        render();
+    </script>
+</body>
+</html>
