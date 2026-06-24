@@ -351,6 +351,74 @@
         return num.toLocaleString('ja-JP');
     }
 
+    function buildHellCalculationContent(currentLog) {
+        const remaining = Math.max(0, Number(currentLog.target) - Number(currentLog.current));
+        let html = '';
+
+        if (remaining > 0) {
+            html += '<table><thead><tr><th>難易度</th><th>必要周回数</th><th>消費するお肉の総数</th></tr></thead><tbody>';
+            HELL_INFO.forEach(function (hell) {
+                const runsNeeded = Math.ceil(remaining / hell.contribution);
+                const meatNeeded = hell.meatCost * runsNeeded;
+                const meatTextColor = hell.isSpecialMeat ? '#f43f5e' : '#38bdf8';
+                html += '<tr>' +
+                    '<td><strong>' + escapeHtml(hell.name) + '</strong></td>' +
+                    '<td style="color:#ffffff;">' + formatNum(runsNeeded) + ' 回</td>' +
+                    '<td><strong style="color:' + meatTextColor + ';">' + formatNum(meatNeeded) + '</strong> 個 ' +
+                    '<span style="font-size:11px;color:' + (hell.isSpecialMeat ? '#f43f5e' : '#94a3b8') + ';margin-left:4px;">(' + escapeHtml(hell.meatType) + ')</span></td>' +
+                    '</tr>';
+            });
+            html += '</tbody></table>';
+        } else {
+            html += '<p class="no-runs-text">目標を達成しているため、これ以上の周回は不要です！</p>';
+        }
+
+        return html;
+    }
+
+    function renderSummary() {
+        const currentLog = getCurrentLog();
+        const elementInfo = ELEMENT_MAP[currentLog.element] || ELEMENT_MAP.fire;
+        const remaining = Math.max(0, Number(currentLog.target) - Number(currentLog.current));
+        const percentage = Number(currentLog.target) > 0
+            ? Math.min(100, Math.round((Number(currentLog.current) / Number(currentLog.target)) * 100))
+            : 0;
+
+        const progressHeaderEl = document.getElementById('progress-header');
+        const progressBarEl = document.getElementById('progress-bar-fill');
+        const currentStatsEl = document.getElementById('stats-current');
+        const remainingStatsEl = document.getElementById('stats-remaining');
+        const alertBoxEl = document.getElementById('alert-box');
+        const hellCalculationContentEl = document.getElementById('hell-calculation-content');
+
+        if (progressHeaderEl) {
+            progressHeaderEl.innerHTML = '【第' + escapeHtml(currentLog.count) + '回 ' + escapeHtml(elementInfo.name) + '】目標達成率: ' +
+                '<span class="progress-percentage" style="color:' + elementInfo.color + ';">' + percentage + '%</span>';
+        }
+        if (progressBarEl) {
+            progressBarEl.style.width = percentage + '%';
+            progressBarEl.style.backgroundColor = elementInfo.color;
+        }
+        if (currentStatsEl) {
+            currentStatsEl.textContent = formatNum(currentLog.current);
+        }
+        if (remainingStatsEl) {
+            remainingStatsEl.textContent = formatNum(remaining);
+        }
+        if (alertBoxEl) {
+            if (percentage >= 100) {
+                alertBoxEl.style.display = 'block';
+                alertBoxEl.textContent = '🎉 目標達成！お疲れ様でした！';
+            } else {
+                alertBoxEl.style.display = 'none';
+                alertBoxEl.textContent = '';
+            }
+        }
+        if (hellCalculationContentEl) {
+            hellCalculationContentEl.innerHTML = buildHellCalculationContent(currentLog);
+        }
+    }
+
     // ===== レンダリング =====
     function render() {
         const root = document.getElementById('root');
@@ -388,36 +456,18 @@
 
         // 進捗バー
         html += '<div class="progress-container">';
-        html += '<h3 class="progress-header">【第' + escapeHtml(currentLog.count) + '回 ' + escapeHtml(elementInfo.name) + '】目標達成率: ' +
+        html += '<h3 class="progress-header" id="progress-header">【第' + escapeHtml(currentLog.count) + '回 ' + escapeHtml(elementInfo.name) + '】目標達成率: ' +
             '<span class="progress-percentage" style="color:' + elementInfo.color + ';">' + percentage + '%</span></h3>';
-        html += '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + percentage + '%;background-color:' + elementInfo.color + ';"></div></div>';
-        html += '<div class="stats"><div>現在: <strong class="white">' + formatNum(currentLog.current) + '</strong></div>' +
-            '<div>残り: <strong class="red">' + formatNum(remaining) + '</strong></div></div>';
-        if (percentage >= 100) {
-            html += '<div class="alert-box">🎉 目標達成！お疲れ様でした！</div>';
-        }
+        html += '<div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar-fill" style="width:' + percentage + '%;background-color:' + elementInfo.color + ';"></div></div>';
+        html += '<div class="stats"><div>現在: <strong class="white" id="stats-current">' + formatNum(currentLog.current) + '</strong></div>' +
+            '<div>残り: <strong class="red" id="stats-remaining">' + formatNum(remaining) + '</strong></div></div>';
+        html += '<div class="alert-box" id="alert-box" style="' + (percentage >= 100 ? '' : 'display:none;') + '">' + (percentage >= 100 ? '🎉 目標達成！お疲れ様でした！' : '') + '</div>';
         html += '</div>';
 
         // HELL逆算テーブル
         html += '<div style="margin-top:25px;">';
         html += '<h3 class="section-heading" style="border-left:4px solid ' + elementInfo.color + ';">🎯 残り貢献度からの必要周回数・お肉の計算</h3>';
-        if (remaining > 0) {
-            html += '<table><thead><tr><th>難易度</th><th>必要周回数</th><th>消費するお肉の総数</th></tr></thead><tbody>';
-            HELL_INFO.forEach(function (hell) {
-                const runsNeeded = Math.ceil(remaining / hell.contribution);
-                const meatNeeded = hell.meatCost * runsNeeded;
-                const meatTextColor = hell.isSpecialMeat ? '#f43f5e' : '#38bdf8';
-                html += '<tr>' +
-                    '<td><strong>' + escapeHtml(hell.name) + '</strong></td>' +
-                    '<td style="color:#ffffff;">' + formatNum(runsNeeded) + ' 回</td>' +
-                    '<td><strong style="color:' + meatTextColor + ';">' + formatNum(meatNeeded) + '</strong> 個 ' +
-                    '<span style="font-size:11px;color:' + (hell.isSpecialMeat ? '#f43f5e' : '#94a3b8') + ';margin-left:4px;">(' + escapeHtml(hell.meatType) + ')</span></td>' +
-                    '</tr>';
-            });
-            html += '</tbody></table>';
-        } else {
-            html += '<p class="no-runs-text">目標を達成しているため、これ以上の周回は不要です！</p>';
-        }
+        html += '<div id="hell-calculation-content">' + buildHellCalculationContent(currentLog) + '</div>';
         html += '</div>';
 
         // モーダル
@@ -548,7 +598,7 @@
             return log;
         });
         saveLogs();
-        render();
+        renderSummary();
     }
 
     function handleAddLog() {

@@ -1,0 +1,14 @@
+
+# ローカルでサーバを起動する
+terminal command prompt
+npx serve .
+urlをCtrlを押しながらクリック
+
+# githubに保存
+ファイルを編集
+git add .
+git commit -m "保存した理由"
+git push
+
+# githubの公開
+ファイルがアップされたら自動更新
