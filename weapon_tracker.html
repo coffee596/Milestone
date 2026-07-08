@@ -29,10 +29,12 @@
         font-size: 24px;
         letter-spacing: 1px;
     }
+
+    /* ===== 武器タブ ===== */
     .tab-wrapper {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         border-bottom: 2px solid #334155;
         margin-bottom: 20px;
         overflow-x: auto;
@@ -41,47 +43,46 @@
     .tab {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 14px;
+        gap: 6px;
+        padding: 8px 12px;
         cursor: pointer;
         font-weight: bold;
         border-radius: 6px 6px 0 0;
         border: 1px solid #334155;
         border-bottom: none;
-        font-size: 14px;
+        font-size: 13px;
         white-space: nowrap;
         background-color: #1e293b;
         color: #94a3b8;
         transition: all 0.2s;
         opacity: 0.6;
     }
-    .tab.active {
-        background-color: #3b82f6;
-        color: #ffffff;
-        opacity: 1;
-    }
+    .tab.active { background-color: #3b82f6; color: #ffffff; opacity: 1; }
     .delete-btn {
-        background: none;
-        border: none;
-        color: inherit;
-        cursor: pointer;
-        font-size: 14px;
-        padding: 0 2px;
-        display: flex;
-        align-items: center;
-        opacity: 0.7;
+        background: none; border: none; color: inherit;
+        cursor: pointer; font-size: 13px; padding: 0 2px;
+        display: flex; align-items: center; opacity: 0.7;
     }
-    .add-btn {
-        padding: 8px 12px;
+    .tab-action-btn {
+        padding: 7px 11px;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 12px;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+    .btn-blank {
         background-color: #0f172a;
         border: 1px dashed #475569;
-        border-radius: 6px;
         color: #38bdf8;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 13px;
-        white-space: nowrap;
     }
+    .btn-template {
+        background-color: #4c1d95;
+        border: 1px solid #7c3aed;
+        color: #c4b5fd;
+    }
+
+    /* ===== ヘッダー・汎用ボタン ===== */
     .header-row {
         display: flex;
         justify-content: space-between;
@@ -97,90 +98,13 @@
         white-space: nowrap;
         max-width: 65%;
     }
-    .btn {
-        padding: 8px 14px;
-        cursor: pointer;
-        border-radius: 6px;
-        border: none;
-        font-size: 13px;
-        font-weight: bold;
-    }
+    .btn { padding: 8px 14px; cursor: pointer; border-radius: 6px; border: none; font-size: 13px; font-weight: bold; }
     .btn-edit { background-color: #475569; color: #fff; }
     .btn-save { background-color: #047857; color: #fff; }
     .btn-copy { background-color: #2563eb; color: #fff; }
     .btn-delete { background-color: #dc2626; color: #fff; }
-    .btn-add-material {
-        width: 100%;
-        margin-top: 10px;
-        background-color: #0f172a;
-        border: 1px dashed #475569;
-        color: #38bdf8;
-        padding: 10px;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 13px;
-    }
-    .progress-container {
-        padding: 20px;
-        background-color: #0f172a;
-        border-radius: 8px;
-        border: 1px solid #334155;
-        margin-bottom: 20px;
-    }
-    .progress-bar-bg {
-        width: 100%;
-        height: 20px;
-        background-color: #334155;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-top: 10px;
-    }
-    .progress-bar-fill {
-        height: 100%;
-        background-color: #10b981;
-        transition: width 0.3s ease-in-out;
-    }
-    .progress-pct { font-size: 24px; font-weight: bold; color: #10b981; margin-left: 8px; }
-    .material-card {
-        background-color: #0f172a;
-        border: 1px solid #334155;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 12px;
-    }
-    .display-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #e2e8f0;
-    }
-    .display-row .lack { color: #ef4444; font-weight: bold; }
-    .display-row .done { color: #10b981; font-weight: bold; }
-    .input-row { display: flex; align-items: center; gap: 10px; }
-    input, select {
-        padding: 10px;
-        font-size: 15px;
-        border-radius: 6px;
-        border: 1px solid #475569;
-        background-color: #0f172a;
-        color: #ffffff;
-        outline: none;
-        font-family: inherit;
-    }
-    input[type="number"].current-input {
-        width: 110px;
-        background: #0f172a;
-        border: 1px solid #475569;
-        color: #38bdf8;
-        padding: 8px;
-        border-radius: 4px;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-    }
-    .target-val { color: #94a3b8; font-size: 15px; }
+
+    /* ===== 編集モードボックス ===== */
     .edit-mode-box {
         border: 1px dashed #475569;
         padding: 14px;
@@ -188,13 +112,7 @@
         border-radius: 8px;
         background-color: #0f172a;
     }
-    .edit-mode-box label {
-        font-size: 12px;
-        font-weight: bold;
-        color: #94a3b8;
-        display: block;
-        margin-bottom: 6px;
-    }
+    .edit-mode-box label { font-size: 12px; font-weight: bold; color: #94a3b8; display: block; margin-bottom: 6px; }
     .edit-input {
         background-color: #1e293b;
         border: 1px solid #475569;
@@ -204,67 +122,245 @@
         width: 100%;
         margin-bottom: 10px;
         font-size: 14px;
+        font-family: inherit;
     }
     .edit-actions { display: flex; justify-content: space-between; gap: 10px; }
     .edit-actions .btn { flex: 1; }
-    .material-edit-row {
+
+    /* ===== 全体進捗 ===== */
+    .progress-container {
+        padding: 16px 20px;
+        background-color: #0f172a;
+        border-radius: 8px;
+        border: 1px solid #334155;
+        margin-bottom: 16px;
+    }
+    .progress-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 5px;
+    }
+    .progress-label { font-size: 13px; color: #94a3b8; }
+    .progress-pct-overall { font-size: 22px; font-weight: bold; color: #10b981; }
+    .progress-pct-stage  { font-size: 16px; font-weight: bold; color: #3b82f6; }
+    .progress-bar-bg {
+        width: 100%; height: 12px;
+        background-color: #334155;
+        border-radius: 6px;
+        overflow: hidden;
+        margin-bottom: 12px;
+    }
+    .progress-bar-bg:last-child { margin-bottom: 0; }
+    .bar-fill { height: 100%; border-radius: 6px; transition: width 0.3s ease-in-out; }
+    .bar-overall { background-color: #10b981; }
+    .bar-stage   { background-color: #3b82f6; }
+
+    /* ===== 段階タブ ===== */
+    .stage-tab-wrapper {
+        display: flex;
+        gap: 5px;
+        overflow-x: auto;
+        margin-bottom: 14px;
+        padding-bottom: 2px;
+    }
+    .stage-tab {
+        padding: 5px 12px;
+        border-radius: 20px;
+        border: 1px solid #475569;
+        background-color: #0f172a;
+        color: #94a3b8;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        white-space: nowrap;
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-top: 8px;
+        gap: 5px;
+        transition: all 0.15s;
     }
-    .material-edit-row label { font-size: 13px; color: #94a3b8; white-space: nowrap; }
-    .material-edit-row input[type="number"] { width: 90px; }
-    .footnote {
-        font-size: 11px;
-        color: #64748b;
-        text-align: center;
-        margin-top: 20px;
-    }
+    .stage-tab:hover { border-color: #64748b; color: #cbd5e1; }
+    .stage-tab.active { background-color: #1d4ed8; border-color: #3b82f6; color: #fff; }
+    .stage-tab.done { border-color: #10b981; color: #10b981; }
+    .stage-tab.done.active { background-color: #065f46; border-color: #10b981; color: #fff; }
+    .stage-tab.add-stage { border-color: #7c3aed; color: #a78bfa; }
+    .stage-done-dot { width: 6px; height: 6px; border-radius: 50%; background-color: currentColor; flex-shrink: 0; }
+
+    /* ===== 段階ヘッダー（編集モード）===== */
+    .stage-edit-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .stage-edit-header .edit-input { margin: 0; flex: 1; }
+
+    /* ===== 素材カード ===== */
     .section-heading {
         margin: 0 0 10px 0;
-        font-size: 16px;
+        font-size: 15px;
         color: #f8fafc;
         border-left: 4px solid #3b82f6;
         padding-left: 8px;
     }
+    .material-card {
+        background-color: #0f172a;
+        border: 1px solid #334155;
+        padding: 12px 14px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: border-color 0.2s;
+    }
+    .material-card.complete { border-color: #065f46; }
+    .display-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #e2e8f0;
+    }
+    .display-row .lack { color: #ef4444; font-weight: bold; font-size: 13px; }
+    .display-row .done-label { color: #10b981; font-weight: bold; font-size: 13px; }
+    .input-row { display: flex; align-items: center; gap: 10px; }
+    input[type="number"].current-input {
+        width: 100px;
+        background: #1e293b;
+        border: 1px solid #475569;
+        color: #38bdf8;
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        font-family: inherit;
+        outline: none;
+    }
+    input[type="number"].current-input:focus { border-color: #3b82f6; }
+    .target-val { color: #64748b; font-size: 14px; }
+    .material-edit-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .material-edit-row label { font-size: 12px; color: #94a3b8; white-space: nowrap; }
+    input[type="number"].target-input {
+        width: 90px;
+        background: #1e293b;
+        border: 1px solid #475569;
+        color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+    }
+    .btn-add-material {
+        width: 100%; margin-top: 8px;
+        background-color: #0f172a; border: 1px dashed #475569;
+        color: #38bdf8; padding: 10px; border-radius: 6px;
+        font-weight: bold; cursor: pointer; font-size: 13px; font-family: inherit;
+    }
+    .footnote { font-size: 11px; color: #64748b; text-align: center; margin-top: 20px; }
 
-    /* ===== 共通ハンバーガーメニュー（ドロワー） ===== */
+    /* ===== テンプレートモーダル ===== */
+    .modal-overlay {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.72);
+        z-index: 400;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-panel {
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        width: 92%;
+        max-width: 440px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .modal-header h3 { margin: 0; font-size: 16px; color: #f8fafc; }
+    .modal-close-btn { background: none; border: none; color: #64748b; font-size: 22px; cursor: pointer; line-height: 1; }
+    .modal-close-btn:hover { color: #f1f5f9; }
+    .modal-step-label { font-size: 12px; color: #64748b; font-weight: bold; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .modal-back-btn {
+        background: none; border: 1px solid #334155;
+        color: #94a3b8; padding: 6px 12px; border-radius: 6px;
+        cursor: pointer; font-size: 12px; margin-bottom: 14px; font-family: inherit;
+    }
+    .modal-back-btn:hover { border-color: #475569; color: #f1f5f9; }
+    .option-btn {
+        width: 100%; text-align: left;
+        padding: 12px 14px;
+        background-color: #0f172a; border: 1px solid #334155;
+        border-radius: 8px; color: #e2e8f0;
+        cursor: pointer; font-size: 14px; font-weight: bold;
+        margin-bottom: 8px; font-family: inherit;
+        transition: all 0.15s;
+    }
+    .option-btn:hover { background-color: #172554; border-color: #3b82f6; }
+    .option-sub { color: #64748b; font-size: 11px; font-weight: normal; margin-left: 8px; }
+    .element-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+    .element-btn {
+        padding: 14px 8px; border-radius: 8px;
+        border: 1px solid #334155;
+        background-color: #0f172a; color: #e2e8f0;
+        cursor: pointer; font-size: 15px; font-weight: bold;
+        text-align: center; font-family: inherit;
+        transition: all 0.15s;
+    }
+    .element-btn:hover { background-color: #172554; }
+    .modal-preview {
+        background-color: #0f172a; border: 1px solid #334155;
+        border-radius: 8px; padding: 16px; margin-bottom: 16px;
+    }
+    .preview-name { font-size: 18px; font-weight: bold; color: #f8fafc; margin-bottom: 6px; }
+    .preview-detail { font-size: 13px; color: #64748b; line-height: 1.6; }
+    .modal-confirm-btn {
+        width: 100%; padding: 14px;
+        background-color: #5b21b6; border: none;
+        border-radius: 8px; color: #fff;
+        font-size: 15px; font-weight: bold; cursor: pointer; font-family: inherit;
+        transition: background-color 0.15s;
+    }
+    .modal-confirm-btn:hover { background-color: #7c3aed; }
+
+    /* ===== ドロワー ===== */
     .menu-trigger-btn {
         position: fixed; top: 16px; left: 16px; width: 42px; height: 42px;
         background-color: #1e293b; border: 1px solid #334155; border-radius: 8px;
-        color: #f1f5f9; font-size: 20px; line-height: 1; cursor: pointer; z-index: 200;
-        display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        color: #f1f5f9; font-size: 20px; cursor: pointer; z-index: 200;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
     .menu-trigger-btn:hover { background-color: #334155; }
     .drawer-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(0,0,0,0.55); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+        background-color: rgba(0,0,0,0.55); z-index: 300;
+        opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
     }
     .drawer-overlay.open { opacity: 1; pointer-events: auto; }
     .drawer-panel {
         position: fixed; top: 0; left: 0; width: 280px; max-width: 80vw; height: 100%;
-        background-color: #1e293b; border-right: 1px solid #334155; box-shadow: 4px 0 20px rgba(0,0,0,0.4);
-        z-index: 301; transform: translateX(-100%); transition: transform 0.25s ease; display: flex; flex-direction: column;
+        background-color: #1e293b; border-right: 1px solid #334155;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+        z-index: 301; transform: translateX(-100%); transition: transform 0.25s ease;
+        display: flex; flex-direction: column;
     }
     .drawer-panel.open { transform: translateX(0); }
     .drawer-header { padding: 20px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
-    .drawer-header h3 { margin: 0; font-size: 15px; color: #f8fafc; letter-spacing: 0.5px; }
-    .drawer-close-btn { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; line-height: 1; }
+    .drawer-header h3 { margin: 0; font-size: 15px; color: #f8fafc; }
+    .drawer-close-btn { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; }
     .drawer-nav { padding: 10px; overflow-y: auto; }
     .drawer-nav-item {
-        display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 8px;
-        color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: bold; margin-bottom: 4px; transition: background-color 0.15s;
+        display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+        border-radius: 8px; color: #cbd5e1; text-decoration: none;
+        font-size: 14px; font-weight: bold; margin-bottom: 4px; transition: background-color 0.15s;
     }
     .drawer-nav-item:hover { background-color: #0f172a; }
-    .drawer-nav-item.current { background-color: #3b82f6; color: #ffffff; }
+    .drawer-nav-item.current { background-color: #3b82f6; color: #fff; }
     .drawer-nav-item .icon { font-size: 16px; }
     .drawer-nav-item .desc { display: block; font-size: 11px; color: #94a3b8; font-weight: normal; margin-top: 2px; }
     .drawer-nav-item.current .desc { color: #dbeafe; }
     .drawer-footer { padding: 14px 20px; border-top: 1px solid #334155; font-size: 11px; color: #64748b; text-align: center; }
-    @media (max-width: 600px) {
-        .container { margin-top: 64px; }
-    }
+    @media (max-width: 600px) { .container { margin-top: 64px; } }
 </style>
 </head>
 <body>
@@ -274,338 +370,867 @@
 <div class="drawer-panel" id="drawer-panel">
     <div class="drawer-header">
         <h3>⚔️ 古戦場進捗管理ツール</h3>
-        <button class="drawer-close-btn" id="drawer-close-btn" aria-label="閉じる">×</button>
+        <button class="drawer-close-btn" id="drawer-close-btn">×</button>
     </div>
     <nav class="drawer-nav">
-        <a class="drawer-nav-item" href="index.html">
-            <span class="icon">🏠</span>
-            <span>トップページ<span class="desc">ツール一覧に戻る</span></span>
-        </a>
-        <a class="drawer-nav-item" href="gbf_tracker.html">
-            <span class="icon">🏆</span>
-            <span>古戦場貢献度マネージャー＆ログ<span class="desc">貢献度・HELL逆算</span></span>
-        </a>
-        <a class="drawer-nav-item" href="kessho-tool.html">
-            <span class="icon">🗡️</span>
-            <span>十天衆・十賢者 必要素材<span class="desc">最終上限解放・超越対応</span></span>
-        </a>
-        <a class="drawer-nav-item current" href="weapon_tracker.html">
-            <span class="icon">⚔️</span>
-            <span>武器目標管理<span class="desc">必要素材の収集進捗</span></span>
-        </a>
+        <a class="drawer-nav-item" href="index.html"><span class="icon">🏠</span><span>トップページ<span class="desc">ツール一覧に戻る</span></span></a>
+        <a class="drawer-nav-item" href="gbf_tracker.html"><span class="icon">🏆</span><span>古戦場貢献度マネージャー＆ログ<span class="desc">貢献度・HELL逆算</span></span></a>
+        <a class="drawer-nav-item" href="kessho-tool.html"><span class="icon">🗡️</span><span>十天衆・十賢者 必要素材<span class="desc">最終上限解放・超越対応</span></span></a>
+        <a class="drawer-nav-item current" href="weapon_tracker.html"><span class="icon">⚔️</span><span>武器目標管理<span class="desc">必要素材の収集進捗</span></span></a>
     </nav>
     <div class="drawer-footer">データはブラウザ内に保存されます</div>
+</div>
+
+<!-- テンプレートモーダル -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+        <div id="modal-inner"></div>
+    </div>
 </div>
 
 <div id="root"></div>
 
 <script>
 (function () {
-    "use strict";
+"use strict";
 
-    const STORAGE_KEY = 'gbf_weapon_tracker_v1';
+// =============================================
+//  マスターデータ
+// =============================================
+const WEAPON_SERIES_MASTER = {
 
-    const defaultData = [{
-        id: 'proj_default',
-        name: "ドラゴニック・オリジン(火)",
-        requirements: [
-            { id: "m1", name: "火の刻銘", target: 500, current: 0 },
-            { id: "m2", name: "ドラゴニックコア", target: 50, current: 0 },
-            { id: "m3", name: "刻の流砂", target: 3, current: 0 }
-        ]
-    }];
-
-    function loadProjects() {
-        try {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    // ===== 終末の神器 =====
+    "shunmatsu": {
+        "name": "終末の神器",
+        "elementalMaterials": {
+            "fire": {
+                "weaponType": "斧",
+                "psyche": "火のプシュケー",
+                "magnaAnima": "シヴァのマグナアニマ",
+                "grace": "火の恩寵",
+                "magna2Anima": "シヴァのマグナアニマ",
+                "sixDragon": "ウィルナスの竜珠",
+                "element": "火のエレメント",
+                "bright": "イグニス・ブライト",
+                "revans": "滅尽の残気",
+                "newGrace": "火の恩寵(新)",
+                "weapons": { "divine": { "name": "絶対否定の大鎌" }, "magna": { "name": "永遠拒絶の大鎌" } }
+            },
+            "water": {
+                "weaponType": "杖",
+                "psyche": "水のプシュケー",
+                "magnaAnima": "エウロペのマグナアニマ",
+                "grace": "水の恩寵",
+                "magna2Anima": "エウロペのマグナアニマ",
+                "sixDragon": "ワムデュスの竜珠",
+                "element": "水のエレメント",
+                "bright": "アクア・ブライト",
+                "revans": "機神の基板",
+                "newGrace": "水の恩寵(新)",
+                "weapons": { "divine": { "name": "絶対否定の杖" }, "magna": { "name": "永遠拒絶の杖" } }
+            },
+            "earth": {
+                "weaponType": "楽器",
+                "psyche": "土のプシュケー",
+                "magnaAnima": "ゴッドガード・ブローディアのマグナアニマ",
+                "grace": "土の恩寵",
+                "magna2Anima": "ゴッドガード・ブローディアのマグナアニマ",
+                "sixDragon": "ガレヲンの竜珠",
+                "element": "土のエレメント",
+                "bright": "テラ・ブライト",
+                "revans": "滅竜の赫刃",
+                "newGrace": "土の恩寵(新)",
+                "weapons": { "divine": { "name": "絶対否定の竪琴" }, "magna": { "name": "永遠拒絶の竪琴" } }
+            },
+            "wind": {
+                "weaponType": "槍",
+                "psyche": "風のプシュケー",
+                "magnaAnima": "グリームニルのマグナアニマ",
+                "grace": "風の恩寵",
+                "magna2Anima": "グリームニルのマグナアニマ",
+                "sixDragon": "イーウィヤの竜珠",
+                "element": "風のエレメント",
+                "bright": "ウェントス・ブライト",
+                "revans": "星海の刃屑",
+                "newGrace": "風の恩寵(新)",
+                "weapons": { "divine": { "name": "絶対否定の槍" }, "magna": { "name": "永遠拒絶の槍" } }
+            },
+            "light": {
+                "weaponType": "剣",
+                "psyche": "光のプシュケー",
+                "magnaAnima": "メタトロンのマグナアニマ",
+                "grace": "光の恩寵",
+                "magna2Anima": "メタトロンのマグナアニマ",
+                "sixDragon": "ル・オーの竜珠",
+                "element": "光のエレメント",
+                "bright": "イグニス＆ウェントス・ブライト (各10個)",
+                "revans": "調停の裂布",
+                "newGrace": "光の恩寵(新)",
+                "weapons": { "divine": { "name": "絶対否定の剣" }, "magna": { "name": "永遠拒絶の剣" } }
+            },
+            "dark": {
+                "weaponType": "刀",
+                "psyche": "闇のプシュケー",
+                "magnaAnima": "アバターのマグナアニマ",
+                "grace": "闇の恩寵",
+                "magna2Anima": "アバターのマグナアニマ",
+                "sixDragon": "フェディエルの竜珠",
+                "element": "闇のエレメント",
+                "bright": "アクア＆テラ・ブライト (各10個)",
+                "revans": "壊祖の紋装甲",
+                "newGrace": "闇の恩寵(新)",
+                "weapons": { "divine": { "name": "絶対否定の太刀" }, "magna": { "name": "永遠拒絶の太刀" } }
             }
-        } catch (e) {
-            console.error('保存データの読み込みに失敗:', e);
-        }
-        return JSON.parse(JSON.stringify(defaultData));
+        },
+        "stages": [
+            {
+                "level": "4凸上限解放",
+                "requirements": [
+                    { "name": "ダークネス・マテリアル", "target": 5 },
+                    { "name": "銀天の輝き", "target": 5 },
+                    { "name": "覇者の証", "target": 100 },
+                    { "name": "究竟の証", "target": 10 },
+                    { "name": "プシュケー", "target": 30, "isElementLink": "psyche" },
+                    { "name": "マグナアニマ", "target": 10, "isElementLink": "magnaAnima" }
+                ]
+            },
+            {
+                "level": "第2スキル追加",
+                "requirements": [
+                    { "name": "ダークネス・マテリアル", "target": 5 }
+                ]
+            },
+            {
+                "level": "5凸上限解放",
+                "requirements": [
+                    { "name": "恩寵", "target": 1, "isElementLink": "grace" },
+                    { "name": "終末の暗晶", "target": 5 },
+                    { "name": "ヒヒイロカネ", "target": 1 },
+                    { "name": "バハムートの紫電角", "target": 50 },
+                    { "name": "虚ろなる鍵", "target": 50 },
+                    { "name": "オメガユニット", "target": 50 },
+                    { "name": "アスタロトのアニマ", "target": 30 }
+                ]
+            },
+            {
+                "level": "超越 Lv210",
+                "requirements": [
+                    { "name": "終末の暗晶", "target": 60 },
+                    { "name": "漆黒の棘翅", "target": 60 },
+                    { "name": "狡知の魔角", "target": 60 },
+                    { "name": "ダマスカス骸晶", "target": 20 },
+                    { "name": "究竟の証", "target": 80 }
+                ]
+            },
+            {
+                "level": "超越 Lv220",
+                "requirements": [
+                    { "name": "ニューワールド・クォーツ", "target": 20 },
+                    { "name": "マグナ2アニマ", "target": 80, "isElementLink": "magna2Anima" },
+                    { "name": "六竜竜珠", "target": 240, "isElementLink": "sixDragon" },
+                    { "name": "武器種エレメント", "target": 1200, "isWeaponLink": true },
+                    { "name": "属性エレメント", "target": 1200, "isElementLink": "element" }
+                ]
+            },
+            {
+                "level": "超越 Lv230",
+                "requirements": [
+                    { "name": "終末を齎す黒羽", "target": 10 },
+                    { "name": "レヴァンス素材", "target": 60, "isElementLink": "revans" },
+                    { "name": "ブライト", "target": 20, "isElementLink": "bright" }
+                ]
+            },
+            {
+                "level": "超越 Lv240",
+                "requirements": [
+                    { "name": "終末を齎す黒羽", "target": 15 },
+                    { "name": "新恩寵", "target": 1, "isElementLink": "newGrace" },
+                    { "name": "碧麗の証", "target": 1 },
+                    { "name": "武器種エレメント", "target": 1200, "isWeaponLink": true },
+                    { "name": "属性エレメント", "target": 1200, "isElementLink": "element" },
+                    { "name": "火の光輪", "target": 120 }
+                ]
+            },
+            {
+                "level": "超越 Lv250",
+                "requirements": [
+                    { "name": "終末を齎す黒羽", "target": 15 },
+                    { "name": "極理の結晶", "target": 15 },
+                    { "name": "アルテマメモリ", "target": 15 },
+                    { "name": "刻の流砂", "target": 1 },
+                    { "name": "ヒヒイロカネ", "target": 1 }
+                ]
+            }
+        ]
+    },
+
+    // ===== ドラゴニックウェポン =====
+    "draconic": {
+        "name": "ドラゴニックウェポン",
+        "elementalMaterials": {
+            "fire":  { "star": "赤星の輝き",  "scale": "赤竜鱗",  "malis": "イグナイトラブル",       "sixDragon": "ウィルナスの竜珠", "element": "火のエレメント", "weapons": { "name": "ドラゴニックハープ",  "type": "楽器" } },
+            "water": { "star": "青星の輝き",  "scale": "青竜鱗",  "malis": "アビサル・トラジェディー", "sixDragon": "ワムデュスの竜珠", "element": "水のエレメント", "weapons": { "name": "ドラゴニックバスター","type": "斧" } },
+            "earth": { "star": "黄星の輝き",  "scale": "地竜鱗",  "malis": "インシュラーコア",         "sixDragon": "ガレヲンの竜珠",   "element": "土のエレメント", "weapons": { "name": "ドラゴニックボウ",   "type": "弓" } },
+            "wind":  { "star": "緑星の輝き",  "scale": "風竜鱗",  "malis": "ゲイルロック",             "sixDragon": "イーウィヤの竜珠", "element": "風のエレメント", "weapons": { "name": "ドラゴニックロッド", "type": "杖" } },
+            "light": { "star": "白星の輝き",  "scale": "白竜鱗",  "malis": "靂輪",                    "sixDragon": "ル・オーの竜珠",   "element": "光のエレメント", "weapons": { "name": "ドラゴニックブレイド","type": "刀" } },
+            "dark":  { "star": "黒星の輝き",  "scale": "黒竜鱗",  "malis": "トーデストリープ",         "sixDragon": "フェディエルの竜珠","element": "闇のエレメント", "weapons": { "name": "ドラゴニックファイア","type": "銃" } }
+        },
+        "stages": [
+            {
+                "level": "4凸上限解放",
+                "requirements": [
+                    { "name": "真龍の金鱗", "target": 30 },
+                    { "name": "銀天の輝き", "target": 5 },
+                    { "nameDisplay": "栄光の証", "name": "_栄光", "target": 100 },
+                    { "nameDisplay": "覇者の証", "name": "_覇者", "target": 50 },
+                    { "name": "星の輝き", "target": 30, "isElementLink": "star" }
+                ]
+            },
+            {
+                "level": "5凸上限解放",
+                "requirements": [
+                    { "name": "武器種エレメント", "target": 200, "isWeaponLink": true },
+                    { "name": "マリス固有素材", "target": 15, "isElementLink": "malis" },
+                    { "name": "ダマスカス骸晶", "target": 5 },
+                    { "name": "竜鱗", "target": 350, "isElementLink": "scale" },
+                    { "name": "マリス・フラグメント", "target": 10 },
+                    { "name": "究竟の証", "target": 10 }
+                ]
+            },
+            {
+                "level": "オリジン化 (特殊強化)",
+                "requirements": [
+                    { "name": "武器種エレメント", "target": 1000, "isWeaponLink": true },
+                    { "name": "属性エレメント", "target": 1000, "isElementLink": "element" },
+                    { "name": "ダマスカス骸晶", "target": 15 },
+                    { "name": "極致の証", "target": 10 },
+                    { "name": "六竜トレジャー", "target": 100, "isElementLink": "sixDragon" },
+                    { "name": "極理の結晶", "target": 20 },
+                    { "name": "刻の流砂", "target": 1 }
+                ]
+            }
+        ]
     }
 
-    function saveProjects() {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
-        } catch (e) {
-            console.error('保存に失敗:', e);
-        }
-    }
+    // ← 新シリーズはここに追記
+};
 
-    let projects = loadProjects();
-    let activeIndex = 0;
-    let isEditing = false;
+// =============================================
+//  定数
+// =============================================
+const ELEMENT_KEYS   = ["fire","water","earth","wind","light","dark"];
+const ELEMENT_LABELS = { fire:"🔥火", water:"💧水", earth:"🌿土", wind:"🌀風", light:"✨光", dark:"🌑闇" };
+const ELEMENT_COLORS = { fire:"#dc2626", water:"#2563eb", earth:"#ca8a04", wind:"#16a34a", light:"#d97706", dark:"#7c3aed" };
+const TYPE_LABELS    = { divine:"神石", magna:"マグナ" };
 
-    function escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = String(str);
-        return div.innerHTML;
-    }
+const STORAGE_KEY_V2 = 'gbf_weapon_tracker_v2';
+const STORAGE_KEY_V1 = 'gbf_weapon_tracker_v1';
 
-    function numFmt(n) {
-        const num = Number(n);
-        if (isNaN(num)) return '0';
-        return num.toLocaleString('ja-JP');
-    }
+// =============================================
+//  ヘルパー
+// =============================================
+function escapeHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = String(str);
+    return d.innerHTML;
+}
+function numFmt(n) {
+    const v = Number(n);
+    return isNaN(v) ? '0' : v.toLocaleString('ja-JP');
+}
+function uid() {
+    return Math.random().toString(36).slice(2, 10);
+}
 
-    function getCurrentProject() {
-        return projects[activeIndex] || projects[0];
-    }
+/** elemental から武器種名を取得 */
+function resolveWeaponType(elemental) {
+    if (!elemental) return null;
+    if (elemental.weapons && elemental.weapons.type) return elemental.weapons.type; // draconic style
+    if (elemental.weaponType) return elemental.weaponType;                          // shunmatsu style
+    return null;
+}
 
-    // ===== レンダリング =====
-    function render() {
-        const root = document.getElementById('root');
-        const p = getCurrentProject();
+/** elemental + typeKey から武器名を取得 */
+function resolveWeaponName(elemental, weaponTypeKey) {
+    if (!elemental || !elemental.weapons) return null;
+    const w = elemental.weapons;
+    if (w.name) return w.name;                                   // 単一武器スタイル
+    if (weaponTypeKey && w[weaponTypeKey]) return w[weaponTypeKey].name; // 複数系統スタイル
+    return null;
+}
 
-        let totalScore = 0;
-        p.requirements.forEach(function (m) {
-            const ratio = m.target > 0 ? (m.current / m.target) : 0;
-            totalScore += Math.min(ratio, 1);
+/** weapons オブジェクトが「複数系統選択」を必要とするか */
+function isMultiType(weapons) {
+    if (!weapons) return false;
+    if (weapons.name) return false; // 単一スタイル
+    return Object.keys(weapons).length >= 2;
+}
+
+// =============================================
+//  テンプレート展開
+// =============================================
+function buildProjectFromTemplate(seriesId, elementKey, weaponTypeKey) {
+    const series = WEAPON_SERIES_MASTER[seriesId];
+    if (!series) throw new Error('Unknown series: ' + seriesId);
+
+    const elemental = series.elementalMaterials
+        ? series.elementalMaterials[elementKey]
+        : null;
+
+    const weaponName = resolveWeaponName(elemental, weaponTypeKey)
+        || series.weaponName
+        || series.name;
+
+    const weaponType = resolveWeaponType(elemental);
+
+    const stages = series.stages.map(function (stage) {
+        const materials = stage.requirements.map(function (req) {
+            let name = req.nameDisplay || req.name;
+            if (req.isElementLink && elemental && elemental[req.isElementLink]) {
+                name = elemental[req.isElementLink];
+            }
+            if (req.isWeaponLink && weaponType) {
+                name = weaponType + 'エレメント';
+            }
+            return { id: 'mat_' + uid(), name: name, target: req.target, current: 0 };
         });
-        const finalPercent = p.requirements.length > 0
-            ? Math.round((totalScore / p.requirements.length) * 100)
-            : 0;
+        return { stageName: stage.level, materials: materials };
+    });
 
-        let html = '<div class="container">';
-        html += '<h2 class="title">⚔️ 武器目標管理</h2>';
+    return {
+        id: 'proj_' + uid(),
+        name: weaponName,
+        seriesId: seriesId,
+        elementKey: elementKey || null,
+        weaponTypeKey: weaponTypeKey || null,
+        stages: stages
+    };
+}
 
-        // タブ
-        html += '<div class="tab-wrapper">';
-        projects.forEach(function (proj, i) {
-            const isActive = i === activeIndex;
-            html += '<div class="tab' + (isActive ? ' active' : '') + '" data-tab-index="' + i + '">' +
-                escapeHtml(proj.name) +
-                '<button class="delete-btn" data-delete-index="' + i + '" title="この武器目標を削除">×</button>' +
-                '</div>';
+// =============================================
+//  ストレージ・マイグレーション
+// =============================================
+function normalizeProject(p) {
+    // 旧形式(requirementsフラット配列)を段階構造に変換
+    if (p.stages) return p;
+    return {
+        id: p.id || ('proj_' + uid()),
+        name: p.name || '武器',
+        seriesId: null, elementKey: null, weaponTypeKey: null,
+        stages: [{ stageName: '素材一覧', materials: p.requirements || [] }]
+    };
+}
+
+function loadProjects() {
+    try {
+        const v2 = localStorage.getItem(STORAGE_KEY_V2);
+        if (v2) {
+            const arr = JSON.parse(v2);
+            if (Array.isArray(arr) && arr.length > 0) return arr.map(normalizeProject);
+        }
+        // v1 → v2 マイグレーション
+        const v1 = localStorage.getItem(STORAGE_KEY_V1);
+        if (v1) {
+            const arr = JSON.parse(v1);
+            if (Array.isArray(arr) && arr.length > 0) return arr.map(normalizeProject);
+        }
+    } catch (e) { console.error('読み込み失敗:', e); }
+    // 初期値: 終末火神石
+    return [buildProjectFromTemplate('shunmatsu', 'fire', 'divine')];
+}
+
+function saveProjects() {
+    try { localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(projects)); }
+    catch (e) { console.error('保存失敗:', e); }
+}
+
+// =============================================
+//  アプリ状態
+// =============================================
+let projects      = loadProjects();
+let activeIndex   = 0;
+let viewStageIdx  = 0;
+let isEditing     = false;
+
+function currentProject() {
+    return projects[Math.min(activeIndex, projects.length - 1)];
+}
+
+// =============================================
+//  進捗計算
+// =============================================
+function stageProgress(stage) {
+    if (!stage.materials || stage.materials.length === 0) return 100;
+    const sum = stage.materials.reduce(function (a, m) {
+        return a + Math.min(m.target > 0 ? m.current / m.target : 1, 1);
+    }, 0);
+    return Math.round(sum / stage.materials.length * 100);
+}
+
+function overallProgress(proj) {
+    if (!proj.stages || proj.stages.length === 0) return 0;
+    const sum = proj.stages.reduce(function (a, s) { return a + stageProgress(s); }, 0);
+    return Math.round(sum / proj.stages.length);
+}
+
+// =============================================
+//  レンダリング
+// =============================================
+function render() {
+    const root = document.getElementById('root');
+    const p = currentProject();
+
+    // viewStageIdx を有効範囲に収める
+    viewStageIdx = Math.max(0, Math.min(viewStageIdx, (p.stages || []).length - 1));
+
+    const totalPct  = overallProgress(p);
+    const curStage  = p.stages && p.stages[viewStageIdx];
+    const stagePct  = curStage ? stageProgress(curStage) : 0;
+
+    let h = '<div class="container">';
+    h += '<h2 class="title">⚔️ 武器目標管理</h2>';
+
+    // ── 武器タブ
+    h += '<div class="tab-wrapper">';
+    projects.forEach(function (proj, i) {
+        h += '<div class="tab' + (i === activeIndex ? ' active' : '') + '" data-tab="' + i + '">'
+           + escapeHtml(proj.name)
+           + '<button class="delete-btn" data-del-proj="' + i + '">×</button>'
+           + '</div>';
+    });
+    h += '<button class="tab-action-btn btn-blank" id="btn-add-blank">＋ 空白</button>';
+    h += '<button class="tab-action-btn btn-template" id="btn-open-modal">📋 テンプレ</button>';
+    h += '</div>';
+
+    // ── ヘッダー
+    h += '<div class="header-row">';
+    h += '<h2>' + escapeHtml(p.name) + '</h2>';
+    h += '<button class="btn ' + (isEditing ? 'btn-save' : 'btn-edit') + '" id="btn-toggle-edit">'
+       + (isEditing ? '💾 保存終了' : '✏️ 編集') + '</button>';
+    h += '</div>';
+
+    // ── 編集ボックス
+    if (isEditing) {
+        h += '<div class="edit-mode-box">';
+        h += '<label>武器名</label>';
+        h += '<input type="text" class="edit-input" id="inp-proj-name" value="' + escapeHtml(p.name) + '">';
+        h += '<div class="edit-actions">';
+        h += '<button class="btn btn-copy" id="btn-copy-proj">コピーして増やす</button>';
+        h += '<button class="btn btn-delete" id="btn-del-proj">この武器を削除</button>';
+        h += '</div></div>';
+    }
+
+    // ── 全体進捗
+    h += '<div class="progress-container">';
+    h += '<div class="progress-row"><span class="progress-label">全体進捗</span><span class="progress-pct-overall">' + totalPct + '%</span></div>';
+    h += '<div class="progress-bar-bg"><div class="bar-fill bar-overall" style="width:' + totalPct + '%"></div></div>';
+    if (curStage) {
+        h += '<div class="progress-row"><span class="progress-label">現在: ' + escapeHtml(curStage.stageName) + '</span>'
+           + '<span class="progress-pct-stage">' + stagePct + '%</span></div>';
+        h += '<div class="progress-bar-bg"><div class="bar-fill bar-stage" style="width:' + stagePct + '%"></div></div>';
+    }
+    h += '</div>';
+
+    // ── 段階タブ
+    if (p.stages && p.stages.length > 0) {
+        h += '<div class="stage-tab-wrapper">';
+        p.stages.forEach(function (s, si) {
+            const pct   = stageProgress(s);
+            const done  = pct >= 100;
+            let cls = 'stage-tab' + (si === viewStageIdx ? ' active' : '') + (done ? ' done' : '');
+            h += '<button class="' + cls + '" data-stage="' + si + '">';
+            if (done) h += '<span class="stage-done-dot"></span>';
+            h += escapeHtml(s.stageName) + '</button>';
         });
-        html += '<button class="add-btn" id="add-project-btn">＋ 新規</button>';
-        html += '</div>';
-
-        // ヘッダー行
-        html += '<div class="header-row">';
-        html += '<h2>' + escapeHtml(p.name) + '</h2>';
-        html += '<button class="btn ' + (isEditing ? 'btn-save' : 'btn-edit') + '" id="toggle-edit-btn">' +
-            (isEditing ? '保存終了' : '編集モード') + '</button>';
-        html += '</div>';
-
-        // 編集ボックス(武器名変更・コピー・削除)
         if (isEditing) {
-            html += '<div class="edit-mode-box">';
-            html += '<label>武器名を変更:</label>';
-            html += '<input type="text" class="edit-input" id="edit-project-name" value="' + escapeHtml(p.name) + '">';
-            html += '<div class="edit-actions">';
-            html += '<button class="btn btn-copy" id="copy-project-btn">この武器をコピーして増やす</button>';
-            html += '<button class="btn btn-delete" id="delete-project-btn">削除</button>';
-            html += '</div></div>';
+            h += '<button class="stage-tab add-stage" id="btn-add-stage">＋ 段階</button>';
+        }
+        h += '</div>';
+    }
+
+    // ── 現在段階の素材
+    if (curStage) {
+        if (isEditing) {
+            h += '<div class="stage-edit-header">';
+            h += '<input type="text" class="edit-input" id="inp-stage-name" value="' + escapeHtml(curStage.stageName) + '">';
+            if (p.stages.length > 1) {
+                h += '<button class="btn btn-delete" id="btn-del-stage">段階削除</button>';
+            }
+            h += '</div>';
+        } else {
+            h += '<h3 class="section-heading">📦 ' + escapeHtml(curStage.stageName) + '</h3>';
         }
 
-        // 進捗バー
-        html += '<div class="progress-container">';
-        html += '<h3 style="margin:0;font-size:16px;color:#f8fafc;">【' + escapeHtml(p.name) + '】集め達成率:' +
-            '<span class="progress-pct">' + finalPercent + '%</span></h3>';
-        html += '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + finalPercent + '%;"></div></div>';
-        html += '</div>';
-
-        // 素材リスト
-        html += '<div><h3 class="section-heading">📦 必要素材と所持数の入力</h3>';
-        p.requirements.forEach(function (m, idx) {
-            html += '<div class="material-card">';
+        curStage.materials.forEach(function (m, mi) {
+            const complete = m.current >= m.target;
+            h += '<div class="material-card' + (complete ? ' complete' : '') + '">';
             if (isEditing) {
-                html += '<input type="text" class="edit-input" data-mat-name-index="' + idx + '" value="' + escapeHtml(m.name) + '">';
-                html += '<div class="material-edit-row">';
-                html += '<label>目標数:</label>';
-                html += '<input type="number" data-mat-target-index="' + idx + '" value="' + m.target + '">';
-                html += '<button class="btn btn-delete" data-mat-delete-index="' + idx + '">削除</button>';
-                html += '</div>';
+                h += '<input type="text" class="edit-input" data-mat-name="' + mi + '" value="' + escapeHtml(m.name) + '">';
+                h += '<div class="material-edit-row">';
+                h += '<label>目標数</label>';
+                h += '<input type="number" class="target-input" data-mat-target="' + mi + '" value="' + m.target + '">';
+                h += '<button class="btn btn-delete" data-mat-del="' + mi + '">削除</button>';
+                h += '</div>';
             } else {
                 const lack = Math.max(m.target - m.current, 0);
                 const lackHtml = lack > 0
                     ? '<span class="lack">あと ' + numFmt(lack) + '</span>'
-                    : '<span class="done">完了</span>';
-                html += '<div class="display-row"><span>' + escapeHtml(m.name) + '</span>' + lackHtml + '</div>';
-                html += '<div class="input-row">';
-                html += '<input type="number" class="current-input" data-mat-current-index="' + idx + '" value="' + m.current + '">';
-                html += '<span class="target-val">/ ' + numFmt(m.target) + '</span>';
-                html += '</div>';
+                    : '<span class="done-label">✓ 完了</span>';
+                h += '<div class="display-row"><span>' + escapeHtml(m.name) + '</span>' + lackHtml + '</div>';
+                h += '<div class="input-row">';
+                h += '<input type="number" class="current-input" data-mat-cur="' + mi + '" value="' + m.current + '">';
+                h += '<span class="target-val">/ ' + numFmt(m.target) + '</span>';
+                h += '</div>';
             }
-            html += '</div>';
+            h += '</div>';
         });
 
         if (isEditing) {
-            html += '<button class="btn-add-material" id="add-material-btn">＋ 素材項目を追加</button>';
-        }
-        html += '</div>';
-
-        html += '<div class="footnote">※データはブラウザのLocalStorageに保存されます</div>';
-        html += '</div>';
-
-        root.innerHTML = html;
-        attachEvents();
-        saveProjects();
-    }
-
-    // ===== イベント結線 =====
-    function attachEvents() {
-        // タブ切り替え
-        document.querySelectorAll('.tab').forEach(function (tabEl) {
-            tabEl.addEventListener('click', function (e) {
-                if (e.target.classList.contains('delete-btn')) return;
-                activeIndex = Number(tabEl.getAttribute('data-tab-index'));
-                isEditing = false;
-                render();
-                window.scrollTo(0, 0);
-            });
-        });
-
-        // タブ削除
-        document.querySelectorAll('.delete-btn').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                const idx = Number(btn.getAttribute('data-delete-index'));
-                handleDeleteProjectByIndex(idx);
-            });
-        });
-
-        // 新規タブ追加
-        const addProjectBtn = document.getElementById('add-project-btn');
-        if (addProjectBtn) {
-            addProjectBtn.addEventListener('click', function () {
-                const n = prompt('武器名?', '新しい武器');
-                if (n) {
-                    projects.push({ id: 'proj_' + Date.now(), name: n, requirements: [] });
-                    activeIndex = projects.length - 1;
-                    isEditing = false;
-                    render();
-                }
-            });
-        }
-
-        // 編集モード切り替え
-        const toggleEditBtn = document.getElementById('toggle-edit-btn');
-        if (toggleEditBtn) {
-            toggleEditBtn.addEventListener('click', function () {
-                isEditing = !isEditing;
-                render();
-            });
-        }
-
-        // 武器名変更
-        const editNameInput = document.getElementById('edit-project-name');
-        if (editNameInput) {
-            editNameInput.addEventListener('change', function () {
-                getCurrentProject().name = editNameInput.value;
-                render();
-            });
-        }
-
-        // コピー
-        const copyBtn = document.getElementById('copy-project-btn');
-        if (copyBtn) {
-            copyBtn.addEventListener('click', handleCopyProject);
-        }
-
-        // 武器削除(編集ボックス内)
-        const deleteProjectBtn = document.getElementById('delete-project-btn');
-        if (deleteProjectBtn) {
-            deleteProjectBtn.addEventListener('click', function () {
-                handleDeleteProjectByIndex(activeIndex);
-            });
-        }
-
-        // 素材名変更
-        document.querySelectorAll('[data-mat-name-index]').forEach(function (el) {
-            el.addEventListener('change', function () {
-                const idx = Number(el.getAttribute('data-mat-name-index'));
-                getCurrentProject().requirements[idx].name = el.value;
-                render();
-            });
-        });
-
-        // 素材目標数変更
-        document.querySelectorAll('[data-mat-target-index]').forEach(function (el) {
-            el.addEventListener('change', function () {
-                const idx = Number(el.getAttribute('data-mat-target-index'));
-                getCurrentProject().requirements[idx].target = parseInt(el.value, 10) || 0;
-                render();
-            });
-        });
-
-        // 素材削除
-        document.querySelectorAll('[data-mat-delete-index]').forEach(function (el) {
-            el.addEventListener('click', function () {
-                const idx = Number(el.getAttribute('data-mat-delete-index'));
-                getCurrentProject().requirements.splice(idx, 1);
-                render();
-            });
-        });
-
-        // 素材現在所持数変更
-        document.querySelectorAll('[data-mat-current-index]').forEach(function (el) {
-            el.addEventListener('change', function () {
-                const idx = Number(el.getAttribute('data-mat-current-index'));
-                getCurrentProject().requirements[idx].current = parseInt(el.value, 10) || 0;
-                render();
-            });
-        });
-
-        // 素材項目追加
-        const addMaterialBtn = document.getElementById('add-material-btn');
-        if (addMaterialBtn) {
-            addMaterialBtn.addEventListener('click', function () {
-                getCurrentProject().requirements.push({ id: 'mat_' + Date.now(), name: '新しい素材', target: 10, current: 0 });
-                render();
-            });
+            h += '<button class="btn-add-material" id="btn-add-mat">＋ 素材を追加</button>';
         }
     }
 
-    // ===== ロジック =====
-    function handleCopyProject() {
-        const source = getCurrentProject();
-        const newProj = JSON.parse(JSON.stringify(source));
-        newProj.id = 'proj_' + Date.now();
-        newProj.name = source.name + ' (コピー)';
-        newProj.requirements.forEach(function (r) { r.current = 0; });
-        projects.push(newProj);
-        activeIndex = projects.length - 1;
+    h += '<div class="footnote">※データはブラウザのLocalStorageに保存されます (v2)</div>';
+    h += '</div>';
+
+    root.innerHTML = h;
+    attachEvents();
+    saveProjects();
+}
+
+// =============================================
+//  イベント結線
+// =============================================
+function attachEvents() {
+    // 武器タブ切り替え
+    document.querySelectorAll('[data-tab]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+            if (e.target.hasAttribute('data-del-proj')) return;
+            activeIndex  = Number(el.getAttribute('data-tab'));
+            viewStageIdx = 0;
+            isEditing    = false;
+            render();
+            window.scrollTo(0, 0);
+        });
+    });
+
+    // 武器タブ削除(×ボタン)
+    document.querySelectorAll('[data-del-proj]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            deleteProjectByIndex(Number(btn.getAttribute('data-del-proj')));
+        });
+    });
+
+    // 空白追加
+    const addBlank = document.getElementById('btn-add-blank');
+    if (addBlank) addBlank.addEventListener('click', function () {
+        const n = prompt('武器名?', '新しい武器');
+        if (!n) return;
+        projects.push({
+            id: 'proj_' + uid(), name: n,
+            seriesId: null, elementKey: null, weaponTypeKey: null,
+            stages: [{ stageName: 'Stage 1', materials: [] }]
+        });
+        activeIndex  = projects.length - 1;
+        viewStageIdx = 0;
+        isEditing    = false;
         render();
-    }
+    });
 
-    function handleDeleteProjectByIndex(idx) {
-        if (projects.length <= 1) {
-            alert('最後の1つは削除できません');
-            return;
-        }
-        const name = projects[idx].name;
-        if (!confirm('「' + name + '」の目標を削除しますか？')) return;
-        projects.splice(idx, 1);
-        if (activeIndex >= projects.length) {
-            activeIndex = projects.length - 1;
-        }
-        isEditing = false;
+    // モーダルを開く
+    const openModal = document.getElementById('btn-open-modal');
+    if (openModal) openModal.addEventListener('click', startModal);
+
+    // 編集モード切り替え
+    const toggleEdit = document.getElementById('btn-toggle-edit');
+    if (toggleEdit) toggleEdit.addEventListener('click', function () {
+        isEditing = !isEditing;
         render();
-    }
+    });
 
-    // ===== 共通ハンバーガーメニュー（ドロワー）の初期化 =====
-    (function () {
-        const triggerBtn = document.getElementById('menu-trigger-btn');
-        const overlay = document.getElementById('drawer-overlay');
-        const panel = document.getElementById('drawer-panel');
-        const closeBtn = document.getElementById('drawer-close-btn');
-        function openDrawer() { overlay.classList.add('open'); panel.classList.add('open'); }
-        function closeDrawer() { overlay.classList.remove('open'); panel.classList.remove('open'); }
-        if (triggerBtn) triggerBtn.addEventListener('click', openDrawer);
-        if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-        if (overlay) overlay.addEventListener('click', closeDrawer);
-    })();
+    // 武器名変更
+    const projNameInp = document.getElementById('inp-proj-name');
+    if (projNameInp) projNameInp.addEventListener('change', function () {
+        currentProject().name = projNameInp.value;
+        render();
+    });
 
-    // ===== 初期化 =====
+    // コピー
+    const copyBtn = document.getElementById('btn-copy-proj');
+    if (copyBtn) copyBtn.addEventListener('click', copyProject);
+
+    // 武器削除(編集ボックス)
+    const delProj = document.getElementById('btn-del-proj');
+    if (delProj) delProj.addEventListener('click', function () {
+        deleteProjectByIndex(activeIndex);
+    });
+
+    // 段階タブ切り替え
+    document.querySelectorAll('[data-stage]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            viewStageIdx = Number(btn.getAttribute('data-stage'));
+            render();
+        });
+    });
+
+    // 段階追加
+    const addStage = document.getElementById('btn-add-stage');
+    if (addStage) addStage.addEventListener('click', function () {
+        const p = currentProject();
+        p.stages.push({ stageName: 'Stage ' + (p.stages.length + 1), materials: [] });
+        viewStageIdx = p.stages.length - 1;
+        render();
+    });
+
+    // 段階名変更
+    const stageNameInp = document.getElementById('inp-stage-name');
+    if (stageNameInp) stageNameInp.addEventListener('change', function () {
+        currentProject().stages[viewStageIdx].stageName = stageNameInp.value;
+        render();
+    });
+
+    // 段階削除
+    const delStage = document.getElementById('btn-del-stage');
+    if (delStage) delStage.addEventListener('click', function () {
+        const p = currentProject();
+        if (p.stages.length <= 1) return;
+        if (!confirm('この段階を削除しますか？')) return;
+        p.stages.splice(viewStageIdx, 1);
+        viewStageIdx = Math.max(0, viewStageIdx - 1);
+        render();
+    });
+
+    // 素材名変更
+    document.querySelectorAll('[data-mat-name]').forEach(function (el) {
+        el.addEventListener('change', function () {
+            currentProject().stages[viewStageIdx].materials[Number(el.getAttribute('data-mat-name'))].name = el.value;
+            render();
+        });
+    });
+
+    // 素材目標数変更
+    document.querySelectorAll('[data-mat-target]').forEach(function (el) {
+        el.addEventListener('change', function () {
+            currentProject().stages[viewStageIdx].materials[Number(el.getAttribute('data-mat-target'))].target = parseInt(el.value, 10) || 0;
+            render();
+        });
+    });
+
+    // 素材削除
+    document.querySelectorAll('[data-mat-del]').forEach(function (el) {
+        el.addEventListener('click', function () {
+            currentProject().stages[viewStageIdx].materials.splice(Number(el.getAttribute('data-mat-del')), 1);
+            render();
+        });
+    });
+
+    // 素材現在数変更
+    document.querySelectorAll('[data-mat-cur]').forEach(function (el) {
+        el.addEventListener('change', function () {
+            currentProject().stages[viewStageIdx].materials[Number(el.getAttribute('data-mat-cur'))].current = parseInt(el.value, 10) || 0;
+            render();
+        });
+    });
+
+    // 素材追加
+    const addMat = document.getElementById('btn-add-mat');
+    if (addMat) addMat.addEventListener('click', function () {
+        currentProject().stages[viewStageIdx].materials.push({ id: 'mat_' + uid(), name: '新しい素材', target: 10, current: 0 });
+        render();
+    });
+}
+
+// =============================================
+//  ロジック
+// =============================================
+function copyProject() {
+    const copy = JSON.parse(JSON.stringify(currentProject()));
+    copy.id   = 'proj_' + uid();
+    copy.name = currentProject().name + ' (コピー)';
+    copy.stages.forEach(function (s) { s.materials.forEach(function (m) { m.current = 0; }); });
+    projects.push(copy);
+    activeIndex  = projects.length - 1;
+    viewStageIdx = 0;
     render();
+}
+
+function deleteProjectByIndex(idx) {
+    if (projects.length <= 1) { alert('最後の1つは削除できません'); return; }
+    if (!confirm('「' + projects[idx].name + '」を削除しますか？')) return;
+    projects.splice(idx, 1);
+    if (activeIndex >= projects.length) activeIndex = projects.length - 1;
+    viewStageIdx = 0;
+    isEditing    = false;
+    render();
+}
+
+// =============================================
+//  テンプレートモーダル
+// =============================================
+let ms = { step: 'series', seriesId: null, elementKey: null, weaponTypeKey: null };
+
+function startModal() {
+    ms = { step: 'series', seriesId: null, elementKey: null, weaponTypeKey: null };
+    drawModal();
+    document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function drawModal() {
+    const inner = document.getElementById('modal-inner');
+    let h = '';
+
+    h += '<div class="modal-header"><h3>📋 テンプレートから追加</h3>'
+       + '<button class="modal-close-btn" id="m-close">×</button></div>';
+
+    if (ms.step === 'series') {
+        h += '<div class="modal-step-label">STEP 1 — シリーズを選択</div>';
+        Object.keys(WEAPON_SERIES_MASTER).forEach(function (sid) {
+            const s = WEAPON_SERIES_MASTER[sid];
+            const stageCount = s.stages ? s.stages.length : 0;
+            const elemCount  = s.elementalMaterials ? Object.keys(s.elementalMaterials).length : 0;
+            h += '<button class="option-btn" data-sid="' + sid + '">'
+               + escapeHtml(s.name)
+               + '<span class="option-sub">' + (elemCount ? elemCount + '属性 / ' : '') + stageCount + '段階</span>'
+               + '</button>';
+        });
+
+    } else if (ms.step === 'element') {
+        const series = WEAPON_SERIES_MASTER[ms.seriesId];
+        h += '<button class="modal-back-btn" id="m-back">← 戻る</button>';
+        h += '<div class="modal-step-label">STEP 2 — 属性を選択（' + escapeHtml(series.name) + '）</div>';
+        h += '<div class="element-grid">';
+        ELEMENT_KEYS.forEach(function (ek) {
+            if (!series.elementalMaterials[ek]) return;
+            h += '<button class="element-btn" data-ek="' + ek + '" style="border-color:' + ELEMENT_COLORS[ek] + '">'
+               + escapeHtml(ELEMENT_LABELS[ek]) + '</button>';
+        });
+        h += '</div>';
+
+    } else if (ms.step === 'type') {
+        const series   = WEAPON_SERIES_MASTER[ms.seriesId];
+        const elemental = series.elementalMaterials[ms.elementKey];
+        h += '<button class="modal-back-btn" id="m-back">← 戻る</button>';
+        h += '<div class="modal-step-label">STEP 3 — 系統を選択</div>';
+        Object.keys(elemental.weapons).forEach(function (tk) {
+            const w = elemental.weapons[tk];
+            h += '<button class="option-btn" data-tk="' + tk + '">'
+               + escapeHtml(TYPE_LABELS[tk] || tk) + '：'
+               + escapeHtml(w.name)
+               + '</button>';
+        });
+
+    } else if (ms.step === 'confirm') {
+        const series   = WEAPON_SERIES_MASTER[ms.seriesId];
+        const elemental = series.elementalMaterials
+            ? series.elementalMaterials[ms.elementKey] : null;
+        const wName = resolveWeaponName(elemental, ms.weaponTypeKey) || series.name;
+        const wType = resolveWeaponType(elemental);
+        h += '<button class="modal-back-btn" id="m-back">← 戻る</button>';
+        h += '<div class="modal-step-label">追加内容を確認</div>';
+        h += '<div class="modal-preview">';
+        h += '<div class="preview-name">' + escapeHtml(wName) + '</div>';
+        h += '<div class="preview-detail">';
+        if (ms.elementKey) h += '属性：' + escapeHtml(ELEMENT_LABELS[ms.elementKey] || ms.elementKey) + '<br>';
+        if (ms.weaponTypeKey) h += '系統：' + escapeHtml(TYPE_LABELS[ms.weaponTypeKey] || ms.weaponTypeKey) + '<br>';
+        if (wType) h += '武器種：' + escapeHtml(wType) + '<br>';
+        h += '段階数：' + series.stages.length + '段階';
+        h += '</div></div>';
+        h += '<button class="modal-confirm-btn" id="m-confirm">✚ この武器を追加する</button>';
+    }
+
+    inner.innerHTML = h;
+
+    // モーダル内イベント
+    const mClose = document.getElementById('m-close');
+    if (mClose) mClose.addEventListener('click', closeModal);
+
+    const mBack = document.getElementById('m-back');
+    if (mBack) mBack.addEventListener('click', function () {
+        if (ms.step === 'element') { ms.step = 'series'; }
+        else if (ms.step === 'type') { ms.step = 'element'; }
+        else if (ms.step === 'confirm') {
+            const series = WEAPON_SERIES_MASTER[ms.seriesId];
+            const elemental = series.elementalMaterials
+                ? series.elementalMaterials[ms.elementKey] : null;
+            ms.step = (elemental && isMultiType(elemental.weapons)) ? 'type' : 'element';
+        }
+        drawModal();
+    });
+
+    document.querySelectorAll('[data-sid]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            ms.seriesId = btn.getAttribute('data-sid');
+            const series = WEAPON_SERIES_MASTER[ms.seriesId];
+            ms.step = series.elementalMaterials ? 'element' : 'confirm';
+            drawModal();
+        });
+    });
+
+    document.querySelectorAll('[data-ek]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            ms.elementKey = btn.getAttribute('data-ek');
+            const series   = WEAPON_SERIES_MASTER[ms.seriesId];
+            const elemental = series.elementalMaterials[ms.elementKey];
+            if (isMultiType(elemental.weapons)) {
+                ms.step = 'type';
+            } else {
+                ms.weaponTypeKey = null;
+                ms.step = 'confirm';
+            }
+            drawModal();
+        });
+    });
+
+    document.querySelectorAll('[data-tk]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            ms.weaponTypeKey = btn.getAttribute('data-tk');
+            ms.step = 'confirm';
+            drawModal();
+        });
+    });
+
+    const mConfirm = document.getElementById('m-confirm');
+    if (mConfirm) mConfirm.addEventListener('click', function () {
+        const proj = buildProjectFromTemplate(ms.seriesId, ms.elementKey, ms.weaponTypeKey);
+        projects.push(proj);
+        activeIndex  = projects.length - 1;
+        viewStageIdx = 0;
+        isEditing    = false;
+        closeModal();
+        render();
+    });
+}
+
+// モーダル背景クリックで閉じる
+document.getElementById('modal-overlay').addEventListener('click', function (e) {
+    if (e.target === this) closeModal();
+});
+
+// =============================================
+//  ドロワー初期化
+// =============================================
+(function () {
+    const trigger = document.getElementById('menu-trigger-btn');
+    const overlay = document.getElementById('drawer-overlay');
+    const panel   = document.getElementById('drawer-panel');
+    const closeBtn= document.getElementById('drawer-close-btn');
+    function open()  { overlay.classList.add('open'); panel.classList.add('open'); }
+    function close() { overlay.classList.remove('open'); panel.classList.remove('open'); }
+    if (trigger)  trigger.addEventListener('click', open);
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    if (overlay)  overlay.addEventListener('click', close);
+})();
+
+// =============================================
+//  初期化
+// =============================================
+render();
+
 })();
 </script>
-
 </body>
 </html>
