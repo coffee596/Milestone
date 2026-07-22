@@ -612,6 +612,95 @@ const WEAPON_SERIES_MASTER = {
         ]
     }
 
+    // ===== オメガウェポン =====
+    , "omega": {
+        "name": "オメガウェポン",
+        // weaponTypes を持つシリーズ → 属性選択後に武器種選択ステップが入る
+        "weaponTypes": ["剣","槍","短剣","斧","格闘","刀","弓","銃","楽器","杖"],
+        "elementalMaterials": {
+            "fire":  { "lowerOrb": "火の宝珠",  "gene": "ファイア・ジーン", "stone": "業火の石片", "psyche": "火のプシュケー", "element": "火のエレメント" },
+            "water": { "lowerOrb": "水の宝珠",  "gene": "アクア・ジーン",   "stone": "玉水の石片", "psyche": "水のプシュケー", "element": "水のエレメント" },
+            "earth": { "lowerOrb": "土の宝珠",  "gene": "アース・ジーン",   "stone": "荒土の石片", "psyche": "土のプシュケー", "element": "土のエレメント" },
+            "wind":  { "lowerOrb": "風の宝珠",  "gene": "ウィンド・ジーン", "stone": "狂風の石片", "psyche": "風のプシュケー", "element": "風のエレメント" },
+            "light": {
+                "lowerOrb": "光の宝珠", "gene": "ホーリー・ジーン",
+                "psyche": "光のプシュケー", "element": "光のエレメント",
+                // 光は石片なし → 火(業火)・風(狂風)を半分ずつ
+                "stoneOverride": [
+                    { "name": "業火の石片", "target": 15 },
+                    { "name": "狂風の石片", "target": 15 }
+                ]
+            },
+            "dark": {
+                "lowerOrb": "闇の宝珠", "gene": "ダーク・ジーン",
+                "psyche": "闇のプシュケー", "element": "闇のエレメント",
+                // 闇は石片なし → 水(玉水)・土(荒土)を半分ずつ
+                "stoneOverride": [
+                    { "name": "玉水の石片", "target": 15 },
+                    { "name": "荒土の石片", "target": 15 }
+                ]
+            }
+        },
+        "stages": [
+            {
+                "level": "依代 作成",
+                "requirements": [
+                    { "name": "下位宝珠",   "target": 250, "isElementLink": "lowerOrb" },
+                    { "name": "ジーン",      "target": 250, "isElementLink": "gene" },
+                    { "name": "星晶の欠片", "target": 250 }
+                ]
+            },
+            {
+                "level": "無垢なる竜の武器 作成",
+                "requirements": [
+                    { "name": "石片",             "target": 30, "isElementLink": "stone", "isStoneLink": true },
+                    { "name": "バハムートの角",   "target": 2 },
+                    { "name": "メテオライト",     "target": 10 },
+                    { "name": "覇者の証",         "target": 20 },
+                    { "name": "オメガの器",       "target": 1 }
+                ]
+            },
+            {
+                "level": "オメガウェポン 作成",
+                "requirements": [
+                    { "name": "武器種エレメント",   "target": 500, "isWeaponLink": true },
+                    { "name": "属性エレメント",     "target": 500, "isElementLink": "element" },
+                    { "name": "プシュケー",         "target": 30,  "isElementLink": "psyche" },
+                    { "name": "究竟の証",           "target": 10 },
+                    { "name": "銀天の輝き",         "target": 10 },
+                    { "name": "バハムートの紫電角", "target": 3 },
+                    { "name": "オメガユニット",     "target": 5 }
+                ]
+            },
+            {
+                "level": "4凸上限解放",
+                "requirements": [
+                    { "name": "オメガユニット",     "target": 30 },
+                    { "name": "銀天の輝き",         "target": 30 },
+                    { "name": "バハムートの紫電角", "target": 30 },
+                    { "name": "究竟の証",           "target": 30 }
+                ]
+            },
+            {
+                "level": "5凸上限解放",
+                "requirements": [
+                    { "name": "アルテマメモリ",   "target": 20 },
+                    { "name": "オメガユニット",   "target": 30 },
+                    { "name": "究竟の証",         "target": 30 },
+                    { "name": "武器種の銀片",     "target": 30, "isWeaponLink": "の銀片" },
+                    { "name": "武器種エレメント", "target": 2000, "isWeaponLink": true }
+                ]
+            },
+            {
+                "level": "新ガフスキー交換",
+                "requirements": [
+                    { "name": "アルテマメモリ", "target": 7 },
+                    { "name": "究竟の証",       "target": 15 }
+                ]
+            }
+        ]
+    }
+
     // ← 新シリーズはここに追記
 };
 
@@ -642,12 +731,12 @@ function uid() {
     return Math.random().toString(36).slice(2, 10);
 }
 
-/** elemental から武器種名を取得 */
-function resolveWeaponType(elemental) {
-    if (!elemental) return null;
+/** elemental から武器種名を取得（omega は weaponTypeKey を直接渡す）*/
+function resolveWeaponType(elemental, weaponTypeKey) {
+    if (!elemental) return weaponTypeKey || null;
     if (elemental.weapons && elemental.weapons.type) return elemental.weapons.type; // draconic style
     if (elemental.weaponType) return elemental.weaponType;                          // shunmatsu style
-    return null;
+    return weaponTypeKey || null;                                                    // omega style
 }
 
 /** elemental + typeKey から武器名を取得 */
@@ -677,22 +766,37 @@ function buildProjectFromTemplate(seriesId, elementKey, weaponTypeKey) {
         ? series.elementalMaterials[elementKey]
         : null;
 
-    const weaponName = resolveWeaponName(elemental, weaponTypeKey)
-        || series.weaponName
-        || series.name;
+    // omega スタイル: series.weaponTypes を持つ場合、武器名を「属性+シリーズ名(武器種)」で構成
+    let weaponName;
+    if (series.weaponTypes && weaponTypeKey && elementKey) {
+        weaponName = (ELEMENT_LABELS[elementKey] || elementKey) + series.name + '(' + weaponTypeKey + ')';
+    } else {
+        weaponName = resolveWeaponName(elemental, weaponTypeKey)
+            || series.weaponName
+            || series.name;
+    }
 
-    const weaponType = resolveWeaponType(elemental);
+    const weaponType = resolveWeaponType(elemental, weaponTypeKey);
 
     const stages = series.stages.map(function (stage) {
-        const materials = stage.requirements.map(function (req) {
+        // flatMap で stoneOverride を複数素材に展開する
+        const materials = stage.requirements.flatMap(function (req) {
+            // stoneOverride: 光・闇の石片例外処理
+            if (req.isStoneLink && elemental && elemental.stoneOverride) {
+                return elemental.stoneOverride.map(function (s) {
+                    return { id: 'mat_' + uid(), name: s.name, target: s.target, current: 0 };
+                });
+            }
             let name = req.nameDisplay || req.name;
             if (req.isElementLink && elemental && elemental[req.isElementLink]) {
                 name = elemental[req.isElementLink];
             }
             if (req.isWeaponLink && weaponType) {
-                name = weaponType + 'エレメント';
+                // true → "エレメント"、文字列 → そのサフィックスを使う
+                const suffix = typeof req.isWeaponLink === 'string' ? req.isWeaponLink : 'エレメント';
+                name = weaponType + suffix;
             }
-            return { id: 'mat_' + uid(), name: name, target: req.target, current: 0 };
+            return [{ id: 'mat_' + uid(), name: name, target: req.target, current: 0 }];
         });
         return { stageName: stage.level, materials: materials };
     });
@@ -735,7 +839,7 @@ function loadProjects() {
             if (Array.isArray(arr) && arr.length > 0) return arr.map(normalizeProject);
         }
     } catch (e) { console.error('読み込み失敗:', e); }
-    // 初期値: 終末火神石
+    // 初期値: 終末火神威
     return [buildProjectFromTemplate('shunmatsu', 'fire', 'divine')];
 }
 
@@ -1111,7 +1215,8 @@ function drawModal() {
         h += '</div>';
 
     } else if (ms.step === 'type') {
-        const series   = WEAPON_SERIES_MASTER[ms.seriesId];
+        // 終末スタイル: divine / magna 選択
+        const series    = WEAPON_SERIES_MASTER[ms.seriesId];
         const elemental = series.elementalMaterials[ms.elementKey];
         h += '<button class="modal-back-btn" id="m-back">← 戻る</button>';
         h += '<div class="modal-step-label">STEP 3 — 系統を選択</div>';
@@ -1123,19 +1228,40 @@ function drawModal() {
                + '</button>';
         });
 
+    } else if (ms.step === 'weaponType') {
+        // omega スタイル: 武器種一覧から選択
+        const series = WEAPON_SERIES_MASTER[ms.seriesId];
+        h += '<button class="modal-back-btn" id="m-back">← 戻る</button>';
+        h += '<div class="modal-step-label">STEP 3 — 武器種を選択</div>';
+        h += '<div class="element-grid" style="grid-template-columns:repeat(2,1fr);">';
+        series.weaponTypes.forEach(function (wt) {
+            h += '<button class="element-btn" data-wt="' + escapeHtml(wt) + '">'
+               + escapeHtml(wt) + '</button>';
+        });
+        h += '</div>';
+
     } else if (ms.step === 'confirm') {
-        const series   = WEAPON_SERIES_MASTER[ms.seriesId];
+        const series    = WEAPON_SERIES_MASTER[ms.seriesId];
         const elemental = series.elementalMaterials
             ? series.elementalMaterials[ms.elementKey] : null;
-        const wName = resolveWeaponName(elemental, ms.weaponTypeKey) || series.name;
-        const wType = resolveWeaponType(elemental);
+
+        // omega / 通常 で武器名の構成が異なる
+        let wName, wType;
+        if (series.weaponTypes && ms.weaponTypeKey && ms.elementKey) {
+            wName = (ELEMENT_LABELS[ms.elementKey] || ms.elementKey) + series.name + '(' + ms.weaponTypeKey + ')';
+            wType = ms.weaponTypeKey;
+        } else {
+            wName = resolveWeaponName(elemental, ms.weaponTypeKey) || series.name;
+            wType = resolveWeaponType(elemental, ms.weaponTypeKey);
+        }
+
         h += '<button class="modal-back-btn" id="m-back">← 戻る</button>';
         h += '<div class="modal-step-label">追加内容を確認</div>';
         h += '<div class="modal-preview">';
         h += '<div class="preview-name">' + escapeHtml(wName) + '</div>';
         h += '<div class="preview-detail">';
         if (ms.elementKey) h += '属性：' + escapeHtml(ELEMENT_LABELS[ms.elementKey] || ms.elementKey) + '<br>';
-        if (ms.weaponTypeKey) h += '系統：' + escapeHtml(TYPE_LABELS[ms.weaponTypeKey] || ms.weaponTypeKey) + '<br>';
+        if (ms.weaponTypeKey && !series.weaponTypes) h += '系統：' + escapeHtml(TYPE_LABELS[ms.weaponTypeKey] || ms.weaponTypeKey) + '<br>';
         if (wType) h += '武器種：' + escapeHtml(wType) + '<br>';
         h += '段階数：' + series.stages.length + '段階';
         h += '</div></div>';
@@ -1150,13 +1276,21 @@ function drawModal() {
 
     const mBack = document.getElementById('m-back');
     if (mBack) mBack.addEventListener('click', function () {
-        if (ms.step === 'element') { ms.step = 'series'; }
-        else if (ms.step === 'type') { ms.step = 'element'; }
-        else if (ms.step === 'confirm') {
-            const series = WEAPON_SERIES_MASTER[ms.seriesId];
+        if (ms.step === 'element') {
+            ms.step = 'series';
+        } else if (ms.step === 'type' || ms.step === 'weaponType') {
+            ms.step = 'element';
+        } else if (ms.step === 'confirm') {
+            const series    = WEAPON_SERIES_MASTER[ms.seriesId];
             const elemental = series.elementalMaterials
                 ? series.elementalMaterials[ms.elementKey] : null;
-            ms.step = (elemental && isMultiType(elemental.weapons)) ? 'type' : 'element';
+            if (series.weaponTypes) {
+                ms.step = 'weaponType';          // omega: 武器種選択へ戻る
+            } else if (elemental && isMultiType(elemental.weapons)) {
+                ms.step = 'type';                // 終末: 系統選択へ戻る
+            } else {
+                ms.step = 'element';
+            }
         }
         drawModal();
     });
@@ -1173,10 +1307,12 @@ function drawModal() {
     document.querySelectorAll('[data-ek]').forEach(function (btn) {
         btn.addEventListener('click', function () {
             ms.elementKey = btn.getAttribute('data-ek');
-            const series   = WEAPON_SERIES_MASTER[ms.seriesId];
+            const series    = WEAPON_SERIES_MASTER[ms.seriesId];
             const elemental = series.elementalMaterials[ms.elementKey];
-            if (isMultiType(elemental.weapons)) {
-                ms.step = 'type';
+            if (series.weaponTypes) {
+                ms.step = 'weaponType';          // omega: 武器種選択へ
+            } else if (isMultiType(elemental.weapons)) {
+                ms.step = 'type';                // 終末: 系統選択へ
             } else {
                 ms.weaponTypeKey = null;
                 ms.step = 'confirm';
@@ -1185,9 +1321,19 @@ function drawModal() {
         });
     });
 
+    // 終末スタイル: divine / magna 選択
     document.querySelectorAll('[data-tk]').forEach(function (btn) {
         btn.addEventListener('click', function () {
             ms.weaponTypeKey = btn.getAttribute('data-tk');
+            ms.step = 'confirm';
+            drawModal();
+        });
+    });
+
+    // omega スタイル: 武器種選択
+    document.querySelectorAll('[data-wt]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            ms.weaponTypeKey = btn.getAttribute('data-wt');
             ms.step = 'confirm';
             drawModal();
         });
