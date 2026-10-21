@@ -701,6 +701,123 @@ const WEAPON_SERIES_MASTER = {
         ]
     }
 
+    // ===== レヴァンスウェポン =====
+    , "revans": {
+        "name": "レヴァンスウェポン",
+        "elementalMaterials": {
+            "fire": {
+                "sixDragon": "ウィルナスの竜珠", "element": "火のエレメント",
+                "bossTreasure": "滅尽の残気",
+                "brightOverride": [ { "name": "イグニス・ブライト", "target": 10 } ],
+                "revansOverride": [
+                    { "name": "滅尽の残気", "target": 200 },
+                    { "name": "星海の刃屑", "target": 80 },
+                    { "name": "調停の裂布", "target": 80 }
+                ],
+                "weapons": {
+                    "w1": { "name": "滅尽剣", "type": "剣" },
+                    "w2": { "name": "必滅弓", "type": "弓" }
+                }
+            },
+            "water": {
+                "sixDragon": "ワムデュスの竜珠", "element": "水のエレメント",
+                "bossTreasure": "機神の基板",
+                "brightOverride": [ { "name": "アクア・ブライト", "target": 10 } ],
+                "revansOverride": [
+                    { "name": "機神の基板", "target": 200 },
+                    { "name": "滅竜の赫刃", "target": 80 },
+                    { "name": "壊祖の紋装甲", "target": 80 }
+                ],
+                "weapons": {
+                    "w1": { "name": "シュレディンガー", "type": "刀" },
+                    "w2": { "name": "ラグランジュ", "type": "格闘" }
+                }
+            },
+            "earth": {
+                "sixDragon": "ガレヲンの竜珠", "element": "土のエレメント",
+                "bossTreasure": "滅竜の赫刃",
+                "brightOverride": [ { "name": "テラ・ブライト", "target": 10 } ],
+                "revansOverride": [
+                    { "name": "滅竜の赫刃", "target": 200 },
+                    { "name": "機神の基板", "target": 80 },
+                    { "name": "壊祖の紋装甲", "target": 80 }
+                ],
+                "weapons": {
+                    "w1": { "name": "竜伐の剛牙", "type": "短剣" },
+                    "w2": { "name": "竜伐の撃爪", "type": "斧" }
+                }
+            },
+            "wind": {
+                "sixDragon": "イーウィヤの竜珠", "element": "風のエレメント",
+                "bossTreasure": "星海の刃屑",
+                "brightOverride": [ { "name": "ウェントス・ブライト", "target": 10 } ],
+                "revansOverride": [
+                    { "name": "星海の刃屑", "target": 200 },
+                    { "name": "滅尽の残気", "target": 80 },
+                    { "name": "調停の裂布", "target": 80 }
+                ],
+                "weapons": {
+                    "w1": { "name": "セッテ･ディ･スパーダ", "type": "剣" },
+                    "w2": { "name": "ビエント・ディ・スパーダ", "type": "斧" }
+                }
+            },
+            "light": {
+                "sixDragon": "ル・オーの竜珠", "element": "光のエレメント",
+                "bossTreasure": "調停の裂布",
+                "brightOverride": [
+                    { "name": "イグニス・ブライト", "target": 5 },
+                    { "name": "ウェントス・ブライト", "target": 5 }
+                ],
+                "revansOverride": [
+                    { "name": "調停の裂布", "target": 200 },
+                    { "name": "滅尽の残気", "target": 80 },
+                    { "name": "星海の刃屑", "target": 80 }
+                ],
+                "weapons": {
+                    "w1": { "name": "シンメトリア", "type": "刀" },
+                    "w2": { "name": "コンコルディア", "type": "短剣" }
+                }
+            },
+            "dark": {
+                "sixDragon": "フェディエルの竜珠", "element": "闇のエレメント",
+                "bossTreasure": "壊祖の紋装甲",
+                "brightOverride": [
+                    { "name": "アクア・ブライト", "target": 5 },
+                    { "name": "テラ・ブライト", "target": 5 }
+                ],
+                "revansOverride": [
+                    { "name": "壊祖の紋装甲", "target": 200 },
+                    { "name": "機神の基板", "target": 80 },
+                    { "name": "滅竜の赫刃", "target": 80 }
+                ],
+                "weapons": {
+                    "w1": { "name": "フォービドゥンアガスティ", "type": "杖" },
+                    "w2": { "name": "フォーセイクンアガスティ", "type": "楽器" }
+                }
+            }
+        },
+        "stages": [
+            {
+                "level": "上限解放",
+                "requirements": [
+                    { "name": "武器種エレメント", "target": 200, "isWeaponLink": true },
+                    { "name": "属性エレメント",   "target": 200, "isElementLink": "element" },
+                    { "name": "ブライト",         "target": 10,  "overrideKey": "bright" },
+                    { "name": "専用トレジャー",   "target": 50,  "isElementLink": "bossTreasure" }
+                ]
+            },
+            {
+                "level": "リビルド (特殊強化)",
+                "requirements": [
+                    { "name": "武器種エレメント", "target": 500, "isWeaponLink": true },
+                    { "name": "属性エレメント",   "target": 500, "isElementLink": "element" },
+                    { "name": "六竜トレジャー",   "target": 50,  "isElementLink": "sixDragon" },
+                    { "name": "レヴァンス素材",   "target": 0,   "overrideKey": "revans" }
+                ]
+            }
+        ]
+    }
+
     // ← 新シリーズはここに追記
 };
 
@@ -710,7 +827,7 @@ const WEAPON_SERIES_MASTER = {
 const ELEMENT_KEYS   = ["fire","water","earth","wind","light","dark"];
 const ELEMENT_LABELS = { fire:"🔥火", water:"💧水", earth:"🌿土", wind:"🌀風", light:"✨光", dark:"🌑闇" };
 const ELEMENT_COLORS = { fire:"#dc2626", water:"#2563eb", earth:"#ca8a04", wind:"#16a34a", light:"#d97706", dark:"#7c3aed" };
-const TYPE_LABELS    = { divine:"神石", magna:"マグナ" };
+const TYPE_LABELS    = { divine:"神威", magna:"マグナ" };
 
 const STORAGE_KEY_V2 = 'gbf_weapon_tracker_v2';
 const STORAGE_KEY_V1 = 'gbf_weapon_tracker_v1';
@@ -734,7 +851,10 @@ function uid() {
 /** elemental から武器種名を取得（omega は weaponTypeKey を直接渡す）*/
 function resolveWeaponType(elemental, weaponTypeKey) {
     if (!elemental) return weaponTypeKey || null;
-    if (elemental.weapons && elemental.weapons.type) return elemental.weapons.type; // draconic style
+    const w = elemental.weapons;
+    if (w && w.type) return w.type;                                                 // draconic style
+    if (w && weaponTypeKey && w[weaponTypeKey] && w[weaponTypeKey].type)
+        return w[weaponTypeKey].type;                                               // revans style
     if (elemental.weaponType) return elemental.weaponType;                          // shunmatsu style
     return weaponTypeKey || null;                                                    // omega style
 }
@@ -784,6 +904,12 @@ function buildProjectFromTemplate(seriesId, elementKey, weaponTypeKey) {
             // stoneOverride: 光・闇の石片例外処理
             if (req.isStoneLink && elemental && elemental.stoneOverride) {
                 return elemental.stoneOverride.map(function (s) {
+                    return { id: 'mat_' + uid(), name: s.name, target: s.target, current: 0 };
+                });
+            }
+            // overrideKey: ブライト・レヴァンス素材など属性ごとに複数素材へ展開
+            if (req.overrideKey && elemental && elemental[req.overrideKey + 'Override']) {
+                return elemental[req.overrideKey + 'Override'].map(function (s) {
                     return { id: 'mat_' + uid(), name: s.name, target: s.target, current: 0 };
                 });
             }
@@ -1223,8 +1349,7 @@ function drawModal() {
         Object.keys(elemental.weapons).forEach(function (tk) {
             const w = elemental.weapons[tk];
             h += '<button class="option-btn" data-tk="' + tk + '">'
-               + escapeHtml(TYPE_LABELS[tk] || tk) + '：'
-               + escapeHtml(w.name)
+               + escapeHtml((TYPE_LABELS[tk] ? TYPE_LABELS[tk] + '：' : '') + w.name + (w.type ? '（' + w.type + '）' : ''))
                + '</button>';
         });
 
@@ -1261,7 +1386,7 @@ function drawModal() {
         h += '<div class="preview-name">' + escapeHtml(wName) + '</div>';
         h += '<div class="preview-detail">';
         if (ms.elementKey) h += '属性：' + escapeHtml(ELEMENT_LABELS[ms.elementKey] || ms.elementKey) + '<br>';
-        if (ms.weaponTypeKey && !series.weaponTypes) h += '系統：' + escapeHtml(TYPE_LABELS[ms.weaponTypeKey] || ms.weaponTypeKey) + '<br>';
+        if (ms.weaponTypeKey && !series.weaponTypes && TYPE_LABELS[ms.weaponTypeKey]) h += '系統：' + escapeHtml(TYPE_LABELS[ms.weaponTypeKey] || ms.weaponTypeKey) + '<br>';
         if (wType) h += '武器種：' + escapeHtml(wType) + '<br>';
         h += '段階数：' + series.stages.length + '段階';
         h += '</div></div>';
