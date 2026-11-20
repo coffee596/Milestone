@@ -178,12 +178,12 @@
 
     // ===== マスターデータ（既存の貢献度データを流用） =====
     const ELEMENT_MAP = {
-        fire:  { name: '火属性 (水有利)', color: '#ef4444', label: '火' },
-        water: { name: '水属性 (土有利)', color: '#3b82f6', label: '水' },
-        earth: { name: '土属性 (風有利)', color: '#d97706', label: '土' },
-        wind:  { name: '風属性 (火有利)', color: '#10b981', label: '風' },
-        light: { name: '光属性 (闇有利)', color: '#eab308', label: '光' },
-        dark:  { name: '闇属性 (光有利)', color: '#a855f7', label: '闇' }
+        fire:  { name: '火有利', color: '#ef4444', label: '火' },
+        water: { name: '水有利', color: '#3b82f6', label: '水' },
+        earth: { name: '土有利', color: '#d97706', label: '土' },
+        wind:  { name: '風有利', color: '#10b981', label: '風' },
+        light: { name: '光有利', color: '#eab308', label: '光' },
+        dark:  { name: '闇有利', color: '#a855f7', label: '闇' }
     };
 
     // 既存のHELL_INFOをベースに拡張
@@ -195,11 +195,11 @@
         { key: 'h100', name: '100 HELL', contribution: 2680000,   meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 30, hfa: 55, sfa: 90 } },
         { key: 'h150', name: '150 HELL', contribution: 4100000,   meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 40, hfa: 65, sfa: 110 } },
         { key: 'h200', name: '200 HELL', contribution: 20000000,  meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 75, hfa: 120, sfa: 210 } },
-        { key: 'h250', name: '250 HELL', contribution: 55000000,  meatCost: 20, meatType: 'マリシャスクランプ', isSpecialMeat: true, secPresets: { fast: 90, hfa: 150, sfa: 240 } }
+        { key: 'h250', name: '250 HELL', contribution: 75000000,  meatCost: 20, meatType: 'マリシャスクランプ', isSpecialMeat: true, secPresets: { fast: 90, hfa: 150, sfa: 240 } }
     ];
 
     // EX+の平均肉ドロップ数（1周あたり）
-    const EXP_MEAT_DROP = 2.5;
+    const EXP_MEAT_DROP = 22;
 
     // デフォルト設定
     function defaultSettings() {
