@@ -14,7 +14,7 @@
         color: #f1f5f9;
     }
     .container {
-        max-width: 800px;
+        max-width: 860px;
         margin: 30px auto;
         padding: 25px;
         background-color: #1e293b;
@@ -22,230 +22,134 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         border: 1px solid #334155;
     }
-    .title {
-        text-align: center;
-        color: #f8fafc;
-        margin-bottom: 25px;
-        font-size: 24px;
-        letter-spacing: 1px;
-    }
-    .tab-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        border-bottom: 2px solid #334155;
-        margin-bottom: 20px;
-        overflow-x: auto;
-        padding-bottom: 4px;
-    }
-    .tab {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 14px;
-        cursor: pointer;
-        font-weight: bold;
-        border-radius: 6px 6px 0 0;
-        border: 1px solid #334155;
-        border-bottom: none;
-        font-size: 14px;
-        white-space: nowrap;
-        background-color: #1e293b;
-        color: #94a3b8;
-        transition: all 0.2s;
-        opacity: 0.6;
-    }
-    .tab.active {
-        color: #ffffff;
-        opacity: 1;
-    }
-    .delete-btn {
-        background: none;
-        border: none;
-        color: inherit;
-        cursor: pointer;
-        font-size: 14px;
-        padding: 0 2px;
-        display: flex;
-        align-items: center;
-        opacity: 0.7;
-    }
-    .add-btn {
-        padding: 8px 12px;
-        background-color: #0f172a;
-        border: 1px dashed #475569;
-        border-radius: 6px;
-        color: #38bdf8;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 13px;
-        white-space: nowrap;
-    }
-    .modal-bg {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0,0,0,0.6);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 100;
-    }
-    .modal {
-        background-color: #1e293b;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #475569;
-        width: 320px;
-    }
-    .grid3 {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 20px;
-    }
-    .form-group { display: flex; flex-direction: column; }
-    .form-group label {
-        font-size: 13px;
-        font-weight: bold;
-        margin-bottom: 6px;
-        color: #94a3b8;
-    }
-    input, select {
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 6px;
-        border: 1px solid #475569;
-        background-color: #0f172a;
-        color: #ffffff;
-        outline: none;
-        font-family: inherit;
-        width: 100%;
-    }
-    select { font-size: 15px; }
-    .progress-container {
-        padding: 20px;
-        background-color: #0f172a;
-        border-radius: 8px;
-        border: 1px solid #334155;
-        margin-bottom: 20px;
-    }
-    .progress-header { margin: 0; font-size: 16px; color: #f8fafc; }
-    .progress-percentage { font-size: 24px; font-weight: bold; margin-left: 8px; }
-    .progress-bar-bg {
-        width: 100%;
-        height: 20px;
-        background-color: #334155;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-top: 10px;
-    }
-    .progress-bar-fill {
-        height: 100%;
-        transition: width 0.3s ease-in-out;
-    }
-    .stats {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 12px;
-        font-size: 14px;
-        color: #94a3b8;
-    }
-    .stats strong.white { color: #ffffff; }
-    .stats strong.red { color: #f43f5e; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-    th {
-        background-color: #0f172a;
-        color: #94a3b8;
-        padding: 10px;
-        text-align: left;
-        border-bottom: 2px solid #475569;
-        font-weight: bold;
-    }
-    td { padding: 10px; border-bottom: 1px solid #334155; color: #e2e8f0; }
-    .alert-box {
-        margin-top: 15px;
-        padding: 12px;
-        background-color: #064e3b;
-        color: #34d399;
-        border-radius: 6px;
-        text-align: center;
-        font-weight: bold;
-        border: 1px solid #047857;
-    }
-    .btn-primary {
-        padding: 10px;
-        background-color: #2563eb;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 10px;
-        width: 100%;
-        font-size: 15px;
-    }
-    .btn-cancel {
-        padding: 10px;
-        background-color: #475569;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 5px;
-        text-align: center;
-        width: 100%;
-        font-size: 15px;
-    }
-    .section-heading {
-        margin: 0 0 10px 0;
-        font-size: 16px;
-        color: #f8fafc;
-        padding-left: 8px;
-    }
-    .no-runs-text {
-        color: #94a3b8;
-        font-size: 14px;
-        font-style: italic;
+    .title { text-align: center; color: #f8fafc; margin-bottom: 22px; font-size: 24px; letter-spacing: 1px; }
+
+    /* タブ */
+    .tab-wrapper { display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #334155; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px; }
+    .tab { display: flex; align-items: center; gap: 6px; padding: 9px 13px; cursor: pointer; font-weight: bold; border-radius: 6px 6px 0 0; border: 1px solid #334155; border-bottom: none; font-size: 13px; white-space: nowrap; background-color: #1e293b; color: #94a3b8; transition: all 0.2s; opacity: 0.6; }
+    .tab.active { color: #fff; opacity: 1; }
+    .tab-del { background: none; border: none; color: inherit; cursor: pointer; font-size: 13px; padding: 0 2px; opacity: 0.7; }
+    .add-btn { padding: 8px 12px; background-color: #0f172a; border: 1px dashed #475569; border-radius: 6px; color: #38bdf8; cursor: pointer; font-weight: bold; font-size: 13px; white-space: nowrap; }
+
+    /* セクション見出し */
+    .section-heading { margin: 0 0 14px 0; font-size: 15px; color: #f8fafc; border-left: 4px solid #3b82f6; padding-left: 10px; }
+
+    /* カード */
+    .card { background-color: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+
+    /* グリッド */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 600px) {
+        .grid2 { grid-template-columns: 1fr; }
+        .grid3 { grid-template-columns: 1fr 1fr; }
+        .container { margin-top: 64px; }
     }
 
-    /* ===== 共通ハンバーガーメニュー（ドロワー） ===== */
-    .menu-trigger-btn {
-        position: fixed; top: 16px; left: 16px; width: 42px; height: 42px;
-        background-color: #1e293b; border: 1px solid #334155; border-radius: 8px;
-        color: #f1f5f9; font-size: 20px; line-height: 1; cursor: pointer; z-index: 200;
-        display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    /* フォーム */
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 12px; font-weight: bold; color: #94a3b8; }
+    input[type="number"], input[type="text"], select {
+        padding: 9px 10px; font-size: 14px; border-radius: 6px;
+        border: 1px solid #475569; background-color: #1e293b; color: #fff;
+        outline: none; font-family: inherit; width: 100%;
     }
+    input:focus, select:focus { border-color: #3b82f6; }
+
+    /* プリセットボタン群 */
+    .preset-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .preset-btn { padding: 5px 10px; font-size: 12px; font-weight: bold; border: 1px solid #475569; border-radius: 5px; background-color: #1e293b; color: #94a3b8; cursor: pointer; transition: all 0.15s; }
+    .preset-btn:hover, .preset-btn.active { background-color: #3b82f6; color: #fff; border-color: #3b82f6; }
+
+    /* 進捗バー */
+    .progress-bar-bg { width: 100%; height: 18px; background-color: #334155; border-radius: 9px; overflow: hidden; margin: 10px 0; }
+    .progress-bar-fill { height: 100%; transition: width 0.3s ease; }
+    .progress-pct { font-size: 22px; font-weight: bold; margin-left: 8px; }
+    .progress-stats { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; }
+    .progress-stats strong { color: #fff; }
+    .progress-stats strong.red { color: #ef4444; }
+
+    /* アコーディオン */
+    .accordion-header {
+        display: flex; justify-content: space-between; align-items: center;
+        cursor: pointer; padding: 12px 16px; background-color: #0f172a;
+        border: 1px solid #334155; border-radius: 8px; margin-bottom: 4px;
+        font-size: 14px; font-weight: bold; color: #cbd5e1;
+        user-select: none;
+    }
+    .accordion-header:hover { background-color: #1e293b; }
+    .accordion-header .arrow { font-size: 11px; color: #64748b; transition: transform 0.2s; }
+    .accordion-header.open .arrow { transform: rotate(180deg); }
+    .accordion-body { display: none; padding: 16px; border: 1px solid #334155; border-top: none; border-radius: 0 0 8px 8px; margin-bottom: 12px; background-color: #0f172a; }
+    .accordion-body.open { display: block; }
+
+    /* サマリーカード */
+    .summary-card { background: linear-gradient(135deg, #0f172a 0%, #1a2744 100%); border: 1px solid #3b82f6; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+    .summary-card h3 { margin: 0 0 14px 0; font-size: 15px; color: #93c5fd; }
+    .summary-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+    .summary-label { font-size: 13px; color: #94a3b8; }
+    .summary-value { font-size: 18px; font-weight: bold; color: #f8fafc; }
+    .summary-sub { font-size: 12px; color: #64748b; margin-left: 6px; }
+    .summary-value.green { color: #34d399; }
+    .summary-value.red { color: #ef4444; }
+    .summary-value.yellow { color: #fbbf24; }
+    .summary-divider { border: none; border-top: 1px solid #334155; margin: 12px 0; }
+
+    /* テーブル */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background-color: #0f172a; color: #94a3b8; padding: 9px 10px; text-align: left; border-bottom: 2px solid #475569; font-weight: bold; }
+    td { padding: 9px 10px; border-bottom: 1px solid #334155; color: #e2e8f0; }
+    tr.warn td { color: #ef4444; font-weight: bold; }
+
+    /* アラート系 */
+    .alert-success { margin-top: 12px; padding: 12px; background-color: #064e3b; color: #34d399; border-radius: 6px; text-align: center; font-weight: bold; border: 1px solid #047857; }
+    .alert-warn { padding: 12px 14px; background-color: #3b1a0f; color: #fbbf24; border-radius: 6px; font-size: 13px; border: 1px solid #92400e; margin-bottom: 10px; line-height: 1.6; }
+    .alert-info { padding: 12px 14px; background-color: #0d2444; color: #93c5fd; border-radius: 6px; font-size: 13px; border: 1px solid #1e40af; margin-bottom: 10px; line-height: 1.6; }
+
+    /* ボタン */
+    .btn { padding: 9px 16px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; font-family: inherit; }
+    .btn-primary { background-color: #2563eb; color: #fff; }
+    .btn-cancel { background-color: #475569; color: #fff; }
+    .btn-danger { background-color: #dc2626; color: #fff; }
+    .btn-secondary { background-color: #0f172a; border: 1px solid #475569; color: #94a3b8; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+
+    /* toggle switch */
+    .toggle-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .toggle-label { font-size: 13px; color: #cbd5e1; }
+    .toggle-switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track { position: absolute; cursor: pointer; inset: 0; background-color: #334155; border-radius: 24px; transition: 0.2s; }
+    .toggle-track:before { content: ''; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #fff; border-radius: 50%; transition: 0.2s; }
+    input:checked + .toggle-track { background-color: #3b82f6; }
+    input:checked + .toggle-track:before { transform: translateX(18px); }
+
+    /* モーダル */
+    .modal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 400; }
+    .modal { background-color: #1e293b; padding: 24px; border-radius: 10px; border: 1px solid #475569; width: 340px; max-width: 90vw; }
+
+    /* エクスポート/リセット行 */
+    .data-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px solid #334155; }
+
+    /* ドロワー */
+    .menu-trigger-btn { position: fixed; top: 16px; left: 16px; width: 42px; height: 42px; background-color: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #f1f5f9; font-size: 20px; line-height: 1; cursor: pointer; z-index: 200; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
     .menu-trigger-btn:hover { background-color: #334155; }
-    .drawer-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(0,0,0,0.55); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
-    }
+    .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.55); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
     .drawer-overlay.open { opacity: 1; pointer-events: auto; }
-    .drawer-panel {
-        position: fixed; top: 0; left: 0; width: 280px; max-width: 80vw; height: 100%;
-        background-color: #1e293b; border-right: 1px solid #334155; box-shadow: 4px 0 20px rgba(0,0,0,0.4);
-        z-index: 301; transform: translateX(-100%); transition: transform 0.25s ease; display: flex; flex-direction: column;
-    }
+    .drawer-panel { position: fixed; top: 0; left: 0; width: 280px; max-width: 80vw; height: 100%; background-color: #1e293b; border-right: 1px solid #334155; box-shadow: 4px 0 20px rgba(0,0,0,0.4); z-index: 301; transform: translateX(-100%); transition: transform 0.25s ease; display: flex; flex-direction: column; }
     .drawer-panel.open { transform: translateX(0); }
     .drawer-header { padding: 20px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
-    .drawer-header h3 { margin: 0; font-size: 15px; color: #f8fafc; letter-spacing: 0.5px; }
-    .drawer-close-btn { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; line-height: 1; }
+    .drawer-header h3 { margin: 0; font-size: 15px; color: #f8fafc; }
+    .drawer-close-btn { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; }
     .drawer-nav { padding: 10px; overflow-y: auto; }
-    .drawer-nav-item {
-        display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 8px;
-        color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: bold; margin-bottom: 4px; transition: background-color 0.15s;
-    }
+    .drawer-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 8px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: bold; margin-bottom: 4px; transition: background-color 0.15s; }
     .drawer-nav-item:hover { background-color: #0f172a; }
-    .drawer-nav-item.current { background-color: #3b82f6; color: #ffffff; }
+    .drawer-nav-item.current { background-color: #3b82f6; color: #fff; }
     .drawer-nav-item .icon { font-size: 16px; }
     .drawer-nav-item .desc { display: block; font-size: 11px; color: #94a3b8; font-weight: normal; margin-top: 2px; }
     .drawer-nav-item.current .desc { color: #dbeafe; }
     .drawer-footer { padding: 14px 20px; border-top: 1px solid #334155; font-size: 11px; color: #64748b; text-align: center; }
-    @media (max-width: 600px) {
-        .container { margin-top: 64px; }
-    }
 </style>
 </head>
 <body>
@@ -258,22 +162,10 @@
         <button class="drawer-close-btn" id="drawer-close-btn" aria-label="閉じる">×</button>
     </div>
     <nav class="drawer-nav">
-        <a class="drawer-nav-item" href="index.html">
-            <span class="icon">🏠</span>
-            <span>トップページ<span class="desc">ツール一覧に戻る</span></span>
-        </a>
-        <a class="drawer-nav-item current" href="gbf_tracker.html">
-            <span class="icon">🏆</span>
-            <span>古戦場貢献度マネージャー＆ログ<span class="desc">貢献度・HELL逆算</span></span>
-        </a>
-        <a class="drawer-nav-item" href="kessho-tool.html">
-            <span class="icon">🗡️</span>
-            <span>十天衆・十賢者 必要素材<span class="desc">最終上限解放・超越対応</span></span>
-        </a>
-        <a class="drawer-nav-item" href="weapon_tracker.html">
-            <span class="icon">⚔️</span>
-            <span>武器目標管理<span class="desc">必要素材の収集進捗</span></span>
-        </a>
+        <a class="drawer-nav-item" href="index.html"><span class="icon">🏠</span><span>トップページ<span class="desc">ツール一覧に戻る</span></span></a>
+        <a class="drawer-nav-item current" href="gbf_tracker.html"><span class="icon">🏆</span><span>古戦場貢献度マネージャー＆ログ<span class="desc">貢献度・HELL逆算</span></span></a>
+        <a class="drawer-nav-item" href="kessho-tool.html"><span class="icon">🗡️</span><span>十天衆・十賢者 必要素材<span class="desc">最終上限解放・超越対応</span></span></a>
+        <a class="drawer-nav-item" href="weapon_tracker.html"><span class="icon">⚔️</span><span>武器目標管理<span class="desc">必要素材の収集進捗</span></span></a>
     </nav>
     <div class="drawer-footer">データはブラウザ内に保存されます</div>
 </div>
@@ -284,7 +176,7 @@
 (function () {
     "use strict";
 
-    // ===== マスターデータ =====
+    // ===== マスターデータ（既存の貢献度データを流用） =====
     const ELEMENT_MAP = {
         fire:  { name: '火属性 (水有利)', color: '#ef4444', label: '火' },
         water: { name: '水属性 (土有利)', color: '#3b82f6', label: '水' },
@@ -294,353 +186,637 @@
         dark:  { name: '闇属性 (光有利)', color: '#a855f7', label: '闇' }
     };
 
+    // 既存のHELL_INFOをベースに拡張
     const HELL_INFO = [
-        { name: '90 HELL',  contribution: 315000,    meatCost: 5,  meatType: 'グラッジチャンク',   isSpecialMeat: false },
-        { name: '95 HELL',  contribution: 910000,    meatCost: 10, meatType: 'グラッジチャンク',   isSpecialMeat: false },
-        { name: '100 HELL', contribution: 2680000,   meatCost: 20, meatType: 'グラッジチャンク',   isSpecialMeat: false },
-        { name: '150 HELL', contribution: 4100000,   meatCost: 20, meatType: 'グラッジチャンク',   isSpecialMeat: false },
-        { name: '200 HELL', contribution: 20000000,  meatCost: 20, meatType: 'グラッジチャンク',   isSpecialMeat: false },
-        { name: '250 HELL', contribution: 75000000,  meatCost: 20, meatType: 'マリシャスクランプ', isSpecialMeat: true }
+        { key: 'ex',   name: 'EX',       contribution: 64000,     meatCost: 0,  meatType: 'なし', isSpecialMeat: false, secPresets: { fast: 10, hfa: 10, sfa: 10 } },
+        { key: 'exp',  name: 'EX+',      contribution: 127600,    meatCost: 0,  meatType: 'なし', isSpecialMeat: false, secPresets: { fast: 10, hfa: 10, sfa: 10 } },
+        { key: 'h90',  name: '90 HELL',  contribution: 315000,    meatCost: 5,  meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 20, hfa: 35, sfa: 60 } },
+        { key: 'h95',  name: '95 HELL',  contribution: 910000,    meatCost: 10, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 20, hfa: 35, sfa: 60 } },
+        { key: 'h100', name: '100 HELL', contribution: 2680000,   meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 30, hfa: 55, sfa: 90 } },
+        { key: 'h150', name: '150 HELL', contribution: 4100000,   meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 40, hfa: 65, sfa: 110 } },
+        { key: 'h200', name: '200 HELL', contribution: 20000000,  meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 75, hfa: 120, sfa: 210 } },
+        { key: 'h250', name: '250 HELL', contribution: 55000000,  meatCost: 20, meatType: 'マリシャスクランプ', isSpecialMeat: true, secPresets: { fast: 90, hfa: 150, sfa: 240 } }
     ];
 
-    const STORAGE_KEY = 'gbf_custom_history_logs';
+    // EX+の平均肉ドロップ数（1周あたり）
+    const EXP_MEAT_DROP = 2.5;
+
+    // デフォルト設定
+    function defaultSettings() {
+        return {
+            // 簡易モード
+            targetContrib: 1000000000,
+            mainHell: 'h200',       // 本戦主軸: h200/h250/mix
+            mixRatio: 50,            // 200/250 比率（200の割合%）
+            speedType: 'hfa',        // fast/hfa/sfa
+            dailyDelivery: true,
+            deliveryDays: 4,
+            // 詳細モード
+            kansenHell: 'h90',       // 極星器掘り難易度
+            kansenRuns: 0,
+            customSecs: {},          // key -> 秒数 の上書き
+            autoConvert: true,       // デカ肉→通常肉自動変換
+            // 実戦モード
+            currentContrib: 0,
+            currentChunk: 0,
+            currentClamp: 0,
+            expSecPerRun: 10,
+        };
+    }
+
+    // デイリー納品1日あたりの設定（仮定値: 通常肉400消費、デカ肉1個、貢献度は実績として現在貢献度で管理）
+    const DAILY_DELIVERY = {
+        chunkCost: 400,
+        clampGain: 1,
+        contrib: 10000000  // 1日あたり固定貢献度（概算、実際は変動あり）
+    };
 
     // ===== 状態管理 =====
-    function loadLogs() {
+    const STORAGE_KEY = 'gbf_tracker_v6';
+
+    function loadState() {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 const parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                if (parsed && Array.isArray(parsed.logs) && parsed.logs.length > 0) return parsed;
             }
-        } catch (e) {
-            console.error('保存データの読み込みに失敗:', e);
-        }
-        return [
-            { id: 'log_default', count: 85, element: 'fire', current: 0, target: 1000000000, rank: '' }
-        ];
+        } catch (e) {}
+        return {
+            logs: [{ id: 'log_default', count: 85, element: 'fire', settings: defaultSettings() }],
+            activeLogId: 'log_default'
+        };
     }
 
-    let historyLogs = loadLogs();
-    let activeLogId = historyLogs[0].id;
-    let isModalOpen = false;
-    let newCount = (historyLogs.reduce((max, l) => Math.max(max, Number(l.count) || 0), 0) || 85) + 1;
-    let newElement = 'water';
-
-    function saveLogs() {
+    function saveState() {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(historyLogs));
-        } catch (e) {
-            console.error('保存に失敗:', e);
-        }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ logs: state.logs, activeLogId: state.activeLogId }));
+        } catch (e) {}
     }
+
+    let state = loadState();
+    state.activeLogId = state.activeLogId || state.logs[0].id;
+
+    // モーダル・アコーディオン状態（レンダリング間で保持）
+    let isModalOpen = false;
+    let newCount = (state.logs.reduce((m, l) => Math.max(m, Number(l.count) || 0), 0) || 85) + 1;
+    let newElement = 'water';
+    let detailOpen = false;
+    let battleOpen = false;
 
     function getCurrentLog() {
-        return historyLogs.find(function (log) { return log.id === activeLogId; }) || historyLogs[0];
+        return state.logs.find(l => l.id === state.activeLogId) || state.logs[0];
+    }
+    function getSettings() {
+        const log = getCurrentLog();
+        // 旧形式との互換: settingsがない場合はデフォルト
+        if (!log.settings) log.settings = defaultSettings();
+        return log.settings;
+    }
+    function updateSettings(patch) {
+        const log = getCurrentLog();
+        if (!log.settings) log.settings = defaultSettings();
+        Object.assign(log.settings, patch);
+        saveState();
+        render();
     }
 
     function escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = String(str);
-        return div.innerHTML;
+        const d = document.createElement('div');
+        d.textContent = String(str);
+        return d.innerHTML;
+    }
+    function fmt(n) { return Number(n).toLocaleString('ja-JP'); }
+    function fmtMan(n) { return (Number(n) / 10000).toFixed(0) + '万'; }
+    function fmtOku(n) {
+        const v = Number(n);
+        if (v >= 100000000) return (v / 100000000).toFixed(2) + '億';
+        if (v >= 10000) return (v / 10000).toFixed(0) + '万';
+        return String(v);
+    }
+    function fmtTime(secs) {
+        const h = Math.floor(secs / 3600);
+        const m = Math.floor((secs % 3600) / 60);
+        if (h > 0) return h + '時間' + m + '分';
+        return m + '分';
     }
 
-    function formatNum(n) {
-        const num = Number(n);
-        if (isNaN(num)) return '0';
-        return num.toLocaleString('ja-JP');
-    }
+    // ===== コア計算 =====
+    function calcAll(s, currentContrib) {
+        const hell = HELL_INFO;
+        const hellMap = {};
+        hell.forEach(h => { hellMap[h.key] = h; });
 
-    function buildHellCalculationContent(currentLog) {
-        const remaining = Math.max(0, Number(currentLog.target) - Number(currentLog.current));
-        let html = '';
+        // Step1: 確定行動の収支
+        const deliveryDays = s.dailyDelivery ? Number(s.deliveryDays) : 0;
+        const deliveryChunkCost = DAILY_DELIVERY.chunkCost * deliveryDays;
+        const deliveryClampGain = DAILY_DELIVERY.clampGain * deliveryDays;
+        const deliveryContrib = DAILY_DELIVERY.contrib * deliveryDays;
 
+        const kansenHell = hellMap[s.kansenHell] || hellMap['h90'];
+        const kansenRuns = Number(s.kansenRuns) || 0;
+        const kansenChunkCost = kansenHell.meatCost * kansenRuns;
+        const kansenContrib = kansenHell.contribution * kansenRuns;
+        const kansenClampGain = s.kansenHell === 'h90' || s.kansenHell === 'h95'
+            ? Math.floor(kansenRuns * 0.3) : 0; // ドロップ期待値（90/95HELLは約30%）
+
+        const preContrib = deliveryContrib + kansenContrib;
+        const preClamp = deliveryClampGain + kansenClampGain;
+
+        // Step2: 残り目標貢献度
+        const target = Number(s.targetContrib);
+        const alreadyGot = Number(currentContrib);
+        const remaining = Math.max(0, target - alreadyGot - preContrib);
+
+        // Step3: 本戦必要周回数
+        let runs200 = 0, runs250 = 0;
         if (remaining > 0) {
-            html += '<table><thead><tr><th>難易度</th><th>必要周回数</th><th>消費するお肉の総数</th></tr></thead><tbody>';
-            HELL_INFO.forEach(function (hell) {
-                const runsNeeded = Math.ceil(remaining / hell.contribution);
-                const meatNeeded = hell.meatCost * runsNeeded;
-                const meatTextColor = hell.isSpecialMeat ? '#f43f5e' : '#38bdf8';
-                html += '<tr>' +
-                    '<td><strong>' + escapeHtml(hell.name) + '</strong></td>' +
-                    '<td style="color:#ffffff;">' + formatNum(runsNeeded) + ' 回</td>' +
-                    '<td><strong style="color:' + meatTextColor + ';">' + formatNum(meatNeeded) + '</strong> 個 ' +
-                    '<span style="font-size:11px;color:' + (hell.isSpecialMeat ? '#f43f5e' : '#94a3b8') + ';margin-left:4px;">(' + escapeHtml(hell.meatType) + ')</span></td>' +
-                    '</tr>';
-            });
-            html += '</tbody></table>';
-        } else {
-            html += '<p class="no-runs-text">目標を達成しているため、これ以上の周回は不要です！</p>';
-        }
-
-        return html;
-    }
-
-    function renderSummary() {
-        const currentLog = getCurrentLog();
-        const elementInfo = ELEMENT_MAP[currentLog.element] || ELEMENT_MAP.fire;
-        const remaining = Math.max(0, Number(currentLog.target) - Number(currentLog.current));
-        const percentage = Number(currentLog.target) > 0
-            ? Math.min(100, Math.round((Number(currentLog.current) / Number(currentLog.target)) * 100))
-            : 0;
-
-        const progressHeaderEl = document.getElementById('progress-header');
-        const progressBarEl = document.getElementById('progress-bar-fill');
-        const currentStatsEl = document.getElementById('stats-current');
-        const remainingStatsEl = document.getElementById('stats-remaining');
-        const alertBoxEl = document.getElementById('alert-box');
-        const hellCalculationContentEl = document.getElementById('hell-calculation-content');
-
-        if (progressHeaderEl) {
-            progressHeaderEl.innerHTML = '【第' + escapeHtml(currentLog.count) + '回 ' + escapeHtml(elementInfo.name) + '】目標達成率: ' +
-                '<span class="progress-percentage" style="color:' + elementInfo.color + ';">' + percentage + '%</span>';
-        }
-        if (progressBarEl) {
-            progressBarEl.style.width = percentage + '%';
-            progressBarEl.style.backgroundColor = elementInfo.color;
-        }
-        if (currentStatsEl) {
-            currentStatsEl.textContent = formatNum(currentLog.current);
-        }
-        if (remainingStatsEl) {
-            remainingStatsEl.textContent = formatNum(remaining);
-        }
-        if (alertBoxEl) {
-            if (percentage >= 100) {
-                alertBoxEl.style.display = 'block';
-                alertBoxEl.textContent = '🎉 目標達成！お疲れ様でした！';
+            const h200 = hellMap['h200'];
+            const h250 = hellMap['h250'];
+            if (s.mainHell === 'h200') {
+                runs200 = Math.ceil(remaining / h200.contribution);
+            } else if (s.mainHell === 'h250') {
+                runs250 = Math.ceil(remaining / h250.contribution);
             } else {
-                alertBoxEl.style.display = 'none';
-                alertBoxEl.textContent = '';
+                // mix: 200のratio%、250の(100-ratio)%
+                const ratio = Number(s.mixRatio) / 100;
+                const contrib200 = remaining * ratio;
+                const contrib250 = remaining * (1 - ratio);
+                runs200 = Math.ceil(contrib200 / h200.contribution);
+                runs250 = Math.ceil(contrib250 / h250.contribution);
             }
         }
-        if (hellCalculationContentEl) {
-            hellCalculationContentEl.innerHTML = buildHellCalculationContent(currentLog);
+
+        // Step4: 資材収支
+        const needChunk = kansenChunkCost + deliveryChunkCost
+            + hellMap['h200'].meatCost * runs200;
+        const needClamp = hellMap['h250'].meatCost * runs250;
+
+        const haveChunk = Number(s.currentChunk);
+        const haveClamp = Number(s.currentClamp) + preClamp;
+
+        // デカ肉崩し
+        let extraChunk = 0;
+        const clampSurplus = haveClamp - needClamp;
+        if (s.autoConvert && clampSurplus > 0) {
+            const convertable = Math.min(clampSurplus, 500);
+            extraChunk = convertable * 2;
         }
+
+        const totalChunk = haveChunk + extraChunk;
+        const chunkShort = Math.max(0, needChunk - totalChunk);
+        const chunkSurplus = Math.max(0, totalChunk - needChunk);
+
+        // EX+必要周回数（不足分補填）
+        const expRunsNeeded = chunkShort > 0
+            ? Math.ceil(chunkShort / EXP_MEAT_DROP) : 0;
+
+        // Step5: 所要時間
+        function getSec(key) {
+            if (s.customSecs && s.customSecs[key]) return Number(s.customSecs[key]);
+            const h = hellMap[key];
+            if (!h) return 60;
+            return h.secPresets[s.speedType] || 60;
+        }
+        const expSec = Number(s.expSecPerRun) || 10;
+        const totalSec =
+            expRunsNeeded * expSec +
+            kansenRuns * getSec(s.kansenHell) +
+            runs200 * getSec('h200') +
+            runs250 * getSec('h250');
+
+        // 推定時速（本戦分のみ）
+        const battleSec = runs200 * getSec('h200') + runs250 * getSec('h250');
+        const battleContrib = runs200 * hellMap['h200'].contribution + runs250 * hellMap['h250'].contribution;
+        const hourlyContrib = battleSec > 0 ? Math.round(battleContrib / battleSec * 3600) : 0;
+
+        // 250→200節約シミュレーション（200メインの時のみ）
+        let sim250 = null;
+        if (s.mainHell === 'h200' && runs200 > 0) {
+            const halfRuns200 = Math.ceil(runs200 / 2);
+            const halfContrib200 = halfRuns200 * hellMap['h200'].contribution;
+            const remainFor250 = remaining - halfContrib200;
+            const halfRuns250 = remainFor250 > 0 ? Math.ceil(remainFor250 / hellMap['h250'].contribution) : 0;
+            const savedChunk = (runs200 - halfRuns200) * hellMap['h200'].meatCost;
+            const savedExp = Math.ceil(savedChunk / EXP_MEAT_DROP);
+            sim250 = { savedChunk, savedExp };
+        }
+
+        return {
+            preContrib, preClamp, deliveryChunkCost, kansenChunkCost,
+            remaining, runs200, runs250,
+            needChunk, needClamp, haveChunk, haveClamp,
+            extraChunk, chunkShort, chunkSurplus, clampSurplus,
+            expRunsNeeded, totalSec, hourlyContrib, sim250
+        };
     }
 
     // ===== レンダリング =====
     function render() {
         const root = document.getElementById('root');
-        const currentLog = getCurrentLog();
-        const elementInfo = ELEMENT_MAP[currentLog.element] || ELEMENT_MAP.fire;
-        const remaining = Math.max(0, Number(currentLog.target) - Number(currentLog.current));
-        const percentage = Number(currentLog.target) > 0
-            ? Math.min(100, Math.round((Number(currentLog.current) / Number(currentLog.target)) * 100))
-            : 0;
+        const log = getCurrentLog();
+        const s = getSettings();
+        const el = ELEMENT_MAP[log.element] || ELEMENT_MAP.fire;
+        const currentContrib = Number(s.currentContrib) || 0;
+        const target = Number(s.targetContrib) || 0;
+        const percentage = target > 0 ? Math.min(100, Math.round(currentContrib / target * 100)) : 0;
+        const remaining = Math.max(0, target - currentContrib);
+        const calc = calcAll(s, currentContrib);
 
-        let html = '';
-        html += '<div class="container">';
-        html += '<h2 class="title">⚔️ 古戦場貢献度マネージャー＆ログ</h2>';
+        let html = '<div class="container">';
+        html += '<h2 class="title">🏆 古戦場貢献度マネージャー＆ログ</h2>';
 
-        // タブエリア
-        html += '<div class="tab-wrapper" id="tab-wrapper">';
-        historyLogs.forEach(function (log) {
-            const el = ELEMENT_MAP[log.element] || ELEMENT_MAP.fire;
-            const isActive = log.id === activeLogId;
-            html += '<div class="tab' + (isActive ? ' active' : '') + '" data-tab-id="' + escapeHtml(log.id) + '" ' +
-                'style="' + (isActive ? 'background-color:' + el.color + ';' : '') + '">' +
-                '第' + escapeHtml(log.count) + '回 (' + el.label + ')' +
-                '<button class="delete-btn" data-delete-id="' + escapeHtml(log.id) + '" data-delete-count="' + escapeHtml(log.count) + '" title="このタブを削除">×</button>' +
-                '</div>';
+        // ===== タブ =====
+        html += '<div class="tab-wrapper">';
+        state.logs.forEach(function(lg) {
+            const e = ELEMENT_MAP[lg.element] || ELEMENT_MAP.fire;
+            const isAct = lg.id === state.activeLogId;
+            html += '<div class="tab' + (isAct ? ' active' : '') + '" data-tab-id="' + escapeHtml(lg.id) + '" style="' + (isAct ? 'background-color:' + e.color + ';' : '') + '">'
+                + '第' + escapeHtml(lg.count) + '回(' + e.label + ')'
+                + '<button class="tab-del" data-del-id="' + escapeHtml(lg.id) + '" data-del-count="' + escapeHtml(lg.count) + '">×</button>'
+                + '</div>';
         });
-        html += '<button class="add-btn" id="open-modal-btn">＋ 新しい古戦場を追加</button>';
+        html += '<button class="add-btn" id="open-modal-btn">＋ 追加</button>';
         html += '</div>';
 
-        // 入力エリア
-        html += '<div class="grid3">';
-        html += '<div class="form-group"><label>目標貢献度</label><input type="number" id="input-target" value="' + escapeHtml(currentLog.target) + '"></div>';
-        html += '<div class="form-group"><label>現在の貢献度</label><input type="number" id="input-current" value="' + escapeHtml(currentLog.current) + '"></div>';
-        html += '<div class="form-group"><label>最終個人ランキング(位)</label><input type="text" id="input-rank" placeholder="例: 14000" value="' + escapeHtml(currentLog.rank || '') + '"></div>';
+        // ===== 進捗バー =====
+        html += '<div class="card" style="margin-bottom:16px;">';
+        html += '<div style="font-size:14px;font-weight:bold;color:#f8fafc;">第' + escapeHtml(log.count) + '回 ' + escapeHtml(el.name) + '　達成率: <span class="progress-pct" style="color:' + el.color + ';">' + percentage + '%</span></div>';
+        html += '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + percentage + '%;background-color:' + el.color + ';"></div></div>';
+        html += '<div class="progress-stats"><div>現在: <strong>' + fmt(currentContrib) + '</strong></div><div>残り: <strong class="red">' + fmt(remaining) + '</strong></div><div>目標: <strong>' + fmtOku(target) + '</strong></div></div>';
+        if (percentage >= 100) html += '<div class="alert-success">🎉 目標達成！お疲れ様でした！</div>';
         html += '</div>';
 
-        // 進捗バー
-        html += '<div class="progress-container">';
-        html += '<h3 class="progress-header" id="progress-header">【第' + escapeHtml(currentLog.count) + '回 ' + escapeHtml(elementInfo.name) + '】目標達成率: ' +
-            '<span class="progress-percentage" style="color:' + elementInfo.color + ';">' + percentage + '%</span></h3>';
-        html += '<div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar-fill" style="width:' + percentage + '%;background-color:' + elementInfo.color + ';"></div></div>';
-        html += '<div class="stats"><div>現在: <strong class="white" id="stats-current">' + formatNum(currentLog.current) + '</strong></div>' +
-            '<div>残り: <strong class="red" id="stats-remaining">' + formatNum(remaining) + '</strong></div></div>';
-        html += '<div class="alert-box" id="alert-box" style="' + (percentage >= 100 ? '' : 'display:none;') + '">' + (percentage >= 100 ? '🎉 目標達成！お疲れ様でした！' : '') + '</div>';
+        // ===== メインサマリーカード =====
+        if (remaining > 0) {
+            html += '<div class="summary-card">';
+            html += '<h3>📊 目標達成プランサマリー</h3>';
+            // 通常肉
+            const chunkColor = calc.chunkShort > 0 ? 'red' : 'green';
+            html += '<div class="summary-row"><span class="summary-label">通常肉（チャンク）</span>';
+            if (calc.chunkShort > 0) {
+                html += '<span class="summary-value red">不足 ' + fmt(calc.chunkShort) + ' 個<span class="summary-sub">EX+ 約' + fmt(calc.expRunsNeeded) + '周で補填</span></span>';
+            } else {
+                html += '<span class="summary-value green">余裕 +' + fmt(calc.chunkSurplus) + ' 個</span>';
+            }
+            html += '</div>';
+            // デカ肉
+            const clampColor = calc.clampSurplus < 0 ? 'red' : 'green';
+            html += '<div class="summary-row"><span class="summary-label">デカ肉（クランプ）</span>';
+            if (calc.clampSurplus < 0) {
+                html += '<span class="summary-value red">不足 ' + fmt(-calc.clampSurplus) + ' 個</span>';
+            } else {
+                html += '<span class="summary-value green">余裕 +' + fmt(calc.clampSurplus) + ' 個</span>';
+            }
+            html += '<span class="summary-sub" style="margin-left:4px;">必要 ' + fmt(calc.needClamp) + ' / 見込み ' + fmt(calc.haveClamp) + '</span></div>';
+            html += '<hr class="summary-divider">';
+            // 周回
+            if (calc.runs200 > 0) html += '<div class="summary-row"><span class="summary-label">200HELL 本戦周回</span><span class="summary-value">' + fmt(calc.runs200) + ' 周</span></div>';
+            if (calc.runs250 > 0) html += '<div class="summary-row"><span class="summary-label">250HELL 本戦周回</span><span class="summary-value">' + fmt(calc.runs250) + ' 周</span></div>';
+            if (calc.expRunsNeeded > 0) html += '<div class="summary-row"><span class="summary-label">EX+ 肉集め周回</span><span class="summary-value yellow">' + fmt(calc.expRunsNeeded) + ' 周</span></div>';
+            html += '<hr class="summary-divider">';
+            // 時間・時速
+            html += '<div class="summary-row"><span class="summary-label">推定残り所要時間</span><span class="summary-value">' + fmtTime(calc.totalSec) + '</span></div>';
+            if (calc.hourlyContrib > 0) html += '<div class="summary-row"><span class="summary-label">本戦 推定時速</span><span class="summary-value">' + fmtOku(calc.hourlyContrib) + '/h</span></div>';
+            html += '</div>';
+
+            // 動的アドバイス
+            if (s.mainHell === 'h200' && calc.runs200 > 0) {
+                html += '<div class="alert-warn">⚠️ 200HELLメイン設定中：通常肉消費が最も激しいルートです。予選での肉集めを多めに確保してください。</div>';
+            }
+            if (calc.sim250 && calc.sim250.savedChunk > 0) {
+                html += '<div class="alert-info">💡 本戦の半数を250HELLに置き換えると、通常肉を約 <strong>' + fmt(calc.sim250.savedChunk) + ' 個</strong>（EX+ 約' + fmt(calc.sim250.savedExp) + '周分）節約できます。</div>';
+            }
+        } else {
+            html += '<div class="alert-success" style="margin-bottom:16px;">🎉 目標達成！これ以上の周回は不要です！</div>';
+        }
+
+        // ===== 簡易モード設定 =====
+        html += '<div class="card">';
+        html += '<h3 class="section-heading">⚙️ 基本設定（簡易モード）</h3>';
+
+        // 目標貢献度
+        html += '<div class="form-group" style="margin-bottom:12px;">';
+        html += '<label>目標累計貢献度</label>';
+        html += '<input type="number" id="inp-target" value="' + s.targetContrib + '">';
+        html += '<div class="preset-row">';
+        [500000000, 1000000000, 1500000000, 2000000000, 3000000000].forEach(function(v) {
+            const label = fmtOku(v);
+            const isAct = Number(s.targetContrib) === v;
+            html += '<button class="preset-btn' + (isAct ? ' active' : '') + '" data-preset-target="' + v + '">' + label + '</button>';
+        });
+        html += '</div></div>';
+
+        html += '<div class="grid2" style="margin-bottom:12px;">';
+        // 主軸難易度
+        html += '<div class="form-group"><label>本戦主軸（3〜4日目）</label><select id="sel-mainhell">';
+        [['h200','200HELLメイン'],['h250','250HELLメイン'],['mix','200・250 併用']].forEach(function([v,n]) {
+            html += '<option value="' + v + '"' + (s.mainHell === v ? ' selected' : '') + '>' + n + '</option>';
+        });
+        html += '</select></div>';
+        // 周回速度
+        html += '<div class="form-group"><label>周回速度</label><select id="sel-speed">';
+        [['fast','爆速（1〜2T手動）'],['hfa','高速フルオート'],['sfa','安定フルオート']].forEach(function([v,n]) {
+            html += '<option value="' + v + '"' + (s.speedType === v ? ' selected' : '') + '>' + n + '</option>';
+        });
+        html += '</select></div>';
         html += '</div>';
 
-        // HELL逆算テーブル
-        html += '<div style="margin-top:25px;">';
-        html += '<h3 class="section-heading" style="border-left:4px solid ' + elementInfo.color + ';">🎯 残り貢献度からの必要周回数・お肉の計算</h3>';
-        html += '<div id="hell-calculation-content">' + buildHellCalculationContent(currentLog) + '</div>';
+        // 200/250 比率（mix時のみ）
+        if (s.mainHell === 'mix') {
+            html += '<div class="form-group" style="margin-bottom:12px;">';
+            html += '<label>200HELL の割合（残りが250HELL）: <strong>' + s.mixRatio + '%</strong></label>';
+            html += '<input type="range" id="rng-mix" min="10" max="90" step="10" value="' + s.mixRatio + '" style="width:100%;accent-color:#3b82f6;">';
+            html += '</div>';
+        }
+
+        // デイリー納品
+        html += '<div class="toggle-row">';
+        html += '<label class="toggle-switch"><input type="checkbox" id="chk-delivery"' + (s.dailyDelivery ? ' checked' : '') + '><span class="toggle-track"></span></label>';
+        html += '<span class="toggle-label">デイリー納品（400個/日）を行う</span>';
         html += '</div>';
+        if (s.dailyDelivery) {
+            html += '<div class="form-group" style="margin-bottom:12px;">';
+            html += '<label>納品予定日数（0〜7日）</label>';
+            html += '<input type="number" id="inp-deldays" min="0" max="7" value="' + s.deliveryDays + '" style="max-width:120px;">';
+            html += '</div>';
+        }
+        html += '</div>'; // card end
+
+        // ===== 詳細モード =====
+        html += '<div class="accordion-header' + (detailOpen ? ' open' : '') + '" id="acc-detail">';
+        html += '🔧 詳細・事前行動設定 <span class="arrow">▼</span>';
+        html += '</div>';
+        html += '<div class="accordion-body' + (detailOpen ? ' open' : '') + '" id="acc-detail-body">';
+
+        // 極星器掘り
+        html += '<h3 class="section-heading" style="font-size:13px;margin-bottom:10px;">予選・インターバル：極星器掘り</h3>';
+        html += '<div class="grid2" style="margin-bottom:12px;">';
+        html += '<div class="form-group"><label>周回する難易度</label><select id="sel-kansen">';
+        [['h90','90HELL'],['h95','95HELL']].forEach(function([v,n]) {
+            html += '<option value="' + v + '"' + (s.kansenHell === v ? ' selected' : '') + '>' + n + '</option>';
+        });
+        html += '</select></div>';
+        html += '<div class="form-group"><label>予定周回数</label><input type="number" id="inp-kansenruns" min="0" value="' + s.kansenRuns + '"></div>';
+        html += '</div>';
+
+        // 個別タイム上書き
+        html += '<h3 class="section-heading" style="font-size:13px;margin-bottom:10px;">個別タイム上書き（秒）</h3>';
+        html += '<div class="grid3" style="margin-bottom:12px;">';
+        [['h90','90HELL'],['h95','95HELL'],['h150','150HELL'],['h200','200HELL'],['h250','250HELL']].forEach(function([k,n]) {
+            const v = s.customSecs && s.customSecs[k] ? s.customSecs[k] : '';
+            html += '<div class="form-group"><label>' + n + '</label><input type="number" class="inp-custom-sec" data-seckey="' + k + '" placeholder="プリセット使用" value="' + escapeHtml(v) + '"></div>';
+        });
+        html += '</div>';
+
+        // デカ肉変換
+        html += '<div class="toggle-row">';
+        html += '<label class="toggle-switch"><input type="checkbox" id="chk-convert"' + (s.autoConvert ? ' checked' : '') + '><span class="toggle-track"></span></label>';
+        html += '<span class="toggle-label">余ったデカ肉を通常肉に自動変換（最大500個→1,000個）</span>';
+        html += '</div>';
+        html += '</div>'; // accordion-body end
+
+        // ===== 実戦・進捗入力 =====
+        html += '<div class="accordion-header' + (battleOpen ? ' open' : '') + '" id="acc-battle">';
+        html += '⚔️ 実戦・進捗入力（開催中） <span class="arrow">▼</span>';
+        html += '</div>';
+        html += '<div class="accordion-body' + (battleOpen ? ' open' : '') + '" id="acc-battle-body">';
+        html += '<div class="grid3" style="margin-bottom:12px;">';
+        html += '<div class="form-group"><label>現在の獲得済み貢献度</label><input type="number" id="inp-current" value="' + s.currentContrib + '"></div>';
+        html += '<div class="form-group"><label>現在の所持通常肉</label><input type="number" id="inp-chunk" value="' + s.currentChunk + '"></div>';
+        html += '<div class="form-group"><label>現在の所持デカ肉</label><input type="number" id="inp-clamp" value="' + s.currentClamp + '"></div>';
+        html += '</div>';
+        html += '<div class="form-group" style="max-width:220px;">';
+        html += '<label>EX+ 1周あたりの所要秒数</label>';
+        html += '<input type="number" id="inp-expsec" value="' + s.expSecPerRun + '">';
+        html += '</div>';
+        html += '</div>'; // accordion-body end
+
+        // ===== HELL逆算テーブル =====
+        html += '<div class="card" style="margin-top:16px;">';
+        html += '<h3 class="section-heading">🎯 残り貢献度からの必要周回数・お肉の計算</h3>';
+        if (remaining > 0) {
+            html += '<table><thead><tr><th>難易度</th><th>必要周回数</th><th>消費するお肉</th></tr></thead><tbody>';
+            HELL_INFO.filter(h => !['ex','exp'].includes(h.key)).forEach(function(hell) {
+                const runsNeeded = Math.ceil(remaining / hell.contribution);
+                const meatNeeded = hell.meatCost * runsNeeded;
+                const meatColor = hell.isSpecialMeat ? '#f43f5e' : '#38bdf8';
+                html += '<tr><td><strong>' + escapeHtml(hell.name) + '</strong></td>'
+                    + '<td style="color:#fff;">' + fmt(runsNeeded) + ' 回</td>'
+                    + '<td><strong style="color:' + meatColor + ';">' + fmt(meatNeeded) + '</strong>'
+                    + ' 個 <span style="font-size:11px;color:#64748b;">(' + escapeHtml(hell.meatType) + ')</span></td></tr>';
+            });
+            html += '</tbody></table>';
+        } else {
+            html += '<p style="color:#94a3b8;font-size:14px;font-style:italic;">目標達成済みのため周回不要です</p>';
+        }
+        html += '</div>';
+
+        // ===== データ操作 =====
+        html += '<div class="data-actions">';
+        html += '<button class="btn btn-secondary btn-sm" id="btn-export">📤 設定をエクスポート</button>';
+        html += '<label class="btn btn-secondary btn-sm" style="cursor:pointer;">📥 設定をインポート<input type="file" id="inp-import" accept=".json" style="display:none;"></label>';
+        html += '<button class="btn btn-secondary btn-sm" id="btn-reset-battle">🔄 実績値のみリセット</button>';
+        html += '<button class="btn btn-danger btn-sm" id="btn-reset-all">🗑 全初期化</button>';
+        html += '</div>';
+
+        html += '</div>'; // container end
 
         // モーダル
         if (isModalOpen) {
-            html += '<div class="modal-bg" id="modal-bg">';
-            html += '<form class="modal" id="add-log-form">';
-            html += '<h3 style="margin-top:0;margin-bottom:15px;color:#fff;">古戦場の新規追加</h3>';
-            html += '<div class="form-group" style="margin-bottom:12px;"><label>第何回？</label><input type="number" id="new-count-input" value="' + escapeHtml(newCount) + '" required></div>';
-            html += '<div class="form-group" style="margin-bottom:20px;"><label>有利属性</label><select id="new-element-select">';
-            Object.keys(ELEMENT_MAP).forEach(function (key) {
-                html += '<option value="' + key + '"' + (key === newElement ? ' selected' : '') + '>' + escapeHtml(ELEMENT_MAP[key].name) + '</option>';
+            html += '<div class="modal-bg" id="modal-bg"><form class="modal" id="add-form">';
+            html += '<h3 style="margin-top:0;margin-bottom:16px;color:#fff;">古戦場を新規追加</h3>';
+            html += '<div class="form-group" style="margin-bottom:12px;"><label>第何回？</label><input type="number" id="inp-newcount" value="' + escapeHtml(newCount) + '"></div>';
+            html += '<div class="form-group" style="margin-bottom:20px;"><label>有利属性</label><select id="sel-newel">';
+            Object.keys(ELEMENT_MAP).forEach(k => {
+                html += '<option value="' + k + '"' + (k === newElement ? ' selected' : '') + '>' + ELEMENT_MAP[k].name + '</option>';
             });
             html += '</select></div>';
-            html += '<div style="display:flex;flex-direction:column;">';
-            html += '<button type="submit" class="btn-primary">タブを追加</button>';
-            html += '<button type="button" class="btn-cancel" id="cancel-modal-btn">キャンセル</button>';
+            html += '<div style="display:flex;flex-direction:column;gap:6px;">';
+            html += '<button type="submit" class="btn btn-primary">追加</button>';
+            html += '<button type="button" class="btn btn-cancel" id="btn-cancel-modal">キャンセル</button>';
             html += '</div></form></div>';
         }
 
-        html += '</div>';
         root.innerHTML = html;
-
         attachEvents();
     }
 
     // ===== イベント結線 =====
     function attachEvents() {
-        // タブ切り替え
-        document.querySelectorAll('.tab').forEach(function (tabEl) {
-            tabEl.addEventListener('click', function (e) {
-                activeLogId = tabEl.getAttribute('data-tab-id');
-                render();
+        // タブ
+        document.querySelectorAll('.tab').forEach(el => {
+            el.addEventListener('click', e => {
+                if (e.target.classList.contains('tab-del')) return;
+                state.activeLogId = el.getAttribute('data-tab-id');
+                saveState(); render();
             });
         });
-
-        // タブ削除
-        document.querySelectorAll('.delete-btn').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
+        document.querySelectorAll('.tab-del').forEach(btn => {
+            btn.addEventListener('click', e => {
                 e.stopPropagation();
-                const id = btn.getAttribute('data-delete-id');
-                const count = btn.getAttribute('data-delete-count');
-                handleDeleteLog(id, count);
+                handleDeleteLog(btn.getAttribute('data-del-id'), btn.getAttribute('data-del-count'));
             });
         });
 
-        // モーダルを開く
+        // モーダル
         const openBtn = document.getElementById('open-modal-btn');
-        if (openBtn) {
-            openBtn.addEventListener('click', function () {
-                isModalOpen = true;
-                render();
-            });
-        }
-
-        // 目標貢献度
-        const targetInput = document.getElementById('input-target');
-        if (targetInput) {
-            targetInput.addEventListener('input', function () {
-                updateCurrentLogField('target', Number(targetInput.value) || 0);
-            });
-        }
-
-        // 現在の貢献度
-        const currentInput = document.getElementById('input-current');
-        if (currentInput) {
-            currentInput.addEventListener('input', function () {
-                updateCurrentLogField('current', Number(currentInput.value) || 0);
-            });
-        }
-
-        // ランキング
-        const rankInput = document.getElementById('input-rank');
-        if (rankInput) {
-            rankInput.addEventListener('input', function () {
-                updateCurrentLogField('rank', rankInput.value);
-            });
-        }
-
-        // モーダル：キャンセル
-        const cancelBtn = document.getElementById('cancel-modal-btn');
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', function () {
-                isModalOpen = false;
-                render();
-            });
-        }
-
-        // モーダル：背景クリックで閉じる
+        if (openBtn) openBtn.addEventListener('click', () => { isModalOpen = true; render(); });
+        const cancelBtn = document.getElementById('btn-cancel-modal');
+        if (cancelBtn) cancelBtn.addEventListener('click', () => { isModalOpen = false; render(); });
         const modalBg = document.getElementById('modal-bg');
-        if (modalBg) {
-            modalBg.addEventListener('click', function (e) {
-                if (e.target === modalBg) {
-                    isModalOpen = false;
-                    render();
-                }
-            });
-        }
-
-        // モーダル：新規追加フォーム
-        const addForm = document.getElementById('add-log-form');
+        if (modalBg) modalBg.addEventListener('click', e => { if (e.target === modalBg) { isModalOpen = false; render(); }});
+        const addForm = document.getElementById('add-form');
         if (addForm) {
-            const newCountInput = document.getElementById('new-count-input');
-            const newElementSelect = document.getElementById('new-element-select');
-
-            newCountInput.addEventListener('input', function () {
-                newCount = newCountInput.value;
-            });
-            newElementSelect.addEventListener('change', function () {
-                newElement = newElementSelect.value;
-            });
-
-            addForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                handleAddLog();
-            });
+            const nc = document.getElementById('inp-newcount');
+            const ne = document.getElementById('sel-newel');
+            if (nc) nc.addEventListener('input', () => { newCount = nc.value; });
+            if (ne) ne.addEventListener('change', () => { newElement = ne.value; });
+            addForm.addEventListener('submit', e => { e.preventDefault(); handleAddLog(); });
         }
+
+        // アコーディオン
+        const accDetail = document.getElementById('acc-detail');
+        if (accDetail) accDetail.addEventListener('click', () => { detailOpen = !detailOpen; render(); });
+        const accBattle = document.getElementById('acc-battle');
+        if (accBattle) accBattle.addEventListener('click', () => { battleOpen = !battleOpen; render(); });
+
+        // 簡易設定
+        function bi(id, field, transform) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('change', () => updateSettings({ [field]: transform ? transform(el.value) : el.value }));
+        }
+        function bii(id, field, transform) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', () => updateSettings({ [field]: transform ? transform(el.value) : el.value }));
+        }
+        bii('inp-target', 'targetContrib', Number);
+        bi('sel-mainhell', 'mainHell');
+        bi('sel-speed', 'speedType');
+        bii('rng-mix', 'mixRatio', Number);
+        const chkDel = document.getElementById('chk-delivery');
+        if (chkDel) chkDel.addEventListener('change', () => updateSettings({ dailyDelivery: chkDel.checked }));
+        bii('inp-deldays', 'deliveryDays', Number);
+
+        // プリセット目標
+        document.querySelectorAll('[data-preset-target]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const v = Number(btn.getAttribute('data-preset-target'));
+                updateSettings({ targetContrib: v });
+            });
+        });
+
+        // 詳細設定
+        bi('sel-kansen', 'kansenHell');
+        bii('inp-kansenruns', 'kansenRuns', Number);
+        document.querySelectorAll('.inp-custom-sec').forEach(el => {
+            el.addEventListener('change', () => {
+                const key = el.getAttribute('data-seckey');
+                const s = getSettings();
+                const customSecs = Object.assign({}, s.customSecs || {});
+                if (el.value === '') { delete customSecs[key]; }
+                else { customSecs[key] = Number(el.value); }
+                updateSettings({ customSecs });
+            });
+        });
+        const chkConvert = document.getElementById('chk-convert');
+        if (chkConvert) chkConvert.addEventListener('change', () => updateSettings({ autoConvert: chkConvert.checked }));
+
+        // 実戦入力
+        bii('inp-current', 'currentContrib', Number);
+        bii('inp-chunk', 'currentChunk', Number);
+        bii('inp-clamp', 'currentClamp', Number);
+        bii('inp-expsec', 'expSecPerRun', Number);
+
+        // エクスポート
+        const exportBtn = document.getElementById('btn-export');
+        if (exportBtn) exportBtn.addEventListener('click', handleExport);
+
+        // インポート
+        const importInput = document.getElementById('inp-import');
+        if (importInput) importInput.addEventListener('change', handleImport);
+
+        // リセット（実績値のみ）
+        const resetBattle = document.getElementById('btn-reset-battle');
+        if (resetBattle) resetBattle.addEventListener('click', () => {
+            if (confirm('現在の貢献度・所持肉数をリセットします。よろしいですか？')) {
+                updateSettings({ currentContrib: 0, currentChunk: 0, currentClamp: 0 });
+            }
+        });
+
+        // 全初期化
+        const resetAll = document.getElementById('btn-reset-all');
+        if (resetAll) resetAll.addEventListener('click', () => {
+            if (confirm('この古戦場のすべての設定を初期化します。よろしいですか？')) {
+                const log = getCurrentLog();
+                log.settings = defaultSettings();
+                saveState(); render();
+            }
+        });
     }
 
     // ===== ロジック =====
-    function updateCurrentLogField(field, value) {
-        const currentLog = getCurrentLog();
-        historyLogs = historyLogs.map(function (log) {
-            if (log.id === currentLog.id) {
-                const updated = Object.assign({}, log);
-                updated[field] = value;
-                return updated;
-            }
-            return log;
-        });
-        saveLogs();
-        renderSummary();
-    }
-
     function handleAddLog() {
-        const newId = 'log_' + Date.now();
-        const countValue = Number(newCount) || 0;
+        const countVal = Number(newCount) || 0;
         const newLog = {
-            id: newId,
-            count: countValue,
+            id: 'log_' + Date.now(),
+            count: countVal,
             element: newElement,
-            current: 0,
-            target: 1000000000,
-            rank: ''
+            settings: defaultSettings()
         };
-
-        historyLogs = historyLogs.concat([newLog]).sort(function (a, b) { return a.count - b.count; });
-        activeLogId = newId;
+        state.logs = state.logs.concat([newLog]).sort((a, b) => a.count - b.count);
+        state.activeLogId = newLog.id;
         isModalOpen = false;
-        newCount = countValue + 1;
+        newCount = countVal + 1;
         newElement = 'water';
-        saveLogs();
-        render();
+        saveState(); render();
     }
 
     function handleDeleteLog(id, count) {
-        if (historyLogs.length <= 1) {
-            alert('これ以上古戦場のログを削除することはできません。最低1つのログが必要です。');
-            return;
-        }
-
-        if (window.confirm('「第' + count + '回 古戦場」のデータを完全に削除しますか？')) {
-            const wasActive = (activeLogId === id);
-            historyLogs = historyLogs.filter(function (log) { return log.id !== id; });
-
-            if (wasActive) {
-                activeLogId = historyLogs[0].id;
-            }
-            saveLogs();
-            render();
+        if (state.logs.length <= 1) { alert('最低1つのログが必要です。'); return; }
+        if (confirm('「第' + count + '回 古戦場」のデータを削除しますか？')) {
+            state.logs = state.logs.filter(l => l.id !== id);
+            if (state.activeLogId === id) state.activeLogId = state.logs[0].id;
+            saveState(); render();
         }
     }
 
-    // ===== 共通ハンバーガーメニュー（ドロワー）の初期化 =====
+    function handleExport() {
+        const log = getCurrentLog();
+        const json = JSON.stringify({ version: 1, log: log }, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gbf_tracker_' + log.count + '回_' + (log.element) + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function handleImport(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            try {
+                const data = JSON.parse(ev.target.result);
+                if (data && data.log && data.log.settings) {
+                    const log = getCurrentLog();
+                    log.settings = Object.assign(defaultSettings(), data.log.settings);
+                    saveState(); render();
+                    alert('インポートしました。');
+                } else {
+                    alert('形式が正しくありません。');
+                }
+            } catch (err) {
+                alert('ファイルの読み込みに失敗しました。');
+            }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+    }
+
+    // ===== ドロワー =====
     (function () {
         const triggerBtn = document.getElementById('menu-trigger-btn');
         const overlay = document.getElementById('drawer-overlay');
@@ -653,7 +829,6 @@
         if (overlay) overlay.addEventListener('click', closeDrawer);
     })();
 
-    // ===== 初期化 =====
     render();
 })();
 </script>
