@@ -195,11 +195,11 @@
         { key: 'h100', name: '100 HELL', contribution: 2680000,   meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 30, hfa: 55, sfa: 90 } },
         { key: 'h150', name: '150 HELL', contribution: 4100000,   meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 40, hfa: 65, sfa: 110 } },
         { key: 'h200', name: '200 HELL', contribution: 20000000,  meatCost: 20, meatType: 'グラッジチャンク', isSpecialMeat: false, secPresets: { fast: 75, hfa: 120, sfa: 210 } },
-        { key: 'h250', name: '250 HELL', contribution: 75000000,  meatCost: 20, meatType: 'マリシャスクランプ', isSpecialMeat: true, secPresets: { fast: 90, hfa: 150, sfa: 240 } }
+        { key: 'h250', name: '250 HELL', contribution: 55000000,  meatCost: 20, meatType: 'マリシャスクランプ', isSpecialMeat: true, secPresets: { fast: 90, hfa: 150, sfa: 240 } }
     ];
 
     // EX+の平均肉ドロップ数（1周あたり）
-    const EXP_MEAT_DROP = 22;
+    const EXP_MEAT_DROP = 2.5;
 
     // デフォルト設定
     function defaultSettings() {
@@ -638,8 +638,14 @@
             html += '</div></form></div>';
         }
 
+        const scrollY = window.scrollY;
         root.innerHTML = html;
         attachEvents();
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+                window.scrollTo(0, scrollY);
+            });
+        });
     }
 
     // ===== イベント結線 =====
@@ -690,13 +696,13 @@
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', () => updateSettings({ [field]: transform ? transform(el.value) : el.value }));
         }
-        bii('inp-target', 'targetContrib', Number);
+        bi('inp-target', 'targetContrib', Number);  // change のみ（入力完了時）
         bi('sel-mainhell', 'mainHell');
         bi('sel-speed', 'speedType');
-        bii('rng-mix', 'mixRatio', Number);
+        bii('rng-mix', 'mixRatio', Number);  // スライダーはリアルタイム更新を維持
         const chkDel = document.getElementById('chk-delivery');
         if (chkDel) chkDel.addEventListener('change', () => updateSettings({ dailyDelivery: chkDel.checked }));
-        bii('inp-deldays', 'deliveryDays', Number);
+        bi('inp-deldays', 'deliveryDays', Number);
 
         // プリセット目標
         document.querySelectorAll('[data-preset-target]').forEach(btn => {
@@ -708,7 +714,7 @@
 
         // 詳細設定
         bi('sel-kansen', 'kansenHell');
-        bii('inp-kansenruns', 'kansenRuns', Number);
+        bi('inp-kansenruns', 'kansenRuns', Number);
         document.querySelectorAll('.inp-custom-sec').forEach(el => {
             el.addEventListener('change', () => {
                 const key = el.getAttribute('data-seckey');
@@ -722,11 +728,11 @@
         const chkConvert = document.getElementById('chk-convert');
         if (chkConvert) chkConvert.addEventListener('change', () => updateSettings({ autoConvert: chkConvert.checked }));
 
-        // 実戦入力
-        bii('inp-current', 'currentContrib', Number);
-        bii('inp-chunk', 'currentChunk', Number);
-        bii('inp-clamp', 'currentClamp', Number);
-        bii('inp-expsec', 'expSecPerRun', Number);
+        // 実戦入力（changeのみ: 入力完了時に更新）
+        bi('inp-current', 'currentContrib', Number);
+        bi('inp-chunk', 'currentChunk', Number);
+        bi('inp-clamp', 'currentClamp', Number);
+        bi('inp-expsec', 'expSecPerRun', Number);
 
         // エクスポート
         const exportBtn = document.getElementById('btn-export');
