@@ -178,12 +178,12 @@
 
     // ===== マスターデータ（既存の貢献度データを流用） =====
     const ELEMENT_MAP = {
-        fire:  { name: '火有利', color: '#ef4444', label: '火' },
-        water: { name: '水有利', color: '#3b82f6', label: '水' },
-        earth: { name: '土有利', color: '#d97706', label: '土' },
-        wind:  { name: '風有利', color: '#10b981', label: '風' },
-        light: { name: '光有利', color: '#eab308', label: '光' },
-        dark:  { name: '闇有利', color: '#a855f7', label: '闇' }
+        fire:  { name: '火属性 (水有利)', color: '#ef4444', label: '火' },
+        water: { name: '水属性 (土有利)', color: '#3b82f6', label: '水' },
+        earth: { name: '土属性 (風有利)', color: '#d97706', label: '土' },
+        wind:  { name: '風属性 (火有利)', color: '#10b981', label: '風' },
+        light: { name: '光属性 (闇有利)', color: '#eab308', label: '光' },
+        dark:  { name: '闇属性 (光有利)', color: '#a855f7', label: '闇' }
     };
 
     // 既存のHELL_INFOをベースに拡張
@@ -574,6 +574,9 @@
         html += '<label class="toggle-switch"><input type="checkbox" id="chk-convert"' + (s.autoConvert ? ' checked' : '') + '><span class="toggle-track"></span></label>';
         html += '<span class="toggle-label">余ったデカ肉を通常肉に自動変換（最大500個→1,000個）</span>';
         html += '</div>';
+        html += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #334155;">';
+        html += '<button class="btn btn-primary" id="btn-apply-detail">✅ 詳細設定を反映する</button>';
+        html += '</div>';
         html += '</div>'; // accordion-body end
 
         // ===== 実戦・進捗入力 =====
@@ -589,6 +592,9 @@
         html += '<div class="form-group" style="max-width:220px;">';
         html += '<label>EX+ 1周あたりの所要秒数</label>';
         html += '<input type="number" id="inp-expsec" value="' + s.expSecPerRun + '">';
+        html += '</div>';
+        html += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #334155;">';
+        html += '<button class="btn btn-primary" id="btn-apply-battle">✅ 実戦入力を反映する</button>';
         html += '</div>';
         html += '</div>'; // accordion-body end
 
@@ -712,27 +718,43 @@
             });
         });
 
-        // 詳細設定
-        bi('sel-kansen', 'kansenHell');
-        bi('inp-kansenruns', 'kansenRuns', Number);
-        document.querySelectorAll('.inp-custom-sec').forEach(el => {
-            el.addEventListener('change', () => {
-                const key = el.getAttribute('data-seckey');
-                const s = getSettings();
-                const customSecs = Object.assign({}, s.customSecs || {});
-                if (el.value === '') { delete customSecs[key]; }
-                else { customSecs[key] = Number(el.value); }
-                updateSettings({ customSecs });
+        // 詳細設定 → 反映ボタンでまとめて保存
+        const applyDetailBtn = document.getElementById('btn-apply-detail');
+        if (applyDetailBtn) {
+            applyDetailBtn.addEventListener('click', () => {
+                const kansenHell = document.getElementById('sel-kansen');
+                const kansenRuns = document.getElementById('inp-kansenruns');
+                const chkConvert = document.getElementById('chk-convert');
+                const customSecs = {};
+                document.querySelectorAll('.inp-custom-sec').forEach(el => {
+                    const key = el.getAttribute('data-seckey');
+                    if (el.value !== '') customSecs[key] = Number(el.value);
+                });
+                updateSettings({
+                    kansenHell: kansenHell ? kansenHell.value : getSettings().kansenHell,
+                    kansenRuns: kansenRuns ? Number(kansenRuns.value) : getSettings().kansenRuns,
+                    autoConvert: chkConvert ? chkConvert.checked : getSettings().autoConvert,
+                    customSecs
+                });
             });
-        });
-        const chkConvert = document.getElementById('chk-convert');
-        if (chkConvert) chkConvert.addEventListener('change', () => updateSettings({ autoConvert: chkConvert.checked }));
+        }
 
-        // 実戦入力（changeのみ: 入力完了時に更新）
-        bi('inp-current', 'currentContrib', Number);
-        bi('inp-chunk', 'currentChunk', Number);
-        bi('inp-clamp', 'currentClamp', Number);
-        bi('inp-expsec', 'expSecPerRun', Number);
+        // 実戦入力 → 反映ボタンでまとめて保存
+        const applyBattleBtn = document.getElementById('btn-apply-battle');
+        if (applyBattleBtn) {
+            applyBattleBtn.addEventListener('click', () => {
+                const inpCurrent = document.getElementById('inp-current');
+                const inpChunk   = document.getElementById('inp-chunk');
+                const inpClamp   = document.getElementById('inp-clamp');
+                const inpExpsec  = document.getElementById('inp-expsec');
+                updateSettings({
+                    currentContrib: inpCurrent ? Number(inpCurrent.value) : getSettings().currentContrib,
+                    currentChunk:   inpChunk   ? Number(inpChunk.value)   : getSettings().currentChunk,
+                    currentClamp:   inpClamp   ? Number(inpClamp.value)   : getSettings().currentClamp,
+                    expSecPerRun:   inpExpsec  ? Number(inpExpsec.value)  : getSettings().expSecPerRun
+                });
+            });
+        }
 
         // エクスポート
         const exportBtn = document.getElementById('btn-export');
